@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# Vector DB if very large
+db/faiss_index/
+
+# OS files
+.DS_Store
+Thumbs.db
+ 
