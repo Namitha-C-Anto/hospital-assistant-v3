@@ -1,6 +1,7 @@
 from typing import Sequence
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
+from utils.logger import logger
 
 from config import (
     CHUNK_SIZE,
@@ -19,10 +20,28 @@ def split_documents(
     Returns:
         List of chunked documents.
     """
+    try:
 
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=CHUNK_SIZE,
-        chunk_overlap=CHUNK_OVERLAP,
-    )
+        logger.info(
+            "Splitting %d documents.",
+            len(documents),
+        )
 
-    return text_splitter.split_documents(documents)
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=CHUNK_SIZE,
+            chunk_overlap=CHUNK_OVERLAP,
+        )
+
+        chunks = text_splitter.split_documents(documents)
+
+        logger.info(
+            "Split %d documents into %d chunks.",
+            len(documents),
+            len(chunks),
+        )
+
+        return chunks
+
+    except Exception:
+        logger.exception("Failed to split documents.")
+        raise

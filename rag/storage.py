@@ -1,7 +1,7 @@
 import pickle
 from pathlib import Path
 from typing import Sequence
-
+from utils.logger import logger
 from langchain_core.documents import Document
 
 def save_chunks(
@@ -16,8 +16,23 @@ def save_chunks(
         documents: Collection of document chunks.
         path: Output file path.
     """
-    with open(path, "wb") as file:
-        pickle.dump(documents, file)
+    try:
+
+        logger.info(
+            "Saving %d chunks to '%s'.",
+            len(documents),
+            path
+        )
+        with open(path, "wb") as file:
+            pickle.dump(documents, file)
+
+        logger.info(
+            "Chunks saved successfully."
+        )
+
+    except Exception:
+        logger.exception("Failed to save chunks.")
+        raise
 
 def load_chunks(
     path: str | Path,

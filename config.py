@@ -8,6 +8,12 @@ from datetime import datetime
 
 load_dotenv(override=True)
 
+#---------------------------------------------------
+# Logging Configuration
+#---------------------------------------------------
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
+LOG_FORMAT = os.getenv("LOG_FORMAT", "%(asctime)s | %(levelname)s | %(name)s | %(message)s") 
+
 # --------------------------------------------------
 # Project Paths
 # --------------------------------------------------
