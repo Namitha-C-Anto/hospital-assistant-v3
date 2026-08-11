@@ -1,7 +1,12 @@
 import time
-from typing import Any 
+from typing import Any
+from langchain_core.language_models import BaseChatModel 
+from config import (
+    DEBUG,
+    LLM_PROVIDER,
+    LLM_MODEL,
+    LLM_API_KEY,)
 
-from config import DEBUG
 from utils.logger import logger
 from evaluate.logging import (
     log_pipeline_stats, 
@@ -13,28 +18,66 @@ from rag.models import (
     TokenUsage, 
     PipelineComponents,)
 from rag.pipeline import run_rag_pipeline
+from llm.llm import get_llm
 
 def run_test_questions(
     test_data: list[dict[str, Any]],
     rag_components: PipelineComponents,
 ) -> list[PipelineResults]:
 
-    """Run the RAG pipeline for all test questions.
+    """
+    Run the RAG pipeline for a collection of evaluation test questions.
+
+    The application LLM is initialized once and reused for all test
+    questions. Each question is processed through the complete RAG
+    pipeline, and the resulting answers, retrieval information,
+    latency measurements, and token usage are collected into
+    structured PipelineResults objects.
+
+    If an individual question fails during processing, the error is
+    logged and that question is skipped so that the remaining test
+    questions can continue to be evaluated.
 
     Args:
-        test_data: List of test questions and reference answers.
-        rag_components: Initialized RAG pipeline components.
+        test_data: List of test cases containing questions, ground-truth
+            answers, and related evaluation information.
+        rag_components: Initialized RAG components required for document
+            retrieval and reranking.
 
     Returns:
-        List of evaluation results for successfully processed questions.
+        List of PipelineResults for successfully processed test
+        questions. Failed questions are excluded from the returned list.
+
+    Raises:
+        Exception: If the application LLM cannot be initialized.
+        
     """
     pipeline_results = []
 
-    logger.info("Running RAG on test questions...")
+    logger.info(
+        "LLM settings: provider=%s, model=%s, api_key_provided=%s",
+        LLM_PROVIDER,
+        LLM_MODEL,
+        bool(LLM_API_KEY),
+    )
+    
+    try:
+        app_llm = get_llm(
+            provider=LLM_PROVIDER,
+            model=LLM_MODEL,
+            api_key=LLM_API_KEY,
+        )
+    except Exception:
+        logger.exception("Failed to initialize the LLM.")
+        raise
+
+    logger.info("Running RAG on test questions.")
 
     # Execute the RAG pipeline for each test question.
     for item in test_data:
-        result = process_test_questions(item, rag_components)
+
+        logger.info("Processing test question: '%s'.", item["id"])
+        result = process_test_questions(item, rag_components, app_llm)
 
         # Skip questions that failed during pipeline execution.
         if result is not None:
@@ -46,6 +89,7 @@ def run_test_questions(
 def process_test_questions(
     item: dict[str, Any],
     rag_components: PipelineComponents,
+    app_llm: BaseChatModel,
 ) -> PipelineResults | None:
 
     """
@@ -63,8 +107,8 @@ def process_test_questions(
         rag_components: Initialized RAG pipeline components.
 
     Returns:
-        PipelineResult containing the generated answer and evaluation metadata,
-        or None if the pipeline execution fails.
+        PipelineResults containing the generated answer and evaluation
+        metadata, or None if the pipeline execution fails.
     """
 
     question = item["question"]
@@ -76,6 +120,7 @@ def process_test_questions(
         pipeline_result = run_rag_pipeline(
             question,
             rag_components,
+            app_llm,
         )
 
         # Calculate total pipeline execution time.
@@ -134,5 +179,5 @@ def process_test_questions(
         return result
 
     except Exception:
-        logger.exception(f"Failed question: {question}")
+        logger.exception("Failed to process test question: %s", question)
         return None

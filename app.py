@@ -1,9 +1,13 @@
 from pathlib import Path
 import streamlit as st
-from config import DB_PATH  
+from config import (
+    DB_PATH,
+    LLM_PROVIDER,
+    LLM_MODEL,)  
 from utils.logger import logger     
 from rag.pipeline import run_rag_pipeline  
 from rag.initializer import initialize_rag 
+from llm.llm import get_llm
 
 from memory.chat_manager import (
     initialize_chat_sessions,
@@ -70,6 +74,30 @@ def main() -> None:
     rag_components = load_rag_components()
 
     # -------------------------------------------------
+    # Create the selected LLM
+    # -------------------------------------------------        
+    
+    logger.info(
+        "LLM settings: provider=%s, model=%s, api_key_provided=%s",
+        st.session_state.get("provider", LLM_PROVIDER),
+        st.session_state.get("model", LLM_MODEL),
+        bool(st.session_state.get("api_key")),
+    )
+
+    try:
+        app_llm = get_llm(
+            provider=st.session_state.get("provider", LLM_PROVIDER),
+            model=st.session_state.get("model", LLM_MODEL),
+            api_key=st.session_state.get("api_key"),
+        )
+    except Exception:
+        logger.exception("Failed to initialize selected LLM.")
+        st.error(
+            "Unable to initialize the selected LLM. "
+            "Please check the provider, model, and API key."
+        )
+        st.stop()
+    # -------------------------------------------------
     # Restore and display previous chat messages.
     # -------------------------------------------------
     chat_history = get_chat_history()
@@ -134,6 +162,7 @@ def main() -> None:
                     pipeline_result = run_rag_pipeline(
                         question,
                         rag_components,
+                        app_llm,
                         chat_history=history_text,
                     )
                 

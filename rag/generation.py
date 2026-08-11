@@ -2,11 +2,12 @@ import time
 from typing import Any
 from prompts.prompt_template import prompt 
 from utils.logger import logger
+from langchain_core.language_models import BaseChatModel
 
 def generate_answer(
     question: str,
     context_text: str,
-    app_llm: Any,
+    app_llm: BaseChatModel,
     chat_history: str | None = None,
 ) -> tuple[str, dict[str, int], float, float]:
     """

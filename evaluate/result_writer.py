@@ -2,8 +2,8 @@ import json
 import os
 from dataclasses import asdict
 from typing import Any
-
 import pandas as pd
+from pathlib import Path
 
 from config import (
     RAGAS_RESULTS_PATH, 
@@ -11,11 +11,11 @@ from config import (
     TEMPERATURE, 
     EVALUATION_PATH,)
 from utils.logger import logger
-from rag.models import PipelineComponents, PipelineResults
+from rag.models import PipelineResults
 
 def add_metadata(
     df: pd.DataFrame, 
-    metadata: list[str, Any],
+    metadata: dict[str, Any],
 )-> pd.DataFrame:
     """
     Add experiment metadata as columns to the evaluation DataFrame.
@@ -39,7 +39,7 @@ def add_metadata(
 #---------------------------------------------------------------------
 def get_results_output_path (
     metadata  : dict[str, Any]
-) -> str:
+) -> Path:
     """
     Generate the output path for the experiment results.
 
@@ -55,16 +55,13 @@ def get_results_output_path (
     # -------------------------------------------------
     # Ensure the output directory exists
     # -------------------------------------------------
-    output_dir = RAGAS_RESULTS_PATH
-    os.makedirs(output_dir, exist_ok=True)
+    output_dir = RAGAS_RESULTS_PATH 
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # -------------------------------------------------
     # Build the output file path
     # -------------------------------------------------
-    return os.path.join(
-        output_dir,
-        f"{metadata['experiment']}.json",
-    )
+    return output_dir / f"{metadata['experiment']}.json"
 
 #---------------------------------------------------------------------Summary
 def save_summary_csv(
@@ -75,7 +72,7 @@ def save_summary_csv(
     """
     Save the experiment summary to the master summary CSV.
 
-    If the summary file already exists, the new experiment is appended.
+    If the master experiment summary CSV already exists, the new experiment is appended.
     Otherwise, a new summary file is created.
 
     Args:
@@ -91,13 +88,13 @@ def save_summary_csv(
         **summary,
     }
      
-    summary_path = os.path.join(EVALUATION_PATH, "experiment_summary.csv")
+    summary_path = Path(EVALUATION_PATH) / "experiment_summary.csv"
     summary_df = pd.DataFrame([summary_row])
     
     # -------------------------------------------------
     # Append to the existing summary file if available
     # -------------------------------------------------
-    if os.path.exists(summary_path):
+    if summary_path.exists:
 
         existing_df = pd.read_csv(summary_path)
 
@@ -109,14 +106,20 @@ def save_summary_csv(
     # -------------------------------------------------
     # Save the updated experiment summary
     # -------------------------------------------------
+   
+    logger.info("Saving experiment summary to '%s'.", summary_path)
+
     summary_df.to_csv(
         summary_path, 
         index=False,
     )
+    
+    logger.info("Saving experiment summary to '%s'.", summary_path)
+    logger.info("Experiment summary saved successfully.")
 
 #-------------------------------------------------------------JSON
 def save_json_results(
-    output_path: str,
+    output_path: Path,
     metadata: dict[str, Any],
     summary: dict[str, Any],
     test_data: list[dict[str, Any]],
@@ -165,15 +168,19 @@ def save_json_results(
             indent=4,
             ensure_ascii=False,
         )
-
-    logger.info(f"✅ JSON Results saved to {output_path}")
+    logger.info(
+        "JSON results saved successfully to '%s'. "
+        "Saved %d successful results.",
+        output_path,
+        len(pipeline_results),
+    )
 
 #-------------------------------------------------------------------
 def save_results(
     metadata: dict[str, Any],
-    summary: dict[str,Any],
+    summary: dict[str, Any],
     test_data: list[dict[str, Any]],
-    pipeline_results: list[PipelineComponents],
+    pipeline_results: list[PipelineResults],
 ) -> None:
 
     """

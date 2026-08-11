@@ -3,6 +3,7 @@ from typing import Any
 from langchain_openai import ChatOpenAI
 from langchain_community.vectorstores import FAISS
 from langchain_core.retrievers import BaseRetriever
+from langchain_core.language_models import BaseChatModel
 
 """
 Shared dataclasses used throughout the RAG application and
@@ -59,7 +60,7 @@ class PipelineComponents:
 
 @dataclass
 class EvaluationComponents:
-    judge_llm: ChatOpenAI
+    judge_llm: BaseChatModel
     ragas_llm: object
     ragas_embeddings: object
    

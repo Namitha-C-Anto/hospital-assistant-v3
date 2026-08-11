@@ -19,13 +19,21 @@ from rag.initializer import (
 from utils.logger import logger
 from utils.experiment import create_experiment_metadata
 
-def main():
+def main() -> None:
 
-    """Run the complete RAG evaluation pipeline."""
+    """
+    Run the complete RAG evaluation workflow.
 
-    logger.info("Starting RAG evaluation...")
+    This includes RAG initialization, test-question processing,
+    RAGAS evaluation, metric attachment, summary generation,
+    result display, and persistence of experiment outputs.
+    """
 
-    # Initialize
+    logger.info("Starting RAG evaluation.")
+
+    # -------------------------------------------------
+    # Initialize RAG and RAGAS components
+    # -------------------------------------------------
     rag_components = initialize_rag()
     ragas_components = initialize_ragas()
     

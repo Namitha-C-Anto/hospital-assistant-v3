@@ -4,7 +4,7 @@ from rag.models import PipelineResults
 def build_latency_summary(
     pipeline_results: list[PipelineResults], 
     num_questions: int
-)-> dict:
+)-> dict[str, int | float]:
     """
     Calculate average latency metrics across all pipeline executions.
 
@@ -57,7 +57,7 @@ def build_latency_summary(
 def build_token_summary(
     pipeline_results: list[PipelineResults], 
     num_questions: int
-)-> dict:
+)-> dict[str, int | float]:
     
     """
     Calculate average tokens across all pipeline executions.
@@ -99,7 +99,7 @@ def build_token_summary(
 def build_chunk_summary(
     pipeline_results: list[PipelineResults], 
     num_questions: int
-)-> dict:
+)-> dict[str, int | float]:
     """
     Calculate average chunks retrieved across all pipeline executions.
 
@@ -130,7 +130,7 @@ def build_chunk_summary(
 
 def build_ragas_summary(
     df: pd.DataFrame
-) -> dict:
+) -> dict[str: int | float]:
     """
     Calculate the average RAGAS metric scores across all evaluated questions.
 
@@ -166,7 +166,7 @@ def build_summary(
     pipeline_results: list[PipelineResults], 
     ragas_time: float, 
     df: pd.DataFrame, 
-) -> dict:
+) -> dict[str, int | float]:
     
     """
     Build a summary of the RAG pipeline and RAGAS evaluation results.

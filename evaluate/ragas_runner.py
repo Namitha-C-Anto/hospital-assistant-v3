@@ -17,22 +17,43 @@ from ragas.metrics import (
     ContextRecall
 )
 
+# -------------------------------------------------------------------------------
+def get_contexts(result: PipelineResults) -> list[str]:
+    """Return the document contents to use as RAGAS contexts."""
+
+    documents = (
+        result.retrieval.reranked_documents
+        if USE_RERANKER
+        else result.retrieval.retrieved_documents
+    )
+
+    return [document.content for document in documents]
+# -------------------------------------------------------------------------------
+
 def build_ragas_dataset(
     pipeline_results: list[PipelineResults]
 )->Dataset:
-    """
-    Build a Hugging Face Dataset in the format required by RAGAS.
 
-    The dataset is constructed from the outputs of the RAG pipeline,
-    including the generated answers, retrieved contexts, and reference
-    answers. Depending on the configuration, either the reranked
-    documents or the original retrieved documents are used as contexts.
+    """
+    Build a RAGAS-compatible Hugging Face Dataset from pipeline results.
+
+    The function transforms the structured results produced by the RAG
+    pipeline into the column format expected by RAGAS. It includes the
+    original user questions, generated responses, retrieved document
+    contexts, and reference answers.
+
+    When reranking is enabled, the reranked documents are used as the
+    retrieved contexts. Otherwise, the initially retrieved documents
+    are used.
 
     Args:
-        pipeline_results: Results produced by the RAG pipeline.
+        pipeline_results: Successfully processed RAG pipeline results
+            containing generated answers, retrieved documents, and
+            reference answers.
 
     Returns:
-        Dataset formatted for RAGAS evaluation.
+        A Hugging Face Dataset containing the data required for RAGAS
+        evaluation.
     """
 
     # -------------------------------------------------
@@ -41,30 +62,23 @@ def build_ragas_dataset(
     ragas_dataset = Dataset.from_dict(
         {
             "user_input": [
-                x.question
-                for x in pipeline_results
+                result.question
+                for result in pipeline_results
             ],
 
             "response": [
-                x.answer
-                for x in pipeline_results
+                result.answer
+                for result in pipeline_results
             ],
 
             "retrieved_contexts": [
-                [
-                    chunk.content
-                    for chunk in (
-                        x.retrieval.reranked_documents
-                        if USE_RERANKER
-                        else x.retrieval.retrieved_documents
-                    )
-                ]
-                for x in pipeline_results
+                get_contexts(result)
+                for result in pipeline_results
             ],
 
             "reference": [
-                x.reference
-                for x in pipeline_results
+                result.reference
+                for result in pipeline_results
             ],
         }
     )
@@ -74,15 +88,22 @@ def build_ragas_dataset(
 def create_ragas_metrics(
     ragas_components: EvaluationComponents,
 ) -> list:
-    
+
     """
     Create and configure the RAGAS metrics used for evaluation.
 
+    The metrics evaluate different aspects of the RAG pipeline:
+    faithfulness checks whether the generated answer is supported by
+    the retrieved context, response relevancy measures how relevant
+    the answer is to the user's question, and context precision and
+    recall evaluate the quality of the retrieved context.
+
     Args:
-        ragas_components: Initialized RAGAS LLM and embedding components.
+        ragas_components: Initialized RAGAS LLM and embedding components
+            used by the evaluation metrics.
 
     Returns:
-        List of configured RAGAS metric objects.
+        A list containing the configured RAGAS metric objects.
     """
 
     return [
@@ -129,7 +150,7 @@ def run_ragas_evaluation(
     if not pipeline_results:
         raise RuntimeError("No successful test cases were collected.")
 
-    logger.info("Running RAGAS evaluation...")
+    logger.info("Running RAGAS evaluation.")
 
     # -------------------------------------------------
     # Build the evaluation dataset
@@ -155,41 +176,45 @@ def run_ragas_evaluation(
         ragas_time = round(time.perf_counter() - ragas_start, 4)
 
     except Exception:
-        logger.exception("RAGAS evaluation failed") 
+        logger.exception("RAGAS evaluation failed.") 
         raise
 
-    
-    logger.info("========== RAGAS SCORES ==========")
-    logger.info(ragas_results)
+    logger.info("RAGAS evaluation completed in %.4f seconds.", ragas_time)
+    logger.info("RAGAS scores: %s", ragas_results)
  
     return ragas_results, ragas_time
 
 #----------------------------------------------------------------------
 def attach_metrics_to_pipeline_results(
-    ragas_results, 
+    ragas_results: Any, 
     pipeline_results: list[PipelineResults]
     )-> pd.DataFrame:
     
     """
-    Attach RAGAS metric scores to each pipeline result.
+    Attach RAGAS metric scores to the corresponding pipeline results.
 
-    The RAGAS evaluation returns a table containing metric scores for
-    every evaluated question. This function maps those scores back to
-    their corresponding PipelineResults objects so that all pipeline
-    outputs and evaluation metrics are stored together.
+    The RAGAS evaluation results are first converted into a pandas
+    DataFrame. The metric scores for each evaluated question are then
+    mapped back to the corresponding PipelineResults object and stored
+    in its metrics field.
 
     Args:
-        ragas_results: Results returned by RAGAS.
-        pipeline_results: Pipeline results to enrich with evaluation metrics.
+        ragas_results: Results returned by the RAGAS evaluation.
+        pipeline_results: Pipeline results corresponding to the
+            evaluated test questions.
 
     Returns:
-        DataFrame containing the RAGAS evaluation scores.
+        A pandas DataFrame containing the RAGAS evaluation results.
     """
 
     # Convert RAGAS results into a pandas DataFrame.
     df = ragas_results.to_pandas()
 
     # Attach metric scores to each PipelineResults object.
+    
+    # Take each PipelineResults object and pair it with the corresponding row from the RAGAS DataFrame. 
+    # Ignore the DataFrame index, and give the row itself.
+
     for result, (_, row) in zip(pipeline_results, df.iterrows()):
         result.metrics = Metrics(
             faithfulness=row["faithfulness"],

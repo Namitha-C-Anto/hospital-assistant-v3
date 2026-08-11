@@ -1,51 +1,55 @@
 from utils.logger import logger
+from rag.models import RetrievalResult
+import pandas as pd
 
 def log_pipeline_stats(
-    question,
-    retrieval_time,
-    reranker_time,
-    generation_time,
-    pipeline_time,
-):
+    question: str,
+    retrieval_time: float,
+    reranker_time: float,
+    generation_time: float,
+    pipeline_time: float,
+) -> None:
+     
     logger.info(
-        f"{question} | "
-        f"Retrieval={retrieval_time}s | "
-        f"Reranker={reranker_time}s | "
-        f"Generation={generation_time}s | "
-        f"Pipeline={pipeline_time}s"
-    )
+        "Question: %s; Retrieval time = %.4f s; Reranker time = %.4f s; Generation time = %.4f s; Pipeline time = %.4f s.",
+        question,
+        retrieval_time,
+        reranker_time,
+        generation_time,
+        pipeline_time,
+        )
 
 #-------------------------------------------------------------
 def log_debug_info(
-    question,
-    answer,
-    reference,
-    context_text,
-    retrieval_result,
-):
+    question:str,
+    answer:str,
+    reference:str,
+    context_text:str,
+    retrieval_result:RetrievalResult,
+) -> None:
+
+    """Log detailed information about a RAG pipeline result."""
+    
     logger.info("=" * 80)
 
-    logger.info("QUESTION")
-    logger.info(question)
+    logger.info("Question: %s", question) 
 
-    logger.info("\nRESPONSE")
-    logger.info(answer)
+    logger.info("Response: %s", answer)
 
-    logger.info("\nREFERENCE")
-    logger.info(reference)
+    logger.info("Reference: %s", reference) 
 
-    logger.info("\nCONTEXT")
-    logger.info(context_text)
+    logger.info("Context: %s", context_text)
 
     logger.info("=" * 80)
 
     for i, ctx in enumerate(retrieval_result.reranked_documents, 1):
-        logger.info(f"\nChunk {i}")
-        logger.info(ctx.metadata)
-        logger.info(ctx.content)
+        logger.info("Chunk %d", i)
+        logger.info("Metadata: %s", ctx.metadata)
+        logger.info("Content: %s", ctx.content)
 
 #--------------------------------------------------------------------------
-def log_df_info(df):
+def log_df_info(df: pd.DataFrame) -> None:
+
     columns = [
         "user_input",
         "response",
@@ -62,7 +66,7 @@ def log_df_info(df):
     logger.info(df[available_columns].to_string(index=False))
 
 #------------------------------------------------------------------------
-def log_avg_scores(summary):
+def log_avg_scores(summary: dict[str, float]) -> None:
     logger.info("\n========== AVERAGE SCORES ==========")
     
     for metric, score in summary.items():

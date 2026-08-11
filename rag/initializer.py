@@ -1,13 +1,18 @@
-from langchain_openai import ChatOpenAI
 from langchain_huggingface import HuggingFaceEmbeddings
 
-from config import JUDGE_MODEL, OPENAI_API_KEY, EMBEDDING_MODEL, LLM_MODEL
+from config import (
+    JUDGE_PROVIDER, 
+    JUDGE_MODEL, 
+    JUDGE_API_KEY, 
+    EMBEDDING_MODEL,)
+
 from rag.vectorstore import load_vectorstore
 from rag.retriever import create_retriever
 from rag.models import PipelineComponents, EvaluationComponents
 from ragas.embeddings import LangchainEmbeddingsWrapper
 from ragas.llms import LangchainLLMWrapper 
 from utils.logger import logger
+from llm.llm import get_llm
 
 def initialize_rag() -> PipelineComponents:
     """
@@ -35,13 +40,13 @@ def initialize_rag() -> PipelineComponents:
         faiss_retriever = retriever["faiss"]
         bm25_retriever = retriever["bm25"]
 
-        # -------------------------------------------------
-        # 2. Initialize the application LLM used for answer generation
-        # -------------------------------------------------
-        app_llm = ChatOpenAI(
-            model=LLM_MODEL,
-            api_key=OPENAI_API_KEY,
-            )
+        # # -------------------------------------------------
+        # # 2. Initialize the application LLM used for answer generation
+        # # -------------------------------------------------
+        # app_llm = ChatOpenAI(
+        #     model=LLM_MODEL,
+        #     api_key=OPENAI_API_KEY,
+        #     )
 
         # -------------------------------------------------
         # 3. Return all initialized components
@@ -75,15 +80,28 @@ def initialize_ragas() -> EvaluationComponents:
     # -------------------------------------------------
     # 1. Initialize LLM used as the RAGAS evaluation judge
     # -------------------------------------------------
-    judge_llm = ChatOpenAI(
+    
+    logger.info("Initializing RAGAS components.")
+
+    logger.info(
+        "Initializing RAGAS judge: provider = '%s', model = '%s', api_key_provided = '%s'.",
+        JUDGE_PROVIDER,
+        JUDGE_MODEL,
+        bool(JUDGE_API_KEY)
+        )
+
+    judge_llm = get_llm(
+        provider= JUDGE_PROVIDER,
         model=JUDGE_MODEL,
-        api_key=OPENAI_API_KEY,
+        api_key=JUDGE_API_KEY,
     )
 
     # -------------------------------------------------
     # 2. Initialize embedding model for RAGAS metrics
     # -------------------------------------------------
     ragas_llm = LangchainLLMWrapper(judge_llm) 
+
+    logger.info("Initializing embeddings: model = '%s'", EMBEDDING_MODEL)
 
     hf_embeddings = HuggingFaceEmbeddings(
         model_name=EMBEDDING_MODEL
@@ -93,6 +111,7 @@ def initialize_ragas() -> EvaluationComponents:
         hf_embeddings
     )
 
+    logger.info("RAGAS evaluation components initialized successfully.")
     # -------------------------------------------------
     # 3. Return all initialized components
     # -------------------------------------------------

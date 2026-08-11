@@ -40,8 +40,7 @@ def create_experiment_metadata() -> dict[str, Any]:
         f"{RETRIEVAL_MODE}_{RUN_DATE}_"
         f"{'reranker' if USE_RERANKER else 'no_reranker'}"
     )
-    logger.info(f"Experiment: {experiment_name}")
-
+    logger.info("Experiment: %s", experiment_name)
     # -------------------------------------------------
     # Record the configuration used for this experiment
     # -------------------------------------------------

@@ -1,14 +1,13 @@
-import streamlit as st
 from rag.models import PipelineComponents, RagPipelineResult
 from rag.retrieval import run_retrieval_pipeline
 from rag.generation import generate_answer
-from llm.llm import get_llm
 from utils.logger import logger
-from config import LLM_PROVIDER, LLM_MODEL
+from langchain_core.language_models import BaseChatModel
 
 def run_rag_pipeline(
     question: str,
     rag_components: PipelineComponents,
+    app_llm: BaseChatModel,
     chat_history: str = "",
 ) -> RagPipelineResult:
 
@@ -44,31 +43,6 @@ def run_rag_pipeline(
         document.content
         for document in retrieval_result.reranked_documents
         )
-    
-    # -------------------------------------------------
-    # 2. Create the selected LLM
-    # -------------------------------------------------        
-    
-    logger.info(
-        "LLM settings: provider=%s, model=%s, api_key_provided=%s",
-        st.session_state.get("provider", LLM_PROVIDER),
-        st.session_state.get("model", LLM_MODEL),
-        bool(st.session_state.get("api_key")),
-    )
-
-    try:
-        app_llm = get_llm(
-            provider=st.session_state.get("provider", LLM_PROVIDER),
-            model=st.session_state.get("model", LLM_MODEL),
-            api_key=st.session_state.get("api_key"),
-        )
-    except Exception:
-        logger.exception("Failed to initialize selected LLM.")
-        st.error(
-            "Unable to initialize the selected LLM. "
-            "Please check the provider, model, and API key."
-        )
-        st.stop()
 
     # -------------------------------------------------
     # 3. Generate answer

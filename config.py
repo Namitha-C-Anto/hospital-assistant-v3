@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from datetime import datetime
+from pathlib import Path
 
 # --------------------------------------------------
 # Load Environment Variables
@@ -18,18 +19,18 @@ LOG_FORMAT = os.getenv("LOG_FORMAT", "%(asctime)s | %(levelname)s | %(name)s | %
 # Project Paths
 # --------------------------------------------------
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = Path(__file__).resolve().parent
 DATASET = os.getenv("DATASET", "dataset_v1")
 
-DOCS_PATH = os.path.join(BASE_DIR, "docs", DATASET)
-DB_PATH = os.path.join(BASE_DIR, "db", "faiss_index")
-CHUNKS_PATH = os.path.join(BASE_DIR, "db", "chunks")
+DOCS_PATH = BASE_DIR / "docs" / DATASET
+DB_PATH = BASE_DIR / "db" / "faiss_index"
+CHUNKS_PATH = BASE_DIR / "db" / "chunks"
 
-EVALUATION_PATH = os.path.join(BASE_DIR, "evaluate", "evaluation_results")
-RAGAS_RESULTS_PATH = os.path.join(EVALUATION_PATH, "ragas_results", DATASET)
-COMPARISON_PATH = os.path.join(EVALUATION_PATH, "comparisons")
-REPORT_PATH = os.path.join(EVALUATION_PATH, "reports")
-DATASET_PATH = os.path.join(EVALUATION_PATH, "datasets")
+EVALUATION_PATH = BASE_DIR / "evaluate" / "evaluation_results"
+RAGAS_RESULTS_PATH = EVALUATION_PATH / "ragas_results" / DATASET
+COMPARISON_PATH = EVALUATION_PATH / "comparisons"
+REPORT_PATH = EVALUATION_PATH / "reports"
+DATASET_PATH = EVALUATION_PATH / "datasets"
 
 # --------------------------------------------------
 # Embedding Model
@@ -87,15 +88,21 @@ DEBUG = os.getenv(
 # --------------------------------------------------
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "groq")
 LLM_MODEL = os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+LLM_API_KEY = os.getenv("GROQ_API_KEY")
 TEMPERATURE = float(os.getenv("TEMPERATURE", 0.2))
 # --------------------------------------------------
 # Evaluation LLM
 # --------------------------------------------------
-
+JUDGE_PROVIDER = os.getenv(
+    "JUDGE_PROVIDER",
+    "groq"
+)
 JUDGE_MODEL = os.getenv(
     "JUDGE_MODEL",
     LLM_MODEL
 )
+JUDGE_API_KEY = os.getenv("GROQ_API_KEY")
+
 # --------------------------------------------------
 # Streamlit Application
 # --------------------------------------------------
