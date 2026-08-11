@@ -1,11 +1,33 @@
 import uuid
 from typing import Any
-
-import streamlit as st  
+import streamlit as st   
 
 def list_chats():
     """Return all chat sessions."""
     return st.session_state.chat_sessions.items()
+
+# ------------------------------------------------------------------------------------------  
+def create_chat_session() -> str:
+    """
+    Create a new chat session and set it as the active chat.
+
+    The new chat is initialized with an empty title and
+    an empty message list.
+
+    Returns:
+        str: Unique identifier of the newly created chat.
+    """
+
+    chat_id = str(uuid.uuid4()) 
+
+    st.session_state.chat_sessions[chat_id] = {
+        "title": "",
+        "messages": [],
+    }
+
+    st.session_state.current_chat = chat_id
+
+    return chat_id
 
 #-------------------------------------------------------------
 
@@ -26,20 +48,6 @@ def switch_chat(chat_id: str | None) -> None:
 
     # Clear sources when switching chats
     st.session_state.pop("last_pipeline_result", None)
-#-------------------------------------------------------------
-def create_chat_session() -> str:
-    chat_id = str(uuid.uuid4())
-
-    count = len(st.session_state.chat_sessions) + 1
-
-    st.session_state.chat_sessions[chat_id] = {
-        "title": "",
-        "messages": [],
-    }
-
-    st.session_state.current_chat = chat_id
-
-    return chat_id
 #-------------------------------------------------------------
 
 def rename_chat(question: str) -> None:
@@ -67,7 +75,7 @@ def get_chat_history() -> list[dict[str, Any]]:
 
     current = st.session_state.current_chat
 
-    if current is None:
+    if current == None:
         return []
 
     return st.session_state.chat_sessions[current]["messages"]

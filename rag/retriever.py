@@ -2,6 +2,8 @@ from typing import Optional
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
 from langchain_community.retrievers import BM25Retriever
+from langchain_community.vectorstores import FAISS
+from utils.logger import logger
 
 from config import (
     SEARCH_TYPE,
@@ -16,8 +18,9 @@ from rag.rrf import reciprocal_rank_fusion
  
 
 def create_retriever(
-    vectorstore,
-) -> dict[str, Optional[BaseRetriever]]:
+    vectorstore: FAISS,
+) -> dict[str, BaseRetriever | None]:
+
     """
     Create retrievers based on the configured retrieval mode.
 
@@ -26,6 +29,8 @@ def create_retriever(
             - "faiss": FAISS retriever
             - "bm25": BM25 retriever or None
     """
+
+    logger.info("Creating retriever using '%s'.", RETRIEVAL_MODE)
 
     if RETRIEVAL_MODE not in {"faiss", "hybrid"}:
         raise ValueError(f"Unknown retrieval mode: {RETRIEVAL_MODE}")
@@ -57,8 +62,9 @@ def create_retriever(
 def retrieve_documents(
     question: str,
     faiss_retriever: BaseRetriever,
-    bm25_retriever: Optional[BaseRetriever] = None,
+    bm25_retriever: BaseRetriever | None,
 ) -> list[Document]:
+
     """
     Retrieve documents using the configured retrieval mode.
 

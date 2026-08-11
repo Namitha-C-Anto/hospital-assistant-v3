@@ -1,6 +1,7 @@
 import time
 
 from langchain_core.documents import Document
+from langchain_core.retrievers import BaseRetriever
 
 from config import USE_RERANKER, TOP_K
 from rag.models import RetrievalResult, DocumentInfo
@@ -31,6 +32,7 @@ def deduplicate_documents(
 
     return unique_documents
 
+# ----------------------------------------------------------------------
 def build_retrieval_result(
     retrieved_documents: list[Document], 
     reranked_documents: list[Document]
@@ -57,10 +59,11 @@ def build_retrieval_result(
             ],
         )
 
+# -------------------------------------------------------------------------------
 def run_retrieval_pipeline(
     question: str,
-    faiss_retriever,
-    bm25_retriever
+    faiss_retriever: BaseRetriever,
+    bm25_retriever: BaseRetriever | None
 ) -> tuple[RetrievalResult, float, float]:
 
     """

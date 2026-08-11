@@ -74,16 +74,34 @@ def save_vectorstore(
         raise
 
 #---------------------------------------------------------------------------------------
-def load_vectorstore(path: str = DB_PATH) -> FAISS:
+#Load already created vector store
+#---------------------------------------------------------------------------------------
+def load_vectorstore(path: str | Path = DB_PATH) -> FAISS:
     """
-    Load and return the FAISS vector database from disk.
+    Load the FAISS vector store from disk.
+
+    Args:
+        path: Directory containing the saved FAISS index.
+
+    Returns:
+        Loaded FAISS vector store.
     """
 
-    logger.info(f"Loading vector database from '{path}'.")
+    try:
+        logger.info("Loading vector store from '%s'.", path)
 
-    embeddings = get_embeddings()
-    return FAISS.load_local(
-        path, 
-        embeddings, 
-        allow_dangerous_deserialization=True
-    )
+        embeddings = get_embeddings()
+
+        vectorstore = FAISS.load_local(
+            folder_path = path, 
+            embeddings = embeddings, 
+            allow_dangerous_deserialization = True,
+        )
+
+        logger.info("Vector store loaded successfully.")
+
+        return vectorstore
+        
+    except Exception:
+        logger.exception("Failed to load vector store.")
+        raise

@@ -3,6 +3,8 @@ from rag.models import PipelineComponents, RagPipelineResult
 from rag.retrieval import run_retrieval_pipeline
 from rag.generation import generate_answer
 from llm.llm import get_llm
+from utils.logger import logger
+from config import LLM_PROVIDER, LLM_MODEL
 
 def run_rag_pipeline(
     question: str,
@@ -45,14 +47,28 @@ def run_rag_pipeline(
     
     # -------------------------------------------------
     # 2. Create the selected LLM
-    # -------------------------------------------------
-    app_llm = get_llm(
-        provider=st.session_state.get("provider", "openai"),
-        model=st.session_state.get("model"),
-        api_key=st.session_state.get("api_key"),
+    # -------------------------------------------------        
+    
+    logger.info(
+        "LLM settings: provider=%s, model=%s, api_key_provided=%s",
+        st.session_state.get("provider", LLM_PROVIDER),
+        st.session_state.get("model", LLM_MODEL),
+        bool(st.session_state.get("api_key")),
     )
-    if app_llm is None:
-        app_llm = rag_components.app_llm
+
+    try:
+        app_llm = get_llm(
+            provider=st.session_state.get("provider", LLM_PROVIDER),
+            model=st.session_state.get("model", LLM_MODEL),
+            api_key=st.session_state.get("api_key"),
+        )
+    except Exception:
+        logger.exception("Failed to initialize selected LLM.")
+        st.error(
+            "Unable to initialize the selected LLM. "
+            "Please check the provider, model, and API key."
+        )
+        st.stop()
 
     # -------------------------------------------------
     # 3. Generate answer
@@ -62,6 +78,15 @@ def run_rag_pipeline(
         context_text,
         app_llm,
         chat_history,
+    ) 
+ 
+    logger.info(
+        "RAG pipeline completed: retrieval=%.4fs, reranker=%.4fs, "
+        "prompt=%.4fs, generation=%.4fs",
+        retrieval_time,
+        reranker_time,
+        prompt_time,
+        generation_time,
     )
 
     return RagPipelineResult(

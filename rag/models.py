@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import Any
 from langchain_openai import ChatOpenAI
+from langchain_community.vectorstores import FAISS
+from langchain_core.retrievers import BaseRetriever
 
 """
 Shared dataclasses used throughout the RAG application and
@@ -50,11 +52,10 @@ class Metrics:
  
 @dataclass
 class PipelineComponents:
-    vectorstore: object
-    retriever: dict
-    faiss_retriever: object
-    bm25_retriever: object
-    app_llm: ChatOpenAI
+    vectorstore: FAISS
+    retriever: dict[str, BaseRetriever | None]
+    faiss_retriever: BaseRetriever
+    bm25_retriever: BaseRetriever | None 
 
 @dataclass
 class EvaluationComponents:

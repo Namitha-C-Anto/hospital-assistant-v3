@@ -1,5 +1,6 @@
-def render_example_questions():
-    # Example questions
+def render_example_questions() -> list[str]:
+    """Return example questions for the user"""
+
     return [
         "What are the objectives of admission and discharge policy?",
         "How does the emergency admission process work?",

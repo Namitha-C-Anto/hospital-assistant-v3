@@ -1,12 +1,6 @@
-import os
+from pathlib import Path
 import streamlit as st
-from config import (
-    DB_PATH, 
-    APP_TITLE, 
-    WELCOME_TITLE,
-    WELCOME_SUBTITLE,
-    WELCOME_CAPTION,)
-from ui import example_questions
+from config import DB_PATH  
 from utils.logger import logger     
 from rag.pipeline import run_rag_pipeline  
 from rag.initializer import initialize_rag 
@@ -16,42 +10,48 @@ from memory.chat_manager import (
     rename_chat,
     get_chat_history, 
     format_chat_history, 
-    save_chat,
-    switch_chat,
-    list_chats,)
+    save_chat,)
 from rag.builder import build_vector_database
 from rag.models import PipelineComponents
 from ui.styles import load_css
 from ui.sidebar import render_sidebar
 from ui.welcome import render_welcome
 from ui.example_questions import render_example_questions
-from ui.sources import render_sources
-from llm.llm import get_llm
+from ui.sources import render_sources 
 
 load_css()
-# -------------------------------------------------
+# --------------------------------------------------------------
 # Load and cache initialized RAG components.
 # This prevents reloading the vector database and
 # models on every Streamlit rerun.
-# -------------------------------------------------
+# ---------------------------------------------------------------
 @st.cache_resource
 def load_rag_components() -> PipelineComponents:
-    logger.info("Initializing RAG components...")  
-    return initialize_rag()
+    """
+    Initialize and cache RAG pipeline components.
+    """
+    try: 
+        return initialize_rag() 
+
+    except Exception:
+        logger.exception("Failed to load RAG components.")
+        raise
+
+#------------------------------------------------------------------
 
 def main() -> None:
     """
     Run the Streamlit Hospital Policy RAG application.
     """
     
-    #Step 1: Initialize the session state
+    # Step 1: Initialize the session state
     initialize_chat_sessions()
         
     # -------------------------------------------------
     # Create the vector database on first launch if it
     # does not already exist.
     # -------------------------------------------------
-    if not os.path.exists(DB_PATH):
+    if not Path(DB_PATH).exists():
         build_vector_database()
         
     # -------------------------------------------------
@@ -95,16 +95,16 @@ def main() -> None:
         example_questions = render_example_questions()
         columns = st.columns(2)
 
-        for i, q in enumerate(example_questions):
+        for i, question in enumerate(example_questions):
             with columns[i % 2]:
-                if st.button(q, use_container_width=True):
-                    st.session_state.selected_question = q
+                if st.button(question, use_container_width=True):
+                    st.session_state.selected_question = question
 
     # -------------------------------------------------
     # Accept a new user question.
     # -------------------------------------------------
     question = st.chat_input(
-        "Ask your hospital-related question"
+        "Ask your hospital-related question."
     )
 
     # If an example question was clicked, use it instead
@@ -113,7 +113,7 @@ def main() -> None:
 
     if question:
          
-        logger.info(f"Processing question: {question}")
+        logger.info("Processing question: %s.",question)
 
         # -------------------------------------------------
         # Format conversation history and execute the
@@ -128,13 +128,40 @@ def main() -> None:
             st.write(question)
         
         with st.chat_message("assistant"):
-            with st.spinner("Searching and generating answer..."):
+            try:
+                with st.spinner("Searching and generating answer..."):
+                    
+                    pipeline_result = run_rag_pipeline(
+                        question,
+                        rag_components,
+                        chat_history=history_text,
+                    )
                 
-                pipeline_result = run_rag_pipeline(
-                    question,
-                    rag_components,
-                    chat_history=history_text,
-                )
+            except Exception as e:
+                logger.exception("RAG Pipeline failed.")
+
+                error_message = str(e).lower()
+
+                if "rate limit" in error_message or "429" in error_message:
+                    st.error(
+                        "The LLM provider has reached its rate limit. "
+                        "Please try again later or switch to another provider."
+                    )
+
+                elif "api key" in error_message or "authentication" in error_message:
+                    st.error(
+                        "The LLM API key is invalid or missing. "
+                        "Please check your API key in Settings."
+                    )
+
+                else:
+                    st.error(
+                        "The LLM request failed. "
+                        "Please check your settings and try again."
+                    )
+
+                st.stop()
+                
             st.write(pipeline_result.answer)
             st.session_state.last_pipeline_result = pipeline_result
     

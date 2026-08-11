@@ -85,8 +85,8 @@ DEBUG = os.getenv(
 # --------------------------------------------------
 # Large Language Model
 # --------------------------------------------------
-
-LLM_MODEL = os.getenv("LLM_MODEL", "gpt-4o-mini")
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "groq")
+LLM_MODEL = os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
 TEMPERATURE = float(os.getenv("TEMPERATURE", 0.2))
 # --------------------------------------------------
 # Evaluation LLM

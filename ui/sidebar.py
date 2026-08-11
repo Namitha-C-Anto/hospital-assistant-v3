@@ -1,5 +1,9 @@
 import streamlit as st
-from config import APP_TITLE
+from config import (
+    APP_TITLE,
+    GROQ_API_KEY,
+    OPENAI_API_KEY,
+)
 from memory.chat_manager import (
     switch_chat,
     list_chats,
@@ -21,11 +25,9 @@ def render_sidebar() -> None:
         switch_chat(None)
         st.rerun()
 
-
-
     with st.expander("Recent", expanded=True):
 
-        chats = list(list_chats())
+        chats = list_chats()
 
         if not chats:
             st.caption("No conversations yet.")
@@ -80,7 +82,7 @@ def render_sidebar() -> None:
 
         provider = st.selectbox(
             "LLM Provider",
-            ["OpenAI", "Groq"],
+            ["Groq", "OpenAI"],
             key="llm_provider",
         )
         st.session_state["provider"] = provider.lower()
@@ -97,24 +99,26 @@ def render_sidebar() -> None:
 
             api_key = st.text_input(
                 "OpenAI API Key",
+                value=OPENAI_API_KEY,
                 type="password",
                 key="openai_api_key",
                 placeholder="sk-...",
             )
 
-        else:
+        elif provider == "Groq":
             model = st.selectbox(
                 "Model",
                 [
                     "llama-3.3-70b-versatile",
-                    "meta-llama/llama-4-scout-17b-16e-instruct",
-                    "qwen/qwen3-32b",
+                    "llama-3.1-8b-instant",
+                    "qwen/qwen3.6-27b",
                 ],
                 key="llm_model",
             )
 
             api_key = st.text_input(
                 "Groq API Key",
+                value=GROQ_API_KEY,
                 type="password",
                 key="groq_api_key",
                 placeholder="gsk_...",
