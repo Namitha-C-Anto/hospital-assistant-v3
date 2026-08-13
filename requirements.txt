@@ -34,3 +34,6 @@ torchvision==0.20.1
 transformers==4.57.6
 accelerate==1.14.0
 sentence-transformers==5.1.0
+
+uvicorn
+fastapi
