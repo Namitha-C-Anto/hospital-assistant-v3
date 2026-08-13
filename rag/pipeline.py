@@ -4,7 +4,7 @@ from rag.generation import generate_answer
 from utils.logger import logger
 from langchain_core.language_models import BaseChatModel
 
-def run_rag_pipeline(
+async def run_rag_pipeline(
     question: str,
     rag_components: PipelineComponents,
     app_llm: BaseChatModel,
@@ -47,7 +47,7 @@ def run_rag_pipeline(
     # -------------------------------------------------
     # 3. Generate answer
     # -------------------------------------------------
-    answer, usage, prompt_time, generation_time = generate_answer(
+    answer, usage, prompt_time, generation_time = await generate_answer(
         question,
         context_text,
         app_llm,

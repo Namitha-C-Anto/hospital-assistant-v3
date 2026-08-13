@@ -4,7 +4,7 @@ from prompts.prompt_template import prompt
 from utils.logger import logger
 from langchain_core.language_models import BaseChatModel
 
-def generate_answer(
+async def generate_answer(
     question: str,
     context_text: str,
     app_llm: BaseChatModel,
@@ -45,7 +45,7 @@ def generate_answer(
     # -------------------------------------------------
     generation_start = time.perf_counter()
     
-    response = app_llm.invoke(messages)
+    response = await app_llm.ainvoke(messages)
     
     generation_time = round(time.perf_counter() - generation_start,4)
     

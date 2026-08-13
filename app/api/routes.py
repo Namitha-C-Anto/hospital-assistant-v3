@@ -19,13 +19,13 @@ def get_health_status():
     }
 
 @router.post("/chat", response_model=ChatResponse)
-def chat(
+async def chat(
     request:ChatRequest, 
     rag_service: RAGService = Depends(get_rag_service)
     ):
  
     try:
-        answer = rag_service.ask(
+        answer = await rag_service.ask(
             question = request.question, 
             provider = request.provider,
             model = request.model,

@@ -7,7 +7,7 @@ class RAGService:
     def __init__(self):
         self.components = initialize_rag()
 
-    def ask(
+    async def ask(
         self, 
         question:str,
         provider:str,
@@ -21,7 +21,7 @@ class RAGService:
             api_key,
         )
 
-        pipeline_result = run_rag_pipeline(
+        pipeline_result = await run_rag_pipeline(
             question,
             self.components,
             llm,
