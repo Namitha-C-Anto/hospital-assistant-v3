@@ -1,11 +1,14 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Depends, HTTPException
+
+from app.dependencies import get_rag_service
+from app.services.rag_service import RAGService
 
 from app.schemas.chat import (
     ChatRequest,
     ChatResponse,
     HealthResponse,)
 
-
+from utils.logger import logger
 
 router = APIRouter()
 
@@ -16,17 +19,36 @@ def get_health_status():
     }
 
 @router.post("/chat", response_model=ChatResponse)
-def chat(request:ChatRequest, app_request:Request):
+def chat(
+    request:ChatRequest, 
+    rag_service: RAGService = Depends(get_rag_service)
+    ):
+ 
+    try:
+        answer = rag_service.ask(
+            question = request.question, 
+            provider = request.provider,
+            model = request.model,
+            api_key = request.api_key,
+            )
 
-    rag_service = app_request.app.state.rag_service
+        return {
+            "answer" : answer
+        }
+    except ValueError as e:
 
-    answer = rag_service.ask(
-        question = request.question, 
-        provider = request.provider,
-        model = request.model,
-        api_key = request.api_key,
+        logger.warning("Invalid chat request: %s", e)
+
+        raise HTTPException(
+            status_code = 400,
+            detail = str(e)
         )
 
-    return {
-        "answer" : answer
-    }
+    except Exception:
+
+        logger.exception("RAG request failed.")
+
+        raise HTTPException(
+            status_code = 500,
+            detail = "Failed to generate a response."
+        )
