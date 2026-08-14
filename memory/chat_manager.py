@@ -47,7 +47,7 @@ def switch_chat(chat_id: str | None) -> None:
     st.session_state.current_chat = chat_id
 
     # Clear sources when switching chats
-    st.session_state.pop("last_pipeline_result", None)
+    st.session_state.pop("last_retrieval_result", None)
 #-------------------------------------------------------------
 
 def rename_chat(question: str) -> None:
@@ -126,4 +126,4 @@ def delete_chat(chat_id: str) -> None:
             st.session_state.current_chat = None
     
     # Clear sources when switching chats
-    st.session_state.pop("last_pipeline_result", None)
+    st.session_state.pop("last_retrieval_result", None)

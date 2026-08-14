@@ -25,7 +25,7 @@ async def chat(
     ):
  
     try:
-        answer = await rag_service.ask(
+        answer, retrieval_result  = await rag_service.ask(
             question = request.question, 
             provider = request.provider,
             model = request.model,
@@ -34,8 +34,10 @@ async def chat(
             )
 
         return {
-            "answer" : answer
+            "answer": answer,
+            "retrieval_result": retrieval_result,
         }
+
     except ValueError as e:
 
         logger.warning("Invalid chat request: %s", e)

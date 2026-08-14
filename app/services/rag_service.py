@@ -30,4 +30,4 @@ class RAGService:
 
         )
 
-        return pipeline_result.answer
+        return pipeline_result.answer, pipeline_result.retrieval_result

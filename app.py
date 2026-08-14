@@ -49,7 +49,7 @@ def call_chat_api(
 
     response.raise_for_status()
 
-    return response.json()["answer"]
+    return response.json()
 # -------------------------------------------------------------
 
 load_css()
@@ -93,10 +93,10 @@ def main() -> None:
     with st.sidebar:
         render_sidebar()
         
-        # if "last_pipeline_result" in st.session_state:
-        #     render_sources(
-        #         st.session_state.last_pipeline_result
-        #     )
+        if "last_retrieval_result" in st.session_state:
+            render_sources(
+                st.session_state.last_retrieval_result
+            )
     # -------------------------------------------------
     # Load cached RAG components.
     # -------------------------------------------------
@@ -195,13 +195,16 @@ def main() -> None:
                     #     chat_history=history_text,
                     # )
                                     
-                    answer = call_chat_api(
+                    api_result = call_chat_api(
                         question=question,
                         provider=st.session_state.get("provider", LLM_PROVIDER),
                         model=st.session_state.get("model", LLM_MODEL),
                         api_key=st.session_state.get("api_key"),
                         chat_history=history_text
                     )
+
+                    answer = api_result["answer"]
+                    retrieval_result = api_result["retrieval_result"]
 
             except Exception as e:
                 logger.exception("RAG Pipeline failed.")
@@ -231,7 +234,7 @@ def main() -> None:
             # st.write(pipeline_result.answer)
             st.write(answer)
             # st.session_state.last_pipeline_result = pipeline_result
-            st.session_state.last_pipeline_result = None
+            st.session_state.last_retrieval_result = retrieval_result
     
         # Save conversation for future turns.
         # save_chat(question, pipeline_result.answer)
