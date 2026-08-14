@@ -28,8 +28,7 @@ async def chat(
         answer, retrieval_result  = await rag_service.ask(
             question = request.question, 
             provider = request.provider,
-            model = request.model,
-            api_key = request.api_key,
+            model = request.model, 
             chat_history = request.chat_history,
             )
 

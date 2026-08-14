@@ -1,9 +1,5 @@
 import streamlit as st
-from config import (
-    APP_TITLE,
-    GROQ_API_KEY,
-    OPENAI_API_KEY,
-)
+from config import APP_TITLE
 from memory.chat_manager import (
     switch_chat,
     list_chats,
@@ -97,14 +93,6 @@ def render_sidebar() -> None:
                 key="llm_model",
             )
 
-            api_key = st.text_input(
-                "OpenAI API Key",
-                value=OPENAI_API_KEY,
-                type="password",
-                key="openai_api_key",
-                placeholder="sk-...",
-            )
-
         elif provider == "Groq":
             model = st.selectbox(
                 "Model",
@@ -116,13 +104,4 @@ def render_sidebar() -> None:
                 key="llm_model",
             )
 
-            api_key = st.text_input(
-                "Groq API Key",
-                value=GROQ_API_KEY,
-                type="password",
-                key="groq_api_key",
-                placeholder="gsk_...",
-            )
         st.session_state["model"] = model
-        st.session_state["api_key"] = api_key
- 
