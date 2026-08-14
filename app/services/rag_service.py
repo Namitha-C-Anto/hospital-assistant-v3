@@ -13,6 +13,7 @@ class RAGService:
         provider:str,
         model:str,
         api_key:str,
+        chat_history:str,
     ) -> str:
 
         llm = get_llm(
@@ -25,7 +26,7 @@ class RAGService:
             question,
             self.components,
             llm,
-            chat_history = "",
+            chat_history = chat_history,
 
         )
 

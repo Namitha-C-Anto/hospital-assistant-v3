@@ -5,6 +5,7 @@ class ChatRequest(BaseModel):
     provider: str
     model: str
     api_key: str
+    chat_history: str
 
 class ChatResponse(BaseModel):
     answer: str

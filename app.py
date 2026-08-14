@@ -1,3 +1,4 @@
+import requests
 from pathlib import Path
 import streamlit as st
 from config import (
@@ -22,6 +23,34 @@ from ui.sidebar import render_sidebar
 from ui.welcome import render_welcome
 from ui.example_questions import render_example_questions
 from ui.sources import render_sources 
+
+# -------------------------------------------------------------
+FASTAPI_URL = "http://localhost:8000"
+
+def call_chat_api(
+    question: str,
+    provider: str,
+    model: str,
+    api_key: str,
+    chat_history: str,
+) -> str:
+
+    response = requests.post(
+        f"{FASTAPI_URL}/chat",
+        json={
+            "question": question,
+            "provider": provider,
+            "model": model,
+            "api_key": api_key,
+            "chat_history": chat_history,
+        },
+        timeout=300,
+    )
+
+    response.raise_for_status()
+
+    return response.json()["answer"]
+# -------------------------------------------------------------
 
 load_css()
 # --------------------------------------------------------------
@@ -64,10 +93,10 @@ def main() -> None:
     with st.sidebar:
         render_sidebar()
         
-        if "last_pipeline_result" in st.session_state:
-            render_sources(
-                st.session_state.last_pipeline_result
-            )
+        # if "last_pipeline_result" in st.session_state:
+        #     render_sources(
+        #         st.session_state.last_pipeline_result
+        #     )
     # -------------------------------------------------
     # Load cached RAG components.
     # -------------------------------------------------
@@ -159,13 +188,21 @@ def main() -> None:
             try:
                 with st.spinner("Searching and generating answer..."):
                     
-                    pipeline_result = run_rag_pipeline(
-                        question,
-                        rag_components,
-                        app_llm,
-                        chat_history=history_text,
+                    # pipeline_result = run_rag_pipeline(
+                    #     question,
+                    #     rag_components,
+                    #     app_llm,
+                    #     chat_history=history_text,
+                    # )
+                                    
+                    answer = call_chat_api(
+                        question=question,
+                        provider=st.session_state.get("provider", LLM_PROVIDER),
+                        model=st.session_state.get("model", LLM_MODEL),
+                        api_key=st.session_state.get("api_key"),
+                        chat_history=history_text
                     )
-                
+
             except Exception as e:
                 logger.exception("RAG Pipeline failed.")
 
@@ -191,11 +228,14 @@ def main() -> None:
 
                 st.stop()
                 
-            st.write(pipeline_result.answer)
-            st.session_state.last_pipeline_result = pipeline_result
+            # st.write(pipeline_result.answer)
+            st.write(answer)
+            # st.session_state.last_pipeline_result = pipeline_result
+            st.session_state.last_pipeline_result = None
     
         # Save conversation for future turns.
-        save_chat(question, pipeline_result.answer)
+        # save_chat(question, pipeline_result.answer)
+        save_chat(question, answer)
         rename_chat(question)
                   
         st.rerun()

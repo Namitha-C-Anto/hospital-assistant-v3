@@ -30,6 +30,7 @@ async def chat(
             provider = request.provider,
             model = request.model,
             api_key = request.api_key,
+            chat_history = request.chat_history,
             )
 
         return {
