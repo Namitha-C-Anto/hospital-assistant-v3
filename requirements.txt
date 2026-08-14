@@ -37,3 +37,4 @@ sentence-transformers==5.1.0
 
 uvicorn
 fastapi
+pytest
