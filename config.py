@@ -26,6 +26,8 @@ DOCS_PATH = BASE_DIR / "docs" / DATASET
 DB_PATH = BASE_DIR / "db" / "faiss_index"
 CHUNKS_PATH = BASE_DIR / "db" / "chunks"
 
+QDRANT_PATH = BASE_DIR / "db" / "qdrant_data"
+
 EVALUATION_PATH = BASE_DIR / "evaluate" / "evaluation_results"
 RAGAS_RESULTS_PATH = EVALUATION_PATH / "ragas_results" / DATASET
 COMPARISON_PATH = EVALUATION_PATH / "comparisons"

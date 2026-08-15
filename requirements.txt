@@ -39,3 +39,5 @@ uvicorn
 fastapi
 pytest
 requests
+
+qdrant-client
