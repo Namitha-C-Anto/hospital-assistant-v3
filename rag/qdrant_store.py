@@ -136,3 +136,35 @@ def add_documents(
             start,
             start + len(batch) - 1,
         )
+
+def search_qdrant(
+    client: QdrantClient,
+    query: str,
+    embeddings: HuggingFaceEmbeddings,
+    top_k: int = 5,
+) -> list[tuple[Document, float]]:
+    """Search Qdrant using semantic similarity."""
+
+    query_vector = embeddings.embed_query(query)
+
+    results = client.query_points(
+        collection_name=COLLECTION_NAME,
+        query=query_vector,
+        limit=top_k,
+        with_payload=True,
+    ).points
+
+    return [
+        (
+            Document(
+                page_content=result.payload.get("text", ""),
+                metadata={
+                    key: value
+                    for key, value in result.payload.items()
+                    if key != "text"
+                },
+            ),
+            result.score,
+        )
+        for result in results
+    ]
