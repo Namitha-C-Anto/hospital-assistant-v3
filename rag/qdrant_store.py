@@ -1,5 +1,7 @@
 from langchain_core.documents import Document
+from typing import Sequence
 
+from langchain_huggingface import HuggingFaceEmbeddings
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 
@@ -62,12 +64,11 @@ def add_document(
     client: QdrantClient,
     document: Document,
     point_id: int,
+    embeddings: HuggingFaceEmbeddings,
 ) -> None:
 
     """Add a single langchain document to Qdrant."""
-
-    embeddings = get_embeddings()
-
+ 
     vector = embeddings.embed_query(document.page_content)
 
     payload = {
@@ -85,3 +86,53 @@ def add_document(
             )
         ],
     )
+
+def add_documents(
+    client: QdrantClient,
+    documents: Sequence[Document],
+    embeddings: HuggingFaceEmbeddings,
+    batch_size: int = 32,
+) -> None:
+    
+    """Add multiple LangChain documents to Qdrant in batches."""
+
+    for start in range(0, len(documents), batch_size):
+
+        batch = documents[start:start + batch_size]
+
+        texts = [
+            document.page_content
+            for document in batch
+        ]
+
+        vectors = embeddings.embed_documents(texts)
+
+        points = []
+
+        for index, (document, vector) in enumerate(
+            zip(batch, vectors),
+            start=start,
+        ):
+            payload = {
+                "text": document.page_content,
+                **document.metadata,
+            }
+
+            points.append(
+                PointStruct(
+                    id=index,
+                    vector=vector,
+                    payload=payload,
+                )
+            )
+
+        client.upsert(
+            collection_name=COLLECTION_NAME,
+            points=points,
+        )
+
+        logger.info(
+            "Inserted chunks %d-%d into Qdrant.",
+            start,
+            start + len(batch) - 1,
+        )
