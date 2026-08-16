@@ -1,39 +1,38 @@
 from langchain_core.documents import Document
-from rag.qdrant_store import (
-    COLLECTION_NAME,
-    get_qdrant_client,
-    search_qdrant,
-)
+
+from rag.qdrant_retriever import QdrantRetriever
+from rag.qdrant_store import get_qdrant_client
 from rag.embeddings import get_embeddings
 
 
-def test_search_qdrant():
+def test_qdrant_retriever():
 
     client = get_qdrant_client()
     embeddings = get_embeddings()
 
     try:
-        results = search_qdrant(
+        retriever = QdrantRetriever(
             client=client,
-            query="What are the admission guidelines?",
             embeddings=embeddings,
             top_k=5,
         )
 
-        print("\nSearch results:")
+        documents = retriever.invoke(
+            "What are the admission guidelines?"
+        )
 
-        for document, score in results:
-            print("\nScore:", score)
-            print("Source:", document.metadata.get("source"))
+        print("\nRetrieved documents:")
+
+        for document in documents:
+            print("\nSource:", document.metadata.get("source"))
             print("Page:", document.metadata.get("page"))
             print("Text:", document.page_content[:300])
 
-        assert len(results) == 5
+        assert len(documents) == 5
         assert all(
             isinstance(document, Document)
-            for document, score in results
+            for document in documents
         )
-
 
     finally:
         client.close()

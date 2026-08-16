@@ -10,9 +10,6 @@ langchain-groq
 # LLM APIs
 openai==1.109.1
 
-# Vector Store
-faiss-cpu==1.12.0
-
 # Environment Variables
 python-dotenv==1.1.1
 

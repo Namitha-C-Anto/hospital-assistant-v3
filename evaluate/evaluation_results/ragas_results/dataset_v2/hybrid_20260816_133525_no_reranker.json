@@ -1,0 +1,600 @@
+{
+    "version": "1.0",
+    "experiment": {
+        "experiment": "hybrid_20260816_133525_no_reranker",
+        "run_date": "20260816_133525",
+        "dataset": "dataset_v2",
+        "temperature": 1.0,
+        "retrieval_mode": "hybrid",
+        "search_type": "mmr",
+        "embedding_model": "sentence-transformers/all-mpnet-base-v2",
+        "chunk_size": 700,
+        "chunk_overlap": 150,
+        "top_k": 15,
+        "fetch_k": 30,
+        "lambda_mult": 0.4,
+        "use_reranker": false,
+        "reranker_model": null,
+        "reranker_top_n": null,
+        "generation_llm": "llama-3.3-70b-versatile",
+        "judge_llm": "llama-3.3-70b-versatile"
+    },
+    "summary": {
+        "total_questions": 2,
+        "successful_questions": 2,
+        "failed_questions": 0,
+        "ragas_evaluation_seconds": 183.1713,
+        "avg_retrieval_latency": 1.89,
+        "avg_reranker_latency": 0.0,
+        "avg_generation_latency": 0.7379,
+        "avg_pipeline_latency": 2.6287,
+        "avg_prompt_latency": 0.0003,
+        "avg_chunks_retrieved": 15.0,
+        "avg_chunks_after_reranker": 15.0,
+        "total_prompt_tokens": 3849,
+        "total_completion_tokens": 128,
+        "total_tokens": 3977,
+        "avg_prompt_tokens": 1924.5,
+        "avg_completion_tokens": 64.0,
+        "avg_total_tokens": 1988.5,
+        "faithfulness": 0.667,
+        "answer_relevancy": 0.956,
+        "context_precision": 0.779,
+        "context_recall": 1.0
+    },
+    "run_statistics": {
+        "total_questions": 2,
+        "successful_questions": 2,
+        "failed_questions": 0
+    },
+    "results": [
+        {
+            "question": "What are the two types of hospital admissions described in the guidelines?",
+            "answer": "The two types of hospital admissions described in the guidelines are:\n\n1. Emergency admissions: These are unplanned admissions that result from trauma (injury) or acute illness that cannot be treated on an outpatient basis.\n2. Elective admissions: These are planned admissions, where the patient's episode of care is planned before their admission, taking into account the entire \"journey\" up to and after discharge from the hospital.",
+            "reference": "The guidelines describe two types of hospital admissions: elective admissions, which are planned, and emergency admissions, which are unplanned and require urgent care.",
+            "ground_truth": "The guidelines describe two types of hospital admissions: elective admissions, which are planned, and emergency admissions, which are unplanned and require urgent care.",
+            "latency": {
+                "retrieval_seconds": 3.6649,
+                "reranker_seconds": 0.0,
+                "prompt_seconds": 0.0003,
+                "generation_seconds": 1.1759,
+                "pipeline_seconds": 4.8418
+            },
+            "usage": {
+                "prompt_tokens": 1881,
+                "completion_tokens": 85,
+                "total_tokens": 1966
+            },
+            "retrieval": {
+                "retrieved_documents": [
+                    {
+                        "content": "of the patient in the decision making process. 13 This requires an integrated multidisciplinary team approach to care delivery, necessitating the development of care pathways, clinical protocols and standards, which can be audited and evaluated to demonstrate clinical effectiveness /patient outcomes. Emergency Department (ED) admissions Principles for admitting Emergency Department admissions Only emergency patients should be admitted to hospital through the Emergency Department. This may require a subtle shift of emphasis from “semi elective” admission to more rigorous assessment to ensure the appropriateness of hospital admission and to maximise the number of beds available for elective",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 17,
+                            "doc_id": "6dadb8c02fcf1d7809b42f49c22c22e1"
+                        }
+                    },
+                    {
+                        "content": "• Decision support systems enhance consistency of decision making such as nurse led telephone triage can be used to enhance consistency of medical and nursing decision making. (e.g. NHS direct telephone advice service). • There should be regular and influential audit of clinical activity. • The critical role of Health Care Staff should be acknowledged with appropriate support for professional development and influence in decision making at all levels. Elective admissions What are the key principles in planning elective hospital admissions ? A patient’s episode of care should be planned before his/her admission and should take account of the entire “journey” up to and after discharge from",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 19,
+                            "doc_id": "09dcc7cc3ef3895c8db574ee96928dd2"
+                        }
+                    },
+                    {
+                        "content": "at the time of their admission, and to ensure that patients are cared for by staff with the appropriate expertise. What are the key processes for effective elective admissions? The following key requirements have been identified to facilitate effective elective admission practices: • Centralised waiting list management and agreement on the parameters for scheduling theatre lists with clinicians. • Pre-admission assessment should be a standard requirement for all elective admissions to ensure appropriate planning of the entire patient journey. Admissions and Discharge Guidelines - 18",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 19,
+                            "doc_id": "09dcc7cc3ef3895c8db574ee96928dd2"
+                        }
+                    },
+                    {
+                        "content": "What are the Principles Underpinning Best Practice in Hospital Admissions? A number of principles should underpin the development of an effective emergency and elective admissions and discharge planning function. These include: • The provision of patient centred services, which are accessible to the population without compromising safety, quality and clinical standards, to the right people in the right location and at the right time.1 • Patients should be consulted and included in all decisions about their care. • Clinical practice and care should be based on the most up to date evidence. • Co-operation and clinical networking between hospitals and between care groups are essential to",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 10,
+                            "doc_id": "135b2dfc557ab703c449cf87a6c86554"
+                        }
+                    },
+                    {
+                        "content": "one that is not planned and which results from trauma (injury) or acute illness which cannot be treated on an outpatient basis.5 In order to manage the balance between elective and emergency admissions, the factors below have been identified as effective in improving the management of admissions and general patient flow in the Emergency Department (ED): • Where there is a mix of elective and emergency admission in hospitals, occupancy levels should allow for flexibility in dealing with the natural ebb and flow of illness and injury in the community. Thus, a level of about 85% hospital bed occupancy is desirable. • Having a senior medical presence in the emergency department at all times.",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 11,
+                            "doc_id": "67cc981501baed3e6723918f0d254cab"
+                        }
+                    },
+                    {
+                        "content": "admission to more rigorous assessment to ensure the appropriateness of hospital admission and to maximise the number of beds available for elective admissions. The philosophy of care must shift emphasis from admission to assessment to ensure appropriateness of admission and maximise bed availability for elective admissions. Admissions and Discharge Guidelines - 16",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 17,
+                            "doc_id": "6dadb8c02fcf1d7809b42f49c22c22e1"
+                        }
+                    },
+                    {
+                        "content": "3. Uninsured Patient Billing • Major Hospital sends an informational letter to Patients without insurance coverage approximately three days following the date of discharge. This mailing includes the Plain Language Summary of the FAP. • Balances for uninsured patients are reduced by the AGB limitations described in the FAP prior to the informational letter being generated. This discount amount was calculated pursuant to the FAP utilizing the look back method described in the 501 (r) requirements. • If the account guarantor does not make payment arrangements or apply for financial assistance within fourteen (14) days of the informational letter date, Major Hospital sends the first patient",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "Strategic objectives The key strategic objectives underpinning an effective and coherent admissions and discharge policy for emergency and elective patients are: • The provision of an integrated personal health and social services system resulting in seamless patient centred care at all times. • The utilisation of resources to maximise clinical and organisational effectiveness and outcomes. • The establishment of fully integrated networks of acute care which are accessible to each person. • The provision of levels of local access to acute care whilst at the same time ensuring high quality clinical care. • The acquisition of clinical admissions data to assist service planning and monitoring.",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 9,
+                            "doc_id": "fc48674b3c7a49e9967f76ad7a401053"
+                        }
+                    },
+                    {
+                        "content": "date that the written notice is provided or 240 days after the date that the first post-discharge billing statement was provided for the previously provided care. 10. Information Regarding Financial Assistance and the Collections Process • All patients have the opportunity to apply for financial assistance pursuant to the terms of the Major Hospital FAP. • The Major Hospital FAP is available free of charge as described in the FAP. • Patients can apply for financial assistance at any point in the collection cycle subject to the restrictions contained in the FAP and this Policy. • Patients may request a copy of the Policy, the FAP, the financial assistance application form, and the Plain",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 4,
+                            "doc_id": "478267dbb608a00c8c52e9eda45aa39d"
+                        }
+                    },
+                    {
+                        "content": "of the patient’s care for both admission and discharge is commenced at the pre-admission visit. • Patient information is co-ordinated and made available to all relevant providers in an efficient and timely manner. • Pre-admission planning to facilitate ‘day of surgery admission’ where appropriate. • Pre-admission services may require a dedicated individual e.g. Admissions Manager. • Referral pathways for primary care should enhance service delivery and complement the streaming of patients into appropriate diagnostic and therapeutic services within the acute setting. • Integrated service delivery using a range of tools to support the process, for example:12 - shared care protocols for",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 15,
+                            "doc_id": "10baad2bedab2da8beb3e05f6e6365ba"
+                        }
+                    },
+                    {
+                        "content": "Primary Care Strategy model of Primary Care Teams and Networks. There is a need to strengthen the community and continuing care settings to provide rehabilitation, respite and ongoing care, reflective of special population needs.11 The process of hospital admission A range of service processes have been identified as effective in managing the flow of patients through acute hospital services which will be outlined later. In addition, regular communication, good relations and ad hoc liaison, between all those involved are essential to effective bed management. Opportunities to provide an integrated service delivery system arise at two important service points, before hospital admission and",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 14,
+                            "doc_id": "a76049391201af14415ff10166bc947c"
+                        }
+                    },
+                    {
+                        "content": "that in admitting elective patients, consideration is given to the length of time they have been waiting since the decision to admit was taken - taking account of their clinical needs. • Greater standardisation of waiting list administration with consistent monitoring of cancellations, suspensions and removal from lists without treatment. • Emphasis on planning discharge from day of admission. • The adoption of a whole systems approach to bed management. • The appointment of a manager or clinician with sufficient authority and support to balance and monitor the competing demands of emergency and elective pressures ensuring all bed and theatre resources are fully utilised.8 Discharge",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 12,
+                            "doc_id": "c118fae71cea63894549b957f9b12703"
+                        }
+                    },
+                    {
+                        "content": "What are the important factors in admitting patients from the Emergency Department (ED)? • Extended access to rapid assessment clinics and outpatient radiology and pathology services. • Rapid assessment and extended access to diagnostics (unnecessary delays in admitting and/or discharging patients from hospital may arise from avoidable delays in patient assessment by specialists, duplication of tests or the absence of high or low dependency beds). • Early Senior Medical decision making available at the point of admission. • Close multidisciplinary team work. • National agreed standardised triage processes to ensure clinical prioritisation of patients on their arrival in the Emergency",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 18,
+                            "doc_id": "1de7527b1c1d690c8923db1a5ad20aa0"
+                        }
+                    },
+                    {
+                        "content": "resources must be efficiently and effectively utilised. Services are organised so that patients, depending on their needs, can move smoothly between emergency care and the best and most appropriate inpatient care, primary care and continuing care.2 Effective quality assurance and safe care are essential rights of all users of the health services. Achieving the standards set by the Irish Health Services Accreditation Board will ensure that all hospitals are providing such care. Emergency admissions An emergency hospital admission is defined as one that is not planned and which results from trauma (injury) or acute illness which cannot be treated on an outpatient basis.5 In order to manage",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 11,
+                            "doc_id": "67cc981501baed3e6723918f0d254cab"
+                        }
+                    },
+                    {
+                        "content": "Best Practice, Protocols and Policies for Improving Emergency, and Elective Admissions and Discharges Introduction Bed management within the hospital setting is often the driver for the development of policy in relation to patient admission and discharges. Best practice should underpin the development of bed management policies to enhance the effective management of emergency and elective admissions and discharges. The events of admission and discharge are pivotal in an integrated approach to bed management, together with the central position of the patient in the decision making process. 13 This requires an integrated multidisciplinary team approach to care delivery, necessitating the",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 17,
+                            "doc_id": "6dadb8c02fcf1d7809b42f49c22c22e1"
+                        }
+                    }
+                ],
+                "reranked_documents": [
+                    {
+                        "content": "of the patient in the decision making process. 13 This requires an integrated multidisciplinary team approach to care delivery, necessitating the development of care pathways, clinical protocols and standards, which can be audited and evaluated to demonstrate clinical effectiveness /patient outcomes. Emergency Department (ED) admissions Principles for admitting Emergency Department admissions Only emergency patients should be admitted to hospital through the Emergency Department. This may require a subtle shift of emphasis from “semi elective” admission to more rigorous assessment to ensure the appropriateness of hospital admission and to maximise the number of beds available for elective",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 17,
+                            "doc_id": "6dadb8c02fcf1d7809b42f49c22c22e1"
+                        }
+                    },
+                    {
+                        "content": "• Decision support systems enhance consistency of decision making such as nurse led telephone triage can be used to enhance consistency of medical and nursing decision making. (e.g. NHS direct telephone advice service). • There should be regular and influential audit of clinical activity. • The critical role of Health Care Staff should be acknowledged with appropriate support for professional development and influence in decision making at all levels. Elective admissions What are the key principles in planning elective hospital admissions ? A patient’s episode of care should be planned before his/her admission and should take account of the entire “journey” up to and after discharge from",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 19,
+                            "doc_id": "09dcc7cc3ef3895c8db574ee96928dd2"
+                        }
+                    },
+                    {
+                        "content": "at the time of their admission, and to ensure that patients are cared for by staff with the appropriate expertise. What are the key processes for effective elective admissions? The following key requirements have been identified to facilitate effective elective admission practices: • Centralised waiting list management and agreement on the parameters for scheduling theatre lists with clinicians. • Pre-admission assessment should be a standard requirement for all elective admissions to ensure appropriate planning of the entire patient journey. Admissions and Discharge Guidelines - 18",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 19,
+                            "doc_id": "09dcc7cc3ef3895c8db574ee96928dd2"
+                        }
+                    },
+                    {
+                        "content": "What are the Principles Underpinning Best Practice in Hospital Admissions? A number of principles should underpin the development of an effective emergency and elective admissions and discharge planning function. These include: • The provision of patient centred services, which are accessible to the population without compromising safety, quality and clinical standards, to the right people in the right location and at the right time.1 • Patients should be consulted and included in all decisions about their care. • Clinical practice and care should be based on the most up to date evidence. • Co-operation and clinical networking between hospitals and between care groups are essential to",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 10,
+                            "doc_id": "135b2dfc557ab703c449cf87a6c86554"
+                        }
+                    },
+                    {
+                        "content": "one that is not planned and which results from trauma (injury) or acute illness which cannot be treated on an outpatient basis.5 In order to manage the balance between elective and emergency admissions, the factors below have been identified as effective in improving the management of admissions and general patient flow in the Emergency Department (ED): • Where there is a mix of elective and emergency admission in hospitals, occupancy levels should allow for flexibility in dealing with the natural ebb and flow of illness and injury in the community. Thus, a level of about 85% hospital bed occupancy is desirable. • Having a senior medical presence in the emergency department at all times.",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 11,
+                            "doc_id": "67cc981501baed3e6723918f0d254cab"
+                        }
+                    },
+                    {
+                        "content": "admission to more rigorous assessment to ensure the appropriateness of hospital admission and to maximise the number of beds available for elective admissions. The philosophy of care must shift emphasis from admission to assessment to ensure appropriateness of admission and maximise bed availability for elective admissions. Admissions and Discharge Guidelines - 16",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 17,
+                            "doc_id": "6dadb8c02fcf1d7809b42f49c22c22e1"
+                        }
+                    },
+                    {
+                        "content": "3. Uninsured Patient Billing • Major Hospital sends an informational letter to Patients without insurance coverage approximately three days following the date of discharge. This mailing includes the Plain Language Summary of the FAP. • Balances for uninsured patients are reduced by the AGB limitations described in the FAP prior to the informational letter being generated. This discount amount was calculated pursuant to the FAP utilizing the look back method described in the 501 (r) requirements. • If the account guarantor does not make payment arrangements or apply for financial assistance within fourteen (14) days of the informational letter date, Major Hospital sends the first patient",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "Strategic objectives The key strategic objectives underpinning an effective and coherent admissions and discharge policy for emergency and elective patients are: • The provision of an integrated personal health and social services system resulting in seamless patient centred care at all times. • The utilisation of resources to maximise clinical and organisational effectiveness and outcomes. • The establishment of fully integrated networks of acute care which are accessible to each person. • The provision of levels of local access to acute care whilst at the same time ensuring high quality clinical care. • The acquisition of clinical admissions data to assist service planning and monitoring.",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 9,
+                            "doc_id": "fc48674b3c7a49e9967f76ad7a401053"
+                        }
+                    },
+                    {
+                        "content": "date that the written notice is provided or 240 days after the date that the first post-discharge billing statement was provided for the previously provided care. 10. Information Regarding Financial Assistance and the Collections Process • All patients have the opportunity to apply for financial assistance pursuant to the terms of the Major Hospital FAP. • The Major Hospital FAP is available free of charge as described in the FAP. • Patients can apply for financial assistance at any point in the collection cycle subject to the restrictions contained in the FAP and this Policy. • Patients may request a copy of the Policy, the FAP, the financial assistance application form, and the Plain",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 4,
+                            "doc_id": "478267dbb608a00c8c52e9eda45aa39d"
+                        }
+                    },
+                    {
+                        "content": "of the patient’s care for both admission and discharge is commenced at the pre-admission visit. • Patient information is co-ordinated and made available to all relevant providers in an efficient and timely manner. • Pre-admission planning to facilitate ‘day of surgery admission’ where appropriate. • Pre-admission services may require a dedicated individual e.g. Admissions Manager. • Referral pathways for primary care should enhance service delivery and complement the streaming of patients into appropriate diagnostic and therapeutic services within the acute setting. • Integrated service delivery using a range of tools to support the process, for example:12 - shared care protocols for",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 15,
+                            "doc_id": "10baad2bedab2da8beb3e05f6e6365ba"
+                        }
+                    },
+                    {
+                        "content": "Primary Care Strategy model of Primary Care Teams and Networks. There is a need to strengthen the community and continuing care settings to provide rehabilitation, respite and ongoing care, reflective of special population needs.11 The process of hospital admission A range of service processes have been identified as effective in managing the flow of patients through acute hospital services which will be outlined later. In addition, regular communication, good relations and ad hoc liaison, between all those involved are essential to effective bed management. Opportunities to provide an integrated service delivery system arise at two important service points, before hospital admission and",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 14,
+                            "doc_id": "a76049391201af14415ff10166bc947c"
+                        }
+                    },
+                    {
+                        "content": "that in admitting elective patients, consideration is given to the length of time they have been waiting since the decision to admit was taken - taking account of their clinical needs. • Greater standardisation of waiting list administration with consistent monitoring of cancellations, suspensions and removal from lists without treatment. • Emphasis on planning discharge from day of admission. • The adoption of a whole systems approach to bed management. • The appointment of a manager or clinician with sufficient authority and support to balance and monitor the competing demands of emergency and elective pressures ensuring all bed and theatre resources are fully utilised.8 Discharge",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 12,
+                            "doc_id": "c118fae71cea63894549b957f9b12703"
+                        }
+                    },
+                    {
+                        "content": "What are the important factors in admitting patients from the Emergency Department (ED)? • Extended access to rapid assessment clinics and outpatient radiology and pathology services. • Rapid assessment and extended access to diagnostics (unnecessary delays in admitting and/or discharging patients from hospital may arise from avoidable delays in patient assessment by specialists, duplication of tests or the absence of high or low dependency beds). • Early Senior Medical decision making available at the point of admission. • Close multidisciplinary team work. • National agreed standardised triage processes to ensure clinical prioritisation of patients on their arrival in the Emergency",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 18,
+                            "doc_id": "1de7527b1c1d690c8923db1a5ad20aa0"
+                        }
+                    },
+                    {
+                        "content": "resources must be efficiently and effectively utilised. Services are organised so that patients, depending on their needs, can move smoothly between emergency care and the best and most appropriate inpatient care, primary care and continuing care.2 Effective quality assurance and safe care are essential rights of all users of the health services. Achieving the standards set by the Irish Health Services Accreditation Board will ensure that all hospitals are providing such care. Emergency admissions An emergency hospital admission is defined as one that is not planned and which results from trauma (injury) or acute illness which cannot be treated on an outpatient basis.5 In order to manage",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 11,
+                            "doc_id": "67cc981501baed3e6723918f0d254cab"
+                        }
+                    },
+                    {
+                        "content": "Best Practice, Protocols and Policies for Improving Emergency, and Elective Admissions and Discharges Introduction Bed management within the hospital setting is often the driver for the development of policy in relation to patient admission and discharges. Best practice should underpin the development of bed management policies to enhance the effective management of emergency and elective admissions and discharges. The events of admission and discharge are pivotal in an integrated approach to bed management, together with the central position of the patient in the decision making process. 13 This requires an integrated multidisciplinary team approach to care delivery, necessitating the",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 17,
+                            "doc_id": "6dadb8c02fcf1d7809b42f49c22c22e1"
+                        }
+                    }
+                ]
+            },
+            "retrieval_stats": {
+                "retrieved": 15,
+                "after_reranker": 15
+            },
+            "metrics": {
+                "faithfulness": NaN,
+                "answer_relevancy": 1.0000000000000002,
+                "context_precision": 0.5588435374069824,
+                "context_recall": 1.0
+            }
+        },
+        {
+            "question": "What processing fee applies to an extended payment plan?",
+            "answer": "A processing fee of $3.00 per month applies to accounts with payment arrangements where the balance is paid in full between 4 and 18 months of the first statement date, under the Extended Payment Plan.",
+            "reference": "Extended payment plans that last between 4 and 18 months incur a processing fee of $3.00 per month.",
+            "ground_truth": "Extended payment plans that last between 4 and 18 months incur a processing fee of $3.00 per month.",
+            "latency": {
+                "retrieval_seconds": 0.115,
+                "reranker_seconds": 0.0,
+                "prompt_seconds": 0.0002,
+                "generation_seconds": 0.2999,
+                "pipeline_seconds": 0.4156
+            },
+            "usage": {
+                "prompt_tokens": 1968,
+                "completion_tokens": 43,
+                "total_tokens": 2011
+            },
+            "retrieval": {
+                "retrieved_documents": [
+                    {
+                        "content": "– Accounts with payment arrangements where the balance is paid in full within 3 months of the first statement date are accessed no additional fees. • Extended Payment Plan – Accounts with payment arrangements where the balance is paid in full between 4 and 18 months of the first statement date are accessed a processing fee of $3.00 per month. • Patient Financial Services supervisors have the authority to make exceptions to this policy on a case by case basis for special circumstances. • Major Hospital is not required to accept patient-initiated payment arrangements and may refer accounts to a collection agency as outlined below if the patient is unwilling to make acceptable payment",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "information on the prompt pay discount. 6. Pre Payments • Patients may be asked to make a payment prior to certain scheduled services provided that such requirements shall not apply if the pre-payment is an ECA unless the applicable notification procedures are utilized. Examples of these services include Sleep Studies, Labor/Delivery, Surgery, MRIs, CTs, Echocardiograms, and Pain Management Services. • Patients unable to pay the requested pre-payment amount can apply for financial assistance. 7. Payment Plan Arrangements • 90 Day Payment Plan – Accounts with payment arrangements where the balance is paid in full within 3 months of the first statement date are accessed no additional fees. •",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "eligibility for financial assistance before engaging in Extraordinary Collection Actions to obtain payment. This Policy applies to all sums due from patients for all services billed by Major Hospital. The Policy will be applied regardless of race, gender, age, sexual orientation, religious affiliation, or immigrant status. Definitions: The following terms are meant to be interpreted as follows within this Policy: 501(r) Requirements: The requirements of Section 501(r) of the Internal Revenue Code of 1986, as amended from time to time, and the related Treasury Regulations pertaining to financial assistance, limitations on charges, and billing and collections activities. Extraordinary",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 1,
+                            "doc_id": "c00a3ee7f0f096bba2ef104750c5e85c"
+                        }
+                    },
+                    {
+                        "content": "application process. 9. Reasonable Efforts and Extraordinary Collection Actions (ECAs) • Before engaging in ECAs to obtain payment for care, Major Hospital must make certain reasonable efforts to determine whether an individual is eligible for financial assistance under the FAP. The Patient Financial Services Department is responsible for ensuring that Major Hospital undertakes reasonable efforts to determine eligibility for financial assistance pursuant to the FAP and this Policy. • Complete FAP Applications. In the case of a patient who submits a complete financial assistance application form, Major Hospital shall, in a timely manner, suspend any ECAs to obtain payment for the care, make",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 3,
+                            "doc_id": "5337bba5cf7910917ca6a7e58db8438b"
+                        }
+                    },
+                    {
+                        "content": "a complete financial assistance application form, Major Hospital shall, in a timely manner, suspend any ECAs to obtain payment for the care, make an eligibility determination, and provide written notification, as provided in this Policy. • Presumptive Eligibility Determinations. If a patient is presumptively determined to be eligible for less than the most generous assistance available under the FAP (for example, the determination of eligibility is based on an application form submitted with respect to prior care), Major Hospital will notify the patient of the basis for the determination and give the patient a reasonable period of time to apply for more generous assistance before initiating",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 3,
+                            "doc_id": "5337bba5cf7910917ca6a7e58db8438b"
+                        }
+                    },
+                    {
+                        "content": "care, these notification provisions may be aggregated, in which case the timeframes would be based on the most recent episode of care included in the aggregation. Before initiating one (1) or more ECA(s) to obtain payment for care from a patient who has not submitted an application form, Major Hospital shall have taken the following actions during the collection cycle: ₀₀ Provide the patient with a written notice that indicates financial assistance is available for eligible patients, identifies the ECA(s) that are intended to be taken to obtain payment for the care, and states a deadline after which such ECA(s) may be initiated that is no earlier than thirty (30) days after the date the",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 3,
+                            "doc_id": "5337bba5cf7910917ca6a7e58db8438b"
+                        }
+                    },
+                    {
+                        "content": "What are the important factors in admitting patients from the Emergency Department (ED)? • Extended access to rapid assessment clinics and outpatient radiology and pathology services. • Rapid assessment and extended access to diagnostics (unnecessary delays in admitting and/or discharging patients from hospital may arise from avoidable delays in patient assessment by specialists, duplication of tests or the absence of high or low dependency beds). • Early Senior Medical decision making available at the point of admission. • Close multidisciplinary team work. • National agreed standardised triage processes to ensure clinical prioritisation of patients on their arrival in the Emergency",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 18,
+                            "doc_id": "1de7527b1c1d690c8923db1a5ad20aa0"
+                        }
+                    },
+                    {
+                        "content": "arrangements or apply for financial assistance within fourteen (14) days of the informational letter date, Major Hospital sends the first patient statement. • Major Hospital mails at least three (3) separate statements and a final notice letter until the balance is resolved subject to the provisions below regarding ECAs. Follow-up phone calls will also be made to the account guarantor. 4. Miscellaneous Patient Billing • The first patient statement includes the following pieces of information: ₀₀ A summary of the hospital services covered by the statement. ₀₀ The charges for each service. ₀₀ Information on the Prompt Pay Discount. • Each patient statement and letter includes information on",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "payment arrangements and may refer accounts to a collection agency as outlined below if the patient is unwilling to make acceptable payment arrangements or has defaulted on an established payment plan.",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "to find a better address and will resend the patient statement if applicable. • If a patient disputes his or her account balance, staff members will research the dispute in a timely manner and will hold the account for at least thirty (30) days before referring the account to a collection agency subject to the provisions below regarding ECAs. 5. Prompt Pay Discount • Patient balances are reduced by 20% if paid in full less the discount amount within twenty-one (21) days following the date of the first statement. The first patient statement lists information on the prompt pay discount. 6. Pre Payments • Patients may be asked to make a payment prior to certain scheduled services provided that",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "Before the patient is admitted to hospital • There should be a clearly defined pre-admission process, which applies to both emergency and elective admissions. • The decision to access a hospital service should be shared between the patient and a member of the primary care team (PCT) where possible. • Pre-admission services are integrated into secondary care service delivery. • Pre-admission assessment is conducted on an outpatient basis wherever possible; some aspects of pre-admission assessment may be undertaken by the Primary Care Team if appropriate. • Pre-admission assessment aims to optimise a patient’s health status before planned admission to hospital. • At the pre-admission visit,",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 15,
+                            "doc_id": "10baad2bedab2da8beb3e05f6e6365ba"
+                        }
+                    },
+                    {
+                        "content": "• If a claim is denied or is not processed by a payer, staff will follow up with the payer and patient as appropriate to facilitate resolution of the claim. If resolution does not occur after prudent follow-up efforts, Major Hospital may bill the patient subject to the provisions below regarding ECAs. 2. Insured Patient Billing • Major Hospital generates the first patient statement in a timely manner following receipt of the insurance payment or denial. • Major Hospital mails at least (3) three separate statements until the balance is resolved subject to the provisions below regarding ECAs. Follow-up phone calls are also made to the account guarantor.",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 1,
+                            "doc_id": "c00a3ee7f0f096bba2ef104750c5e85c"
+                        }
+                    },
+                    {
+                        "content": "clear and consistent guidelines for conducting billing and collections functions in a manner that promotes compliance, patient satisfaction, and efficiency. Through the use of billing statements, written correspondence, and phone calls, Major Hospital will make diligent efforts to inform patients of their financial responsibilities and available financial assistance options, as well as follow up with patients regarding outstanding accounts. Additionally, this Policy requires Major Hospital to make reasonable efforts to determine a patient’s eligibility for financial assistance before engaging in Extraordinary Collection Actions to obtain payment. This Policy applies to all sums due from",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 1,
+                            "doc_id": "c00a3ee7f0f096bba2ef104750c5e85c"
+                        }
+                    },
+                    {
+                        "content": "date that the written notice is provided or 240 days after the date that the first post-discharge billing statement was provided for the previously provided care. 10. Information Regarding Financial Assistance and the Collections Process • All patients have the opportunity to apply for financial assistance pursuant to the terms of the Major Hospital FAP. • The Major Hospital FAP is available free of charge as described in the FAP. • Patients can apply for financial assistance at any point in the collection cycle subject to the restrictions contained in the FAP and this Policy. • Patients may request a copy of the Policy, the FAP, the financial assistance application form, and the Plain",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 4,
+                            "doc_id": "478267dbb608a00c8c52e9eda45aa39d"
+                        }
+                    },
+                    {
+                        "content": "or credit bureau. • Refunds. As provided in the FAP, a patient can apply for financial assistance at any point in the collection cycle. However, a refund will only be allowed during the “application period.” The application period begins on the date care is provided and ends on the later of the 240th day after the date the first post-discharge statement for the care is provided or either: (i) the date specified in a written notice from Major Hospital regarding its intention to initiate ECAs; or (ii) in the case of a patient who has been deemed presumptively eligible for financial assistance less than 100%, the end of the reasonable time to apply for financial assistance. Major Hospital will",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 4,
+                            "doc_id": "478267dbb608a00c8c52e9eda45aa39d"
+                        }
+                    }
+                ],
+                "reranked_documents": [
+                    {
+                        "content": "– Accounts with payment arrangements where the balance is paid in full within 3 months of the first statement date are accessed no additional fees. • Extended Payment Plan – Accounts with payment arrangements where the balance is paid in full between 4 and 18 months of the first statement date are accessed a processing fee of $3.00 per month. • Patient Financial Services supervisors have the authority to make exceptions to this policy on a case by case basis for special circumstances. • Major Hospital is not required to accept patient-initiated payment arrangements and may refer accounts to a collection agency as outlined below if the patient is unwilling to make acceptable payment",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "information on the prompt pay discount. 6. Pre Payments • Patients may be asked to make a payment prior to certain scheduled services provided that such requirements shall not apply if the pre-payment is an ECA unless the applicable notification procedures are utilized. Examples of these services include Sleep Studies, Labor/Delivery, Surgery, MRIs, CTs, Echocardiograms, and Pain Management Services. • Patients unable to pay the requested pre-payment amount can apply for financial assistance. 7. Payment Plan Arrangements • 90 Day Payment Plan – Accounts with payment arrangements where the balance is paid in full within 3 months of the first statement date are accessed no additional fees. •",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "eligibility for financial assistance before engaging in Extraordinary Collection Actions to obtain payment. This Policy applies to all sums due from patients for all services billed by Major Hospital. The Policy will be applied regardless of race, gender, age, sexual orientation, religious affiliation, or immigrant status. Definitions: The following terms are meant to be interpreted as follows within this Policy: 501(r) Requirements: The requirements of Section 501(r) of the Internal Revenue Code of 1986, as amended from time to time, and the related Treasury Regulations pertaining to financial assistance, limitations on charges, and billing and collections activities. Extraordinary",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 1,
+                            "doc_id": "c00a3ee7f0f096bba2ef104750c5e85c"
+                        }
+                    },
+                    {
+                        "content": "application process. 9. Reasonable Efforts and Extraordinary Collection Actions (ECAs) • Before engaging in ECAs to obtain payment for care, Major Hospital must make certain reasonable efforts to determine whether an individual is eligible for financial assistance under the FAP. The Patient Financial Services Department is responsible for ensuring that Major Hospital undertakes reasonable efforts to determine eligibility for financial assistance pursuant to the FAP and this Policy. • Complete FAP Applications. In the case of a patient who submits a complete financial assistance application form, Major Hospital shall, in a timely manner, suspend any ECAs to obtain payment for the care, make",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 3,
+                            "doc_id": "5337bba5cf7910917ca6a7e58db8438b"
+                        }
+                    },
+                    {
+                        "content": "a complete financial assistance application form, Major Hospital shall, in a timely manner, suspend any ECAs to obtain payment for the care, make an eligibility determination, and provide written notification, as provided in this Policy. • Presumptive Eligibility Determinations. If a patient is presumptively determined to be eligible for less than the most generous assistance available under the FAP (for example, the determination of eligibility is based on an application form submitted with respect to prior care), Major Hospital will notify the patient of the basis for the determination and give the patient a reasonable period of time to apply for more generous assistance before initiating",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 3,
+                            "doc_id": "5337bba5cf7910917ca6a7e58db8438b"
+                        }
+                    },
+                    {
+                        "content": "care, these notification provisions may be aggregated, in which case the timeframes would be based on the most recent episode of care included in the aggregation. Before initiating one (1) or more ECA(s) to obtain payment for care from a patient who has not submitted an application form, Major Hospital shall have taken the following actions during the collection cycle: ₀₀ Provide the patient with a written notice that indicates financial assistance is available for eligible patients, identifies the ECA(s) that are intended to be taken to obtain payment for the care, and states a deadline after which such ECA(s) may be initiated that is no earlier than thirty (30) days after the date the",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 3,
+                            "doc_id": "5337bba5cf7910917ca6a7e58db8438b"
+                        }
+                    },
+                    {
+                        "content": "What are the important factors in admitting patients from the Emergency Department (ED)? • Extended access to rapid assessment clinics and outpatient radiology and pathology services. • Rapid assessment and extended access to diagnostics (unnecessary delays in admitting and/or discharging patients from hospital may arise from avoidable delays in patient assessment by specialists, duplication of tests or the absence of high or low dependency beds). • Early Senior Medical decision making available at the point of admission. • Close multidisciplinary team work. • National agreed standardised triage processes to ensure clinical prioritisation of patients on their arrival in the Emergency",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 18,
+                            "doc_id": "1de7527b1c1d690c8923db1a5ad20aa0"
+                        }
+                    },
+                    {
+                        "content": "arrangements or apply for financial assistance within fourteen (14) days of the informational letter date, Major Hospital sends the first patient statement. • Major Hospital mails at least three (3) separate statements and a final notice letter until the balance is resolved subject to the provisions below regarding ECAs. Follow-up phone calls will also be made to the account guarantor. 4. Miscellaneous Patient Billing • The first patient statement includes the following pieces of information: ₀₀ A summary of the hospital services covered by the statement. ₀₀ The charges for each service. ₀₀ Information on the Prompt Pay Discount. • Each patient statement and letter includes information on",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "payment arrangements and may refer accounts to a collection agency as outlined below if the patient is unwilling to make acceptable payment arrangements or has defaulted on an established payment plan.",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "to find a better address and will resend the patient statement if applicable. • If a patient disputes his or her account balance, staff members will research the dispute in a timely manner and will hold the account for at least thirty (30) days before referring the account to a collection agency subject to the provisions below regarding ECAs. 5. Prompt Pay Discount • Patient balances are reduced by 20% if paid in full less the discount amount within twenty-one (21) days following the date of the first statement. The first patient statement lists information on the prompt pay discount. 6. Pre Payments • Patients may be asked to make a payment prior to certain scheduled services provided that",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 2,
+                            "doc_id": "776670c6645e146d0eede9a1ef330ba5"
+                        }
+                    },
+                    {
+                        "content": "Before the patient is admitted to hospital • There should be a clearly defined pre-admission process, which applies to both emergency and elective admissions. • The decision to access a hospital service should be shared between the patient and a member of the primary care team (PCT) where possible. • Pre-admission services are integrated into secondary care service delivery. • Pre-admission assessment is conducted on an outpatient basis wherever possible; some aspects of pre-admission assessment may be undertaken by the Primary Care Team if appropriate. • Pre-admission assessment aims to optimise a patient’s health status before planned admission to hospital. • At the pre-admission visit,",
+                        "metadata": {
+                            "source": "admission_and_discharge_guidelines_2003.pdf",
+                            "page": 15,
+                            "doc_id": "10baad2bedab2da8beb3e05f6e6365ba"
+                        }
+                    },
+                    {
+                        "content": "• If a claim is denied or is not processed by a payer, staff will follow up with the payer and patient as appropriate to facilitate resolution of the claim. If resolution does not occur after prudent follow-up efforts, Major Hospital may bill the patient subject to the provisions below regarding ECAs. 2. Insured Patient Billing • Major Hospital generates the first patient statement in a timely manner following receipt of the insurance payment or denial. • Major Hospital mails at least (3) three separate statements until the balance is resolved subject to the provisions below regarding ECAs. Follow-up phone calls are also made to the account guarantor.",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 1,
+                            "doc_id": "c00a3ee7f0f096bba2ef104750c5e85c"
+                        }
+                    },
+                    {
+                        "content": "clear and consistent guidelines for conducting billing and collections functions in a manner that promotes compliance, patient satisfaction, and efficiency. Through the use of billing statements, written correspondence, and phone calls, Major Hospital will make diligent efforts to inform patients of their financial responsibilities and available financial assistance options, as well as follow up with patients regarding outstanding accounts. Additionally, this Policy requires Major Hospital to make reasonable efforts to determine a patient’s eligibility for financial assistance before engaging in Extraordinary Collection Actions to obtain payment. This Policy applies to all sums due from",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 1,
+                            "doc_id": "c00a3ee7f0f096bba2ef104750c5e85c"
+                        }
+                    },
+                    {
+                        "content": "date that the written notice is provided or 240 days after the date that the first post-discharge billing statement was provided for the previously provided care. 10. Information Regarding Financial Assistance and the Collections Process • All patients have the opportunity to apply for financial assistance pursuant to the terms of the Major Hospital FAP. • The Major Hospital FAP is available free of charge as described in the FAP. • Patients can apply for financial assistance at any point in the collection cycle subject to the restrictions contained in the FAP and this Policy. • Patients may request a copy of the Policy, the FAP, the financial assistance application form, and the Plain",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 4,
+                            "doc_id": "478267dbb608a00c8c52e9eda45aa39d"
+                        }
+                    },
+                    {
+                        "content": "or credit bureau. • Refunds. As provided in the FAP, a patient can apply for financial assistance at any point in the collection cycle. However, a refund will only be allowed during the “application period.” The application period begins on the date care is provided and ends on the later of the 240th day after the date the first post-discharge statement for the care is provided or either: (i) the date specified in a written notice from Major Hospital regarding its intention to initiate ECAs; or (ii) in the case of a patient who has been deemed presumptively eligible for financial assistance less than 100%, the end of the reasonable time to apply for financial assistance. Major Hospital will",
+                        "metadata": {
+                            "source": "hospital_collection.pdf",
+                            "page": 4,
+                            "doc_id": "478267dbb608a00c8c52e9eda45aa39d"
+                        }
+                    }
+                ]
+            },
+            "retrieval_stats": {
+                "retrieved": 15,
+                "after_reranker": 15
+            },
+            "metrics": {
+                "faithfulness": 0.6666666666666666,
+                "answer_relevancy": 0.91142033043556,
+                "context_precision": 0.9999999999,
+                "context_recall": 1.0
+            }
+        }
+    ]
+}

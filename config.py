@@ -22,8 +22,7 @@ LOG_FORMAT = os.getenv("LOG_FORMAT", "%(asctime)s | %(levelname)s | %(name)s | %
 BASE_DIR = Path(__file__).resolve().parent
 DATASET = os.getenv("DATASET", "dataset_v1")
 
-DOCS_PATH = BASE_DIR / "docs" / DATASET
-DB_PATH = BASE_DIR / "db" / "faiss_index"
+DOCS_PATH = BASE_DIR / "docs" / DATASET 
 CHUNKS_PATH = BASE_DIR / "db" / "chunks"
 
 QDRANT_PATH = BASE_DIR / "db" / "qdrant_data"
@@ -54,11 +53,6 @@ CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", 200))
 # Retriever Configuration
 # --------------------------------------------------
 TOP_K = int(os.getenv("TOP_K", 5))
-FETCH_K = int(os.getenv("FETCH_K", 20))
-
-SEARCH_TYPE = os.getenv("SEARCH_TYPE", "similarity")
-
-LAMBDA_MULT = float(os.getenv("LAMBDA_MULT", 0.5))
 # --------------------------------------------------
 # Reranker Configuration
 # --------------------------------------------------
@@ -78,7 +72,7 @@ USE_RERANKER = os.getenv(
     "True"
 ).lower() == "true"
 
-RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "faiss").lower()
+RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "qdrant").lower()
  
 DEBUG = os.getenv(
     "DEBUG",

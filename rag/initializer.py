@@ -5,8 +5,7 @@ from config import (
     JUDGE_MODEL, 
     JUDGE_API_KEY, 
     EMBEDDING_MODEL,)
-
-from rag.vectorstore import load_vectorstore
+ 
 from rag.retriever import create_retriever
 from rag.models import PipelineComponents, EvaluationComponents
 from ragas.embeddings import LangchainEmbeddingsWrapper
@@ -15,16 +14,18 @@ from utils.logger import logger
 from llm.llm import get_llm
 
 def initialize_rag() -> PipelineComponents:
+    
     """
     Initialize and return all components required for the RAG pipeline.
 
     This includes:
-    - Loading the persisted vector store
-    - Creating retrieval components (FAISS + BM25)
-    - Initializing the application LLM 
+    - Creating the Qdrant semantic retriever
+    - Creating the optional BM25 keyword retriever
+    - Initializing the application RAG components
 
     Returns:
-        PipelineComponents: Container holding all initialized pipeline objects.
+        PipelineComponents: Container holding the initialized
+        retrieval components.
     """
     try: 
         
@@ -32,29 +33,18 @@ def initialize_rag() -> PipelineComponents:
         # -------------------------------------------------
         # 1. Load vector store and create retrievers
         # -------------------------------------------------
-        vectorstore = load_vectorstore()
-
-        retriever = create_retriever(vectorstore)
+        retriever = create_retriever()
 
         # Individual retrievers available for experimentation and retrieval strategies
-        faiss_retriever = retriever["faiss"]
+        qdrant_retriever = retriever["qdrant"]
         bm25_retriever = retriever["bm25"]
 
-        # # -------------------------------------------------
-        # # 2. Initialize the application LLM used for answer generation
-        # # -------------------------------------------------
-        # app_llm = ChatOpenAI(
-        #     model=LLM_MODEL,
-        #     api_key=OPENAI_API_KEY,
-        #     )
-
         # -------------------------------------------------
-        # 3. Return all initialized components
+        # 2. Return all initialized components
         # -------------------------------------------------
-        pipeline_components =  PipelineComponents(
-            vectorstore=vectorstore,
+        pipeline_components =  PipelineComponents( 
             retriever=retriever,
-            faiss_retriever=faiss_retriever,
+            qdrant_retriever=qdrant_retriever,
             bm25_retriever=bm25_retriever, 
         )
 

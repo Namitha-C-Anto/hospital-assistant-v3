@@ -34,7 +34,7 @@ async def run_rag_pipeline(
     # -------------------------------------------------
     retrieval_result, retrieval_time, reranker_time = run_retrieval_pipeline(
             question,
-            rag_components.faiss_retriever,
+            rag_components.qdrant_retriever,
             rag_components.bm25_retriever, 
         )
 

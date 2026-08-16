@@ -6,7 +6,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 
 from config import QDRANT_PATH
-from rag.vectorstore import get_embeddings
+from rag.embeddings import get_embeddings
 from utils.logger import logger
 
 COLLECTION_NAME = "hospital_documents"
@@ -59,33 +59,6 @@ def create_collection() -> None:
     finally:
         client.close()
 
-
-def add_document(
-    client: QdrantClient,
-    document: Document,
-    point_id: int,
-    embeddings: HuggingFaceEmbeddings,
-) -> None:
-
-    """Add a single langchain document to Qdrant."""
- 
-    vector = embeddings.embed_query(document.page_content)
-
-    payload = {
-        "text": document.page_content,
-        **document.metadata,
-    }
-
-    client.upsert(
-        collection_name = COLLECTION_NAME,
-        points = [
-            PointStruct(
-                id = point_id,
-                vector = vector,
-                payload = payload,
-            )
-        ],
-    )
 
 def add_documents(
     client: QdrantClient,

@@ -4,17 +4,20 @@ from config import (
  
 from rag.loader import load_documents_from_folder
 from rag.splitter import split_documents
-from rag.storage import save_chunks
-from rag.vectorstore import (
-    create_vectorstore, 
-    save_vectorstore,)
+from rag.storage import save_chunks 
+from rag.qdrant_store import (
+    get_qdrant_client,
+    create_collection,
+    add_documents,
+)
+from rag.embeddings import get_embeddings
 from utils.logger import logger
 
 def build_vector_database() -> None:
     
     """
-    Load documents, split them into chunks, save the chunks,
-    create a FAISS vector database, and persist it to disk.
+    Load documents, split them into chunks, save the chunks for
+    BM25 retrieval, and ingest the chunks into Qdrant.
     """
 
     try:
@@ -29,15 +32,27 @@ def build_vector_database() -> None:
         # Save chunks for BM25 / hybrid retrieval. 
         save_chunks(chunks, CHUNKS_PATH)
 
-        # Step 3: Create vector store 
-        vectorstore = create_vectorstore(chunks)
+        # Step 3: Create Qdrant collection
+        create_collection()
 
-        # Step 4: Save vector DB 
-        save_vectorstore(vectorstore)
+        # Step 4: Create Qdrant client and embedding model
+        client = get_qdrant_client()
+        embeddings = get_embeddings()
+
+        # Step 5: Insert chunks into Qdrant
+        add_documents(
+            client=client,
+            documents=chunks,
+            embeddings=embeddings,
+        )
 
         logger.info("Vector database created successfully.") 
 
     except Exception:
         logger.exception("Failed to build vector database.")
         raise
+
+    finally:
+        if client is not None:
+            client.close()
 

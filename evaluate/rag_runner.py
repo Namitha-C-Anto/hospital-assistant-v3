@@ -20,7 +20,7 @@ from rag.models import (
 from rag.pipeline import run_rag_pipeline
 from llm.llm import get_llm
 
-def run_test_questions(
+async def run_test_questions(
     test_data: list[dict[str, Any]],
     rag_components: PipelineComponents,
 ) -> list[PipelineResults]:
@@ -77,7 +77,7 @@ def run_test_questions(
     for item in test_data:
 
         logger.info("Processing test question: '%s'.", item["id"])
-        result = process_test_questions(item, rag_components, app_llm)
+        result = await process_test_questions(item, rag_components, app_llm)
 
         # Skip questions that failed during pipeline execution.
         if result is not None:
@@ -86,7 +86,7 @@ def run_test_questions(
     return pipeline_results
 
 #------------------------------------------------------
-def process_test_questions(
+async def process_test_questions(
     item: dict[str, Any],
     rag_components: PipelineComponents,
     app_llm: BaseChatModel,
@@ -117,7 +117,7 @@ def process_test_questions(
 
     try:
         
-        pipeline_result = run_rag_pipeline(
+        pipeline_result = await run_rag_pipeline(
             question,
             rag_components,
             app_llm,
@@ -168,6 +168,7 @@ def process_test_questions(
         )
 
         # Log detailed debugging information when debug mode is enabled.
+        
         if DEBUG:
             log_debug_info(
                 question,

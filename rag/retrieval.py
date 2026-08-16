@@ -62,23 +62,29 @@ def build_retrieval_result(
 # -------------------------------------------------------------------------------
 def run_retrieval_pipeline(
     question: str,
-    faiss_retriever: BaseRetriever,
+    qdrant_retriever: BaseRetriever,
     bm25_retriever: BaseRetriever | None
 ) -> tuple[RetrievalResult, float, float]:
 
     """
-    Retrieve, deduplicate, and optionally rerank documents.
+    Run the document retrieval pipeline.
+
+    The pipeline retrieves relevant documents using Qdrant semantic
+    search and, when configured, combines the results with BM25 keyword
+    search using Reciprocal Rank Fusion (RRF). Retrieved documents are
+    then deduplicated and optionally reranked.
 
     Args:
-        question: User query.
-        faiss_retriever: FAISS retriever.
-        bm25_retriever: BM25 retriever.
+        question: User's query.
+        qdrant_retriever: Qdrant-based semantic retriever.
+        bm25_retriever: BM25 keyword retriever, or None when hybrid
+            retrieval is disabled.
 
     Returns:
         A tuple containing:
-            - RetrievalResult
-            - Retrieval latency (seconds)
-            - Reranker latency (seconds)
+            - RetrievalResult containing the retrieved and reranked documents.
+            - Retrieval latency in seconds.
+            - Reranker latency in seconds.
     """
     
     # ----------------------------------------
@@ -86,10 +92,10 @@ def run_retrieval_pipeline(
     # ---------------------------------------- 
     retrieval_start = time.perf_counter()
     retrieved_documents = retrieve_documents(
-                question,
-                faiss_retriever,
-                bm25_retriever,
-            )
+        question,
+        qdrant_retriever,
+        bm25_retriever,
+    )
     retrieval_time = round(
         time.perf_counter() - retrieval_start, 
         4,

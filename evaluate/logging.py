@@ -52,10 +52,10 @@ def log_df_info(df: pd.DataFrame) -> None:
 
     columns = [
         "user_input",
-        "response",
-        "reference",
-        "retrieved_contexts",
         "faithfulness",
+        "answer_relevancy",
+        "context_precision",
+        "context_recall",
     ]
 
     available_columns = [
@@ -63,7 +63,11 @@ def log_df_info(df: pd.DataFrame) -> None:
         if col in df.columns
     ]
 
-    logger.info(df[available_columns].to_string(index=False))
+    
+    logger.info(
+        "\n%s",
+        df[available_columns].to_string(index=False)
+    )
 
 #------------------------------------------------------------------------
 def log_avg_scores(summary: dict[str, float]) -> None:

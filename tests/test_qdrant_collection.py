@@ -1,7 +1,3 @@
-from qdrant_client import QdrantClient
-
-from config import QDRANT_PATH
-
 from rag.qdrant_store import(
     COLLECTION_NAME,
     get_qdrant_client,

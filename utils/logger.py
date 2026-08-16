@@ -14,8 +14,7 @@ def configure_logger() -> logging.Logger:
         ],
     )
     logging.getLogger("httpx").setLevel(logging.WARNING)
-    logging.getLogger("sentence_transformers").setLevel(logging.WARNING)
-    logging.getLogger("faiss").setLevel(logging.WARNING)
+    logging.getLogger("sentence_transformers").setLevel(logging.WARNING) 
 
     logger = logging.getLogger("HospitalAssistant")
 

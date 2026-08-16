@@ -1,3 +1,4 @@
+import asyncio
 from evaluate.test_questions import TEST_DATA
 from evaluate.rag_runner import run_test_questions
 from evaluate.ragas_runner import (
@@ -19,7 +20,7 @@ from rag.initializer import (
 from utils.logger import logger
 from utils.experiment import create_experiment_metadata
 
-def main() -> None:
+async def main() -> None:
 
     """
     Run the complete RAG evaluation workflow.
@@ -38,7 +39,7 @@ def main() -> None:
     ragas_components = initialize_ragas()
     
     # Run RAG pipeline
-    pipeline_results = run_test_questions(
+    pipeline_results = await run_test_questions(
         TEST_DATA, 
         rag_components,
     )
@@ -84,7 +85,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     try:
-        main()
+        asyncio.run(main())
     except Exception:
         logger.exception("Evaluation pipeline failed.")
         raise

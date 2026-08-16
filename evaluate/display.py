@@ -45,4 +45,8 @@ def display_ragas_summary(
     # -------------------------------------------------
     # Log the per-question evaluation summary
     # -------------------------------------------------
-    logger.info(df[display_columns].to_string(index=False))
+    
+    logger.info(
+        "\n%s",
+        df[display_columns].to_string(index=False)
+    )

@@ -1,7 +1,5 @@
 from dataclasses import dataclass, field
 from typing import Any
-from langchain_openai import ChatOpenAI
-from langchain_community.vectorstores import FAISS
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.language_models import BaseChatModel
 
@@ -52,10 +50,9 @@ class Metrics:
     context_recall: float = 0
  
 @dataclass
-class PipelineComponents:
-    vectorstore: FAISS
+class PipelineComponents: 
     retriever: dict[str, BaseRetriever | None]
-    faiss_retriever: BaseRetriever
+    qdrant_retriever: BaseRetriever
     bm25_retriever: BaseRetriever | None 
 
 @dataclass
