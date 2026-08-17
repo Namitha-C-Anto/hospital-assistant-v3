@@ -1,4 +1,4 @@
-from config import GROQ_API_KEY, OPENAI_API_KEY
+from config import GROQ_API_KEY, OPENAI_API_KEY, OPENROUTER_API_KEY
 from rag.initializer import initialize_rag
 from rag.pipeline import run_rag_pipeline
 from llm.llm import get_llm
@@ -22,6 +22,9 @@ class RAGService:
 
         elif provider == "openai":
             api_key = OPENAI_API_KEY
+
+        elif provider == "openrouter":
+            api_key = OPENROUTER_API_KEY
 
         else:
             raise ValueError(f"Unsupported LLM provider: {provider}")

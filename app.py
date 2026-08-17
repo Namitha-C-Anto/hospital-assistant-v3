@@ -3,6 +3,7 @@ import streamlit as st
 from config import (
     LLM_PROVIDER,
     LLM_MODEL,
+    FASTAPI_URL
 )  
 from utils.logger import logger      
 
@@ -20,8 +21,6 @@ from ui.example_questions import render_example_questions
 from ui.sources import render_sources 
 
 # -------------------------------------------------------------
-FASTAPI_URL = "http://localhost:8000"
-
 def call_chat_api(
     question: str,
     provider: str,

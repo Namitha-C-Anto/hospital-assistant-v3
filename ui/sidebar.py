@@ -78,7 +78,7 @@ def render_sidebar() -> None:
 
         provider = st.selectbox(
             "LLM Provider",
-            ["Groq", "OpenAI"],
+            ["Groq", "OpenAI", "OpenRouter"],
             key="llm_provider",
         )
         st.session_state["provider"] = provider.lower()
@@ -100,6 +100,17 @@ def render_sidebar() -> None:
                     "llama-3.3-70b-versatile",
                     "llama-3.1-8b-instant",
                     "qwen/qwen3.6-27b",
+                ],
+                key="llm_model",
+            )
+            
+        elif provider == "OpenRouter":
+            model = st.selectbox(
+                "Model",
+                [
+                    "openai/gpt-oss-120b",
+                    "qwen/qwen3-235b-a22b",
+                    "openrouter/free",
                 ],
                 key="llm_model",
             )

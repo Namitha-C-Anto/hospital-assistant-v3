@@ -28,6 +28,8 @@ CHUNKS_PATH = BASE_DIR / "db" / "chunks"
 QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
 QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
 
+FASTAPI_URL = os.getenv("FASTAPI_URL", "http://localhost:8000")
+
 EVALUATION_PATH = BASE_DIR / "evaluate" / "evaluation_results"
 RAGAS_RESULTS_PATH = EVALUATION_PATH / "ragas_results" / DATASET
 COMPARISON_PATH = EVALUATION_PATH / "comparisons"
@@ -140,18 +142,18 @@ WELCOME_CAPTION = "⚡AI-powered answers grounded in your hospital knowledge bas
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 # --------------------------------------------------
 # Validation
 # --------------------------------------------------
-
 if not OPENAI_API_KEY:
-    raise ValueError(
-        "OPENAI_API_KEY is missing. "
-        "Set it as an environment variable or Streamlit Secret."
-    )
+    print("Warning: OPENAI_API_KEY not found.")
 
 if not GROQ_API_KEY:
     print("Warning: GROQ_API_KEY not found.")
+
+if not OPENROUTER_API_KEY:
+    print("Warning: OPENROUTER_API_KEY not found.")
 
 RUN_DATE = datetime.now().strftime("%Y%m%d_%H%M%S")

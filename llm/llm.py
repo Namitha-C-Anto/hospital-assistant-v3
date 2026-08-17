@@ -1,7 +1,7 @@
 from langchain_openai import ChatOpenAI
 from langchain_groq import ChatGroq
 
-from config import TEMPERATURE, LLM_PROVIDER, LLM_MODEL, OPENAI_API_KEY, GROQ_API_KEY
+from config import TEMPERATURE, LLM_PROVIDER, LLM_MODEL
 
 
 def get_llm(
@@ -27,6 +27,14 @@ def get_llm(
         return ChatOpenAI(
             model=model,
             api_key=api_key,
+            temperature=TEMPERATURE,
+        )
+        
+    if provider == "openrouter":
+        return ChatOpenAI(
+            model=model,
+            api_key=api_key,
+            base_url="https://openrouter.ai/api/v1",
             temperature=TEMPERATURE,
         )
 
