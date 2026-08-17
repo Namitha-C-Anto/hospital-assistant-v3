@@ -5,10 +5,11 @@ langchain-core==0.3.86
 langchain-openai==0.3.28
 langchain-huggingface==0.1.2
 langchain-text-splitters==0.3.11
-langchain-groq
+langchain-groq==0.3.8
 
 # LLM APIs
 openai==1.109.1
+groq==0.37.1
 
 # Environment Variables
 python-dotenv==1.1.1
@@ -18,23 +19,31 @@ ragas==0.4.3
 datasets==4.0.0
 
 # Dashboard
-streamlit==1.49.1 
+streamlit==1.49.1
 
+# Observability
 langsmith==0.4.27
 
-rank_bm25==0.2.2
+# Retrieval
+rank-bm25==0.2.2
 
+# PDF
 PyMuPDF==1.26.4
 
+# Embeddings / Reranking
 torch==2.5.1
 torchvision==0.20.1
 transformers==4.57.6
 accelerate==1.14.0
 sentence-transformers==5.1.0
 
-uvicorn
-fastapi
-pytest
-requests
+# API
+fastapi==0.141.1
+uvicorn==0.52.1
+requests==2.34.2
 
-qdrant-client
+# Vector Database
+qdrant-client==1.19.0
+
+# Testing
+pytest==9.1.1
