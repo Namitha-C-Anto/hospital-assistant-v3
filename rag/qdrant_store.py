@@ -5,7 +5,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 
-from config import QDRANT_PATH
+from config import QDRANT_HOST, QDRANT_PORT
 from rag.embeddings import get_embeddings
 from utils.logger import logger
 
@@ -14,7 +14,10 @@ COLLECTION_NAME = "hospital_documents"
 def get_qdrant_client() -> QdrantClient:
     """Create and return a local Qdrant client."""
 
-    return QdrantClient(path = str(QDRANT_PATH))
+    return QdrantClient(
+        host=QDRANT_HOST,
+        port=QDRANT_PORT,
+    )
 
 def create_collection() -> None:
     """Create the hospital documents collection if it does not exist."""

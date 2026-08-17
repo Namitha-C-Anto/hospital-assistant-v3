@@ -1,9 +1,9 @@
 from qdrant_client import QdrantClient
-from config import QDRANT_PATH
+from rag.qdrant_store import get_qdrant_client
 
 
 def test_qdrant_local():
-    client = QdrantClient(path = QDRANT_PATH)
+    client = get_qdrant_client()
 
     collections = client.get_collections()
 

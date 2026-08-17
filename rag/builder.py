@@ -20,6 +20,9 @@ def build_vector_database() -> None:
     BM25 retrieval, and ingest the chunks into Qdrant.
     """
 
+    client = None
+
+
     try:
         logger.info("Building vector database.")
 

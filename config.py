@@ -25,7 +25,8 @@ DATASET = os.getenv("DATASET", "dataset_v1")
 DOCS_PATH = BASE_DIR / "docs" / DATASET 
 CHUNKS_PATH = BASE_DIR / "db" / "chunks"
 
-QDRANT_PATH = BASE_DIR / "db" / "qdrant_data"
+QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
+QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
 
 EVALUATION_PATH = BASE_DIR / "evaluate" / "evaluation_results"
 RAGAS_RESULTS_PATH = EVALUATION_PATH / "ragas_results" / DATASET
