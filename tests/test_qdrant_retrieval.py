@@ -1,6 +1,6 @@
+from config import COLLECTION_NAME
 from langchain_core.documents import Document
 from rag.qdrant_store import (
-    COLLECTION_NAME,
     get_qdrant_client,
     search_qdrant,
 )

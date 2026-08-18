@@ -1,5 +1,5 @@
+from config import COLLECTION_NAME
 from rag.qdrant_store import(
-    COLLECTION_NAME,
     get_qdrant_client,
     create_collection,
 )

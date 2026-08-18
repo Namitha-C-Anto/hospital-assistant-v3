@@ -1,7 +1,7 @@
+from config import COLLECTION_NAME
 from qdrant_client import QdrantClient
 
 from rag.qdrant_store import (
-    COLLECTION_NAME,
     get_qdrant_client,
     get_embeddings,
 )

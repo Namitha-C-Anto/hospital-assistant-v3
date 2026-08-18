@@ -2,7 +2,7 @@ from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
 from langchain_community.retrievers import BM25Retriever
 
-from rag.qdrant_retriever import QdrantRetriever
+from rag.qdrant_retriever import QdrantRetriever, load_documents_from_qdrant
 from rag.qdrant_store import get_qdrant_client
 from rag.embeddings import get_embeddings
 
@@ -10,10 +10,8 @@ from utils.logger import logger
 
 from config import (
     TOP_K,
-    CHUNKS_PATH,
     RETRIEVAL_MODE,
-)
-from rag.storage import load_chunks
+) 
 from rag.rrf import reciprocal_rank_fusion
  
 
@@ -44,8 +42,8 @@ def create_retriever() -> dict[str, BaseRetriever | None]:
 
     bm25_retriever = None
     
-    if RETRIEVAL_MODE == "hybrid":
-        documents = load_chunks(CHUNKS_PATH)
+    if RETRIEVAL_MODE == "hybrid": 
+        documents = load_documents_from_qdrant(client)
 
         bm25_retriever = BM25Retriever.from_documents(documents)
         bm25_retriever.k = TOP_K

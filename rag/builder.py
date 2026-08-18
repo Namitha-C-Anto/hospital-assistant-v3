@@ -4,7 +4,6 @@ from config import (
  
 from rag.loader import load_documents_from_folder
 from rag.splitter import split_documents
-from rag.storage import save_chunks 
 from rag.qdrant_store import (
     get_qdrant_client,
     create_collection,
@@ -31,9 +30,6 @@ def build_vector_database() -> None:
 
         # Step 2: Split into chunks 
         chunks = split_documents(documents)  
-
-        # Save chunks for BM25 / hybrid retrieval. 
-        save_chunks(chunks, CHUNKS_PATH)
 
         # Step 3: Create Qdrant collection
         create_collection()

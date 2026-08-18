@@ -22,11 +22,11 @@ LOG_FORMAT = os.getenv("LOG_FORMAT", "%(asctime)s | %(levelname)s | %(name)s | %
 BASE_DIR = Path(__file__).resolve().parent
 DATASET = os.getenv("DATASET", "dataset_v1")
 
-DOCS_PATH = BASE_DIR / "docs" / DATASET 
-CHUNKS_PATH = BASE_DIR / "db" / "chunks"
+DOCS_PATH = BASE_DIR / "docs" / DATASET  
 
 QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
 QDRANT_PORT = int(os.getenv("QDRANT_PORT", "6333"))
+COLLECTION_NAME = "hospital_documents"
 
 FASTAPI_URL = os.getenv("FASTAPI_URL", "http://localhost:8000")
 

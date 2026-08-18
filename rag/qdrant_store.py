@@ -5,11 +5,9 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 
-from config import QDRANT_HOST, QDRANT_PORT
+from config import QDRANT_HOST, QDRANT_PORT, COLLECTION_NAME
 from rag.embeddings import get_embeddings
 from utils.logger import logger
-
-COLLECTION_NAME = "hospital_documents"
 
 def get_qdrant_client() -> QdrantClient:
     """Create and return a local Qdrant client."""
