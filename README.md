@@ -1,274 +1,282 @@
 # 🏥 Hospital Assistant RAG v3
 
-An AI-powered conversational assistant that answers hospital policy and patient-service questions using **Retrieval-Augmented Generation (RAG)**.
+An AI-powered **Retrieval-Augmented Generation (RAG)** application that answers hospital policy and patient-service questions using trusted document content.
 
-Version 3 evolves the application from a Streamlit-based RAG prototype into a more **modular, API-driven, and containerized architecture** using **Qdrant, FastAPI, Streamlit, and Docker Compose**.
-
-The system retrieves relevant information from hospital documents, optionally combines semantic and keyword retrieval, reranks the retrieved documents, and uses an LLM to generate a grounded response.
+Version 3 evolves the application from a Streamlit-based RAG prototype into a **modular, API-driven, configurable, and containerized application** using Qdrant, FastAPI, Streamlit, and Docker Compose.
 
 ---
 
-## 🚀 Highlights
+## 🎥 Demo
 
-* 🧠 End-to-end Retrieval-Augmented Generation
-* 🗄️ Qdrant vector database
-* 🔍 Semantic retrieval using Qdrant
-* 🔀 Optional hybrid retrieval using Qdrant + BM25 + RRF
-* 🎯 Cross-Encoder reranking
-* ⚡ FastAPI REST API
-* 💬 Streamlit conversational interface
-* 🐳 Docker and Docker Compose
-* 🤖 Multiple LLM provider support
-* 📊 RAGAS evaluation
-* 📝 Structured logging
-* 🧪 Automated tests
-* 🔐 Environment-based configuration
-* 📚 Retrieval result and source metadata
+> Add your demo video here.
+
+**▶️ [Watch the Demo Video](YOUR_DEMO_VIDEO_LINK)**
+
+The demo showcases:
+
+* 💬 Conversational hospital policy and patient-service questions
+* 🔎 Semantic and hybrid retrieval
+* 🎯 Optional cross-encoder reranking
+* 🤖 LLM provider and model selection
+* 📋 Retrieved document metadata displayed in the UI
+* ⚡ FastAPI backend
+* 🐳 Dockerized deployment
 
 ---
 
-# 🎯 Project Overview
+## 📸 Screenshots
 
-The Hospital Assistant is designed to answer questions about:
+### 💬 Chat Interface
 
-* Hospital policies
-* Admissions
-* Insurance
-* Patient services
-* Other information contained in the hospital knowledge base
+![Hospital Assistant Chat](assets/screenshots/chat-interface.png)
 
-Instead of asking an LLM to answer directly from its internal knowledge, the application first retrieves relevant information from the hospital document collection.
+The response interface displays the generated answer together with **retrieval/source metadata**, making the retrieved context more transparent and easier to verify.
+
+### ⚙️ Model & Retrieval Configuration
+
+![Model and Retrieval Configuration](assets/screenshots/settings.png)
+
+Users can configure the available **LLM provider/model**, retrieval mode, and optional reranking through the application UI.
+
+### ⚡ FastAPI Swagger UI
+
+![FastAPI Swagger UI](assets/screenshots/fastapi-swagger.png)
+
+### 🗄️ Qdrant
+
+![Qdrant](assets/screenshots/qdrant.png)
+
+> Replace the screenshot filenames above with the actual files you add to your repository.
+
+---
+
+## ✨ Key Features
+
+* 🧠 **End-to-end RAG** for hospital policies and patient services
+* 🗄️ **Qdrant vector database** for persistent vector storage
+* 🔎 **Semantic retrieval** using Qdrant
+* 🔀 **Hybrid retrieval** using Qdrant + BM25
+* 🏆 **Reciprocal Rank Fusion (RRF)** for hybrid result fusion
+* 🎯 **Optional cross-encoder reranking** for semantic or hybrid retrieval
+* 📋 **Retrieval/source metadata** displayed in the UI
+* 🤖 **Multiple LLM providers and models** selectable through the UI
+* ⚡ **FastAPI REST API** with dependency injection and lifespan management
+* 💬 **Streamlit conversational interface**
+* 📝 **Structured terminal logging**
+* 🧪 **Automated tests** for API and Qdrant functionality
+* 📊 **RAGAS evaluation**
+* 🐳 **Docker and Docker Compose**
+* 🔐 **Environment-based API key configuration**
+
+---
+
+## 🏗️ Architecture
 
 ```text
-User Question
-      │
-      ▼
-Document Retrieval
-      │
-      ▼
-Relevant Hospital Context
-      │
-      ▼
-LLM
-      │
-      ▼
-Grounded Answer
-```
-
-This RAG approach helps keep responses grounded in the available hospital knowledge base.
-
----
-
-# 🏗️ Architecture
-
-Version 3 separates the frontend, API layer, RAG service, and vector database.
-
-```text
-                         User
-                           │
-                           ▼
-                  ┌─────────────────┐
-                  │    Streamlit    │
-                  │    Frontend     │
-                  └────────┬────────┘
-                           │
-                       HTTP / REST
-                           │
-                           ▼
-                  ┌─────────────────┐
-                  │     FastAPI     │
-                  │     Backend     │
-                  └────────┬────────┘
-                           │
-                           ▼
-                  ┌─────────────────┐
-                  │    RAGService   │
-                  └────────┬────────┘
-                           │
-                ┌──────────┴──────────┐
-                │                     │
-                ▼                     ▼
-        ┌───────────────┐      ┌───────────────┐
-        │    Qdrant     │      │      LLM      │
-        │ Vector Search │      │    Provider   │
-        └───────┬───────┘      └───────────────┘
-                │
-                ▼
-         Retrieved Context
-                │
-                ▼
-          Context + Question
-                │
-                ▼
-          Grounded Answer
+                              User
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │    Streamlit    │
+                       │    Frontend     │
+                       └────────┬────────┘
+                                │
+                            HTTP / REST
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │     FastAPI     │
+                       │     Backend     │
+                       └────────┬────────┘
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │   RAGService    │
+                       └────────┬────────┘
+                                │
+                    ┌───────────┴───────────┐
+                    │                       │
+                    ▼                       ▼
+             Retrieval Strategy       LLM Provider
+                    │                  + Model
+          ┌─────────┴─────────┐
+          │                   │
+          ▼                   ▼
+      Semantic             Hybrid
+          │                   │
+       Qdrant          ┌──────┴──────┐
+          │             │             │
+          │          Qdrant          BM25
+          │             │             │
+          │             └──────┬──────┘
+          │                    │
+          │                   RRF
+          │                    │
+          └──────────┬─────────┘
+                     │
+                     ▼
+              Optional Reranker
+                     │
+                     ▼
+              Top-K Documents
+                     │
+                     ▼
+             Retrieved Context
+                     │
+                     ▼
+                Selected LLM
+                     │
+                     ▼
+             Answer + Metadata
 ```
 
 ---
 
-# 📄 Document Ingestion
+## 📄 Document Ingestion
 
-Hospital documents are processed and stored in the vector database through the ingestion pipeline.
+Hospital documents are processed through the ingestion pipeline:
 
 ```text
 Hospital Documents
-        │
-        ▼
+       ↓
 Document Loading
-        │
-        ▼
+       ↓
 Text Extraction
-        │
-        ▼
+       ↓
 Text Splitting
-        │
-        ▼
+       ↓
 Embedding Generation
-        │
-        ├──────────────► Saved Chunks
-        │                  │
-        │                  ▼
-        │                 BM25
-        │
-        ▼
-      Qdrant
+       ↓
+      ┌┴───────────────┐
+      ▼                ▼
+   Qdrant            Chunks
+ Vector Store           │
+                       ▼
+                      BM25
 ```
 
-The chunks are stored separately so that BM25 keyword retrieval can be used when hybrid retrieval is enabled.
+The processed chunks and metadata support both semantic and keyword-based retrieval.
 
 ---
 
-# 🔍 Retrieval Pipeline
+## 🔍 Retrieval Pipeline
 
-The retrieval system supports two modes.
-
-### Qdrant Retrieval
+### Semantic Search
 
 ```text
-User Question
-      │
-      ▼
-Embedding
-      │
-      ▼
-Qdrant Semantic Search
-      │
-      ▼
-Relevant Documents
+User Query
+    ↓
+Query Embedding
+    ↓
+Qdrant Similarity Search
+    ↓
+Retrieved Documents
+    ↓
+Optional Reranker
+    ↓
+Top-K Context
 ```
 
-### Hybrid Retrieval
+### Hybrid Search
 
 ```text
-                   User Question
-                         │
-              ┌──────────┴──────────┐
-              ▼                     ▼
-        Qdrant Search           BM25 Search
-        Semantic Search         Keyword Search
-              │                     │
-              └──────────┬──────────┘
-                         ▼
-              Reciprocal Rank Fusion
-                         │
-                         ▼
+                    User Query
+                        │
+                ┌───────┴───────┐
+                ▼               ▼
+           Qdrant Search      BM25 Search
+           Semantic Search    Keyword Search
+                │               │
+                └───────┬───────┘
+                        ▼
+                       RRF
+                        ↓
                   Deduplication
-                         │
-                         ▼
-                Cross-Encoder
-                   Reranking
-                         │
-                         ▼
-                Top Ranked Context
+                        ↓
+                 Optional Reranker
+                        ↓
+                   Top-K Context
 ```
 
-The retrieval mode can be configured through the `RETRIEVAL_MODE` environment variable.
+The retrieval mode can be configured as:
 
-Supported modes:
+* `qdrant` — semantic vector search
+* `hybrid` — Qdrant + BM25 + RRF
 
-```text
-qdrant
-hybrid
-```
+The **reranker is independent of the retrieval mode** and can optionally be enabled for either semantic or hybrid retrieval.
 
 ---
 
-# 🔀 Reciprocal Rank Fusion
+## 🎯 Reranking
 
-When hybrid retrieval is enabled, the system combines:
+Retrieved documents can optionally be reranked using a cross-encoder.
 
-* Qdrant semantic search
-* BM25 keyword search
-
-The results are merged using **Reciprocal Rank Fusion (RRF)**.
-
-RRF allows documents that appear highly ranked across multiple retrieval methods to receive stronger combined rankings.
-
-This helps combine:
-
-* semantic similarity
-* exact keyword matching
-
-into a single retrieval result.
-
----
-
-# 🎯 Cross-Encoder Reranking
-
-Retrieved documents can be reranked using a Cross-Encoder.
-
-Default model:
+**Default model:**
 
 ```text
 BAAI/bge-reranker-base
 ```
 
-The reranker evaluates the relationship between the user query and retrieved documents and returns the most relevant documents to the generation stage.
+The reranker evaluates the relationship between the **user query and retrieved documents** and improves document ordering before context is passed to the LLM.
 
-Reranking can be enabled or disabled through:
+Reranking can be controlled through:
 
 ```text
 USE_RERANKER
-```
-
-The number of documents returned by the reranker can be configured using:
-
-```text
+RERANKER_MODEL
 RERANKER_TOP_N
 ```
 
 ---
 
-# 🤖 Answer Generation
+## 🤖 Multiple LLM Providers & Models
 
-The application supports multiple LLM providers.
+The application supports multiple LLM providers:
 
-Currently supported providers include:
+* **Groq**
+* **OpenAI**
+* **OpenRouter**
 
-* Groq
-* OpenAI
-* OpenRouter
+The provider and model can be selected through the UI/API without changing the core RAG pipeline.
 
-The provider and model can be selected through the API request and environment configuration.
-
-The LLM receives:
+The selected LLM receives:
 
 ```text
 User Question
-+
+      +
 Conversation History
-+
+      +
 Retrieved Context
+      ↓
+Selected LLM
+      ↓
+Grounded Answer
 ```
 
-and generates the final response.
+This makes it possible to compare different models while keeping retrieval and application logic consistent.
 
 ---
 
-# ⚡ FastAPI Backend
+## 📋 Retrieval Metadata & Source Transparency
 
-FastAPI provides the REST API layer between the frontend and RAG pipeline.
+The application returns retrieval information along with the generated answer.
 
-The application uses a dedicated `RAGService` to keep the RAG logic separate from the API routes.
+The UI exposes relevant document metadata such as:
+
+* Source document
+* Page information
+* Retrieved content/chunks
+* Retrieval information
+
+This provides greater **transparency, traceability, and debugging capability** for RAG responses.
+
+---
+
+## ⚡ FastAPI Backend
+
+FastAPI provides the API layer between the Streamlit frontend and RAG pipeline.
+
+The backend uses a dedicated `RAGService` to separate API handling from RAG logic.
 
 ```text
 FastAPI
@@ -277,257 +285,123 @@ FastAPI
 RAGService
    │
    ├── Initialize RAG components
-   ├── Select LLM provider
-   ├── Run retrieval pipeline
+   ├── Select LLM provider/model
+   ├── Run retrieval
+   ├── Apply optional reranking
    ├── Generate answer
-   └── Return retrieval metadata
+   └── Return answer + retrieval metadata
 ```
+
+The application also uses:
+
+* **FastAPI lifespan** for application-level initialization
+* **Dependency injection** for `RAGService`
+* `/health` endpoint
+* `/chat` endpoint
+* Swagger/OpenAPI documentation
 
 ---
 
-## ❤️ Health Check
+## 📝 Logging & Error Handling
 
-```http
-GET /health
-```
+The application uses **structured terminal logging** to make application execution and failures easier to monitor and debug.
 
-Example response:
+Logs include useful information such as:
 
-```json
-{
-  "status": "healthy."
-}
-```
+* Application events
+* Retrieval execution
+* Service initialization
+* Errors and exceptions
+* Configuration-related information
 
----
+Application errors are handled at the appropriate service/API boundaries so that failures can be logged and returned as controlled API responses rather than exposing raw internal exceptions.
 
-## 💬 Chat Endpoint
-
-```http
-POST /chat
-```
-
-Example request:
-
-```json
-{
-  "question": "What is the hospital visitor policy?",
-  "provider": "groq",
-  "model": "llama-3.3-70b-versatile",
-  "chat_history": []
-}
-```
-
-The endpoint returns:
-
-```json
-{
-  "answer": "Generated answer based on the hospital knowledge base.",
-  "retrieval_result": {}
-}
-```
-
-The actual response includes the retrieval information generated by the RAG pipeline.
+> API keys and sensitive configuration values are not hardcoded or logged.
 
 ---
 
-# 🧩 FastAPI Lifespan
+## 🗄️ Qdrant Vector Database
 
-The application initializes `RAGService` during FastAPI startup using the **lifespan mechanism**.
+Version 3 migrated the vector storage layer from **FAISS to Qdrant**.
 
 ```text
-Application Startup
-        │
-        ▼
-FastAPI Lifespan
-        │
-        ▼
-RAGService()
-        │
-        ▼
-Initialize RAG Components
-        │
-        ▼
-Application Ready
-```
+Previous
 
-This avoids repeatedly initializing expensive RAG components for every API request.
+Application → FAISS
 
----
 
-# 🔗 Dependency Injection
+Version 3
 
-The `/chat` endpoint receives `RAGService` through FastAPI dependency injection.
-
-```text
-/chat
-  │
-  ▼
-Depends(get_rag_service)
-  │
-  ▼
+Streamlit
+    ↓
+FastAPI
+    ↓
 RAGService
-```
-
-This keeps route handling separate from service initialization and makes the application easier to test and maintain.
-
----
-
-# 🗄️ Qdrant Vector Database
-
-Version 3 migrates the vector storage layer from **FAISS to Qdrant**.
-
-### Previous Architecture
-
-```text
-Application
-    │
-    ▼
-FAISS
-```
-
-### Version 3
-
-```text
-Application
-    │
-    ▼
-RAG Service
-    │
-    ▼
+    ↓
 Qdrant
 ```
 
-Qdrant runs as an independent service, allowing the vector database to be separated from the application.
-
-This makes the architecture better suited for containerized and future cloud deployment.
+Qdrant runs as an independent Docker service and uses persistent storage so that vector data survives container recreation.
 
 ---
 
-# 🐳 Docker Architecture
+## 🐳 Docker Architecture
 
-The application uses Docker Compose to run separate services.
+The application uses Docker Compose to run separate services:
 
 ```text
-┌────────────────────────────────────────────┐
-│               Docker Compose               │
-│                                            │
-│  ┌─────────────────┐                       │
-│  │    Streamlit    │                       │
-│  │                 │                       │
-│  │     :8501       │                       │
-│  └────────┬────────┘                       │
-│           │                                │
-│           │ HTTP                           │
-│           ▼                                │
-│  ┌─────────────────┐                       │
-│  │     FastAPI     │                       │
-│  │                 │                       │
-│  │     :8000       │                       │
-│  └────────┬────────┘                       │
-│           │                                │
-│           ▼                                │
-│  ┌─────────────────┐                       │
-│  │     Qdrant      │                       │
-│  │                 │                       │
-│  │     :6333       │                       │
-│  └─────────────────┘                       │
-│                                            │
-└────────────────────────────────────────────┘
+┌───────────────────────────────────────┐
+│            Docker Compose             │
+│                                       │
+│  ┌──────────────┐                     │
+│  │  Streamlit   │ :8501               │
+│  └──────┬───────┘                     │
+│         │ HTTP                        │
+│         ▼                             │
+│  ┌──────────────┐                     │
+│  │   FastAPI    │ :8000               │
+│  └──────┬───────┘                     │
+│         │                             │
+│         ▼                             │
+│  ┌──────────────┐                     │
+│  │   Qdrant     │ :6333               │
+│  └──────────────┘                     │
+│                                       │
+└───────────────────────────────────────┘
 ```
 
-### Services
+| Service   | Purpose                | Port |
+| --------- | ---------------------- | ---: |
+| Streamlit | User interface         | 8501 |
+| FastAPI   | REST API + RAG service | 8000 |
+| Qdrant    | Vector database        | 6333 |
 
-| Service     | Purpose                  | Port |
-| ----------- | ------------------------ | ---: |
-| `streamlit` | User interface           | 8501 |
-| `fastapi`   | REST API and RAG service | 8000 |
-| `qdrant`    | Vector database          | 6333 |
+Inside Docker, services communicate using their **Docker Compose service names** rather than `localhost`.
 
 ---
 
-# 🌐 Docker Networking
+## 📊 RAG Evaluation
 
-The services communicate using Docker Compose service names.
+The project includes an evaluation framework using **RAGAS** to measure retrieval and generation quality.
 
-Streamlit communicates with FastAPI using:
+### Metrics
 
-```text
-http://fastapi:8000
-```
+| Metric            | Purpose                                                       |
+| ----------------- | ------------------------------------------------------------- |
+| Faithfulness      | Measures whether the answer is supported by retrieved context |
+| Answer Relevancy  | Measures how well the answer addresses the question           |
+| Context Precision | Measures the relevance of retrieved documents                 |
+| Context Recall    | Measures whether the required information was retrieved       |
 
-FastAPI communicates with Qdrant using:
-
-```text
-qdrant:6333
-```
-
-This is different from local development, where `localhost` is used.
-
-```text
-Inside Docker:
-
-streamlit
-    │
-    ▼
-fastapi:8000
-    │
-    ▼
-qdrant:6333
-```
-
-From the host machine:
-
-```text
-localhost:8501  → Streamlit
-localhost:8000  → FastAPI
-localhost:6333  → Qdrant
-```
+Evaluation experiments are used to compare retrieval configurations and identify weaknesses in the RAG pipeline.
 
 ---
 
-# 💾 Persistent Vector Storage
+## 🧪 Testing
 
-Qdrant uses persistent storage so that vector data is not lost when the container is recreated.
+The project includes automated tests covering API and Qdrant functionality.
 
-```text
-Docker Volume
-     │
-     ▼
-Qdrant Storage
-     │
-     ▼
-Vector Collection
-```
-
-The Docker Compose configuration uses a persistent Qdrant volume.
-
----
-
-# 📊 RAG Evaluation
-
-The project includes an automated evaluation framework using **RAGAS**.
-
-The evaluation process measures both retrieval quality and generated-answer quality.
-
-## Metrics
-
-| Metric                | Description                                                                  |
-| --------------------- | ---------------------------------------------------------------------------- |
-| **Faithfulness**      | Measures whether the generated answer is supported by the retrieved context. |
-| **Answer Relevancy**  | Measures how well the answer addresses the user's question.                  |
-| **Context Precision** | Measures the relevance of retrieved documents.                               |
-| **Context Recall**    | Measures whether the required information was retrieved.                     |
-
-Evaluation artifacts include experiment results and comparison data used during RAG development.
-
----
-
-# 🧪 Testing
-
-The project includes automated tests covering the API and Qdrant-related functionality.
-
-Test areas include:
+Current test areas include:
 
 * Chat endpoint
 * Health endpoint
@@ -537,7 +411,7 @@ Test areas include:
 * Qdrant retrieval
 * Qdrant retriever
 
-Run the tests using:
+Run tests with:
 
 ```bash
 pytest
@@ -545,19 +419,19 @@ pytest
 
 ---
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 | Category          | Technology                           |
 | ----------------- | ------------------------------------ |
 | Language          | Python                               |
 | RAG Framework     | LangChain                            |
 | Vector Database   | Qdrant                               |
-| Embeddings        | Hugging Face / sentence-transformers |
+| Embeddings        | Hugging Face / Sentence Transformers |
 | Keyword Retrieval | BM25                                 |
 | Hybrid Retrieval  | Qdrant + BM25 + RRF                  |
-| Reranker          | BAAI/bge-reranker-base               |
+| Reranker          | `BAAI/bge-reranker-base`             |
 | LLM Providers     | Groq, OpenAI, OpenRouter             |
-| API               | FastAPI                              |
+| Backend           | FastAPI                              |
 | Frontend          | Streamlit                            |
 | Evaluation        | RAGAS                                |
 | PDF Processing    | PyMuPDF                              |
@@ -568,26 +442,24 @@ pytest
 
 ---
 
-# 📂 Project Structure
+## 📂 Project Structure
+
+The following structure reflects the current repository organization.
 
 ```text
-hospital-assistant-v3
+hospital-assistant-v3/
 │
 ├── app/
 │   ├── api/
 │   │   └── routes.py
-│   │
 │   ├── schemas/
 │   │   └── chat.py
-│   │
 │   ├── services/
 │   │   └── rag_service.py
-│   │
 │   ├── dependencies.py
 │   └── main.py
 │
 ├── assets/
-├── db/
 ├── docs/
 ├── evaluate/
 ├── llm/
@@ -627,6 +499,7 @@ hospital-assistant-v3
 ├── build_db.py
 ├── config.py
 ├── Dockerfile
+├── Dockerfile.streamlit
 ├── docker-compose.yml
 ├── pyproject.toml
 ├── requirements.txt
@@ -635,11 +508,11 @@ hospital-assistant-v3
 
 ---
 
-# ⚙️ Configuration
+## ⚙️ Configuration
 
 The application uses environment variables for configuration.
 
-### RAG Configuration
+### RAG
 
 ```text
 DATASET
@@ -649,7 +522,7 @@ CHUNK_OVERLAP
 TOP_K
 ```
 
-### Retrieval Configuration
+### Retrieval
 
 ```text
 RETRIEVAL_MODE
@@ -662,7 +535,7 @@ qdrant
 hybrid
 ```
 
-### Reranker Configuration
+### Reranking
 
 ```text
 RERANKER_MODEL
@@ -670,7 +543,7 @@ RERANKER_TOP_N
 USE_RERANKER
 ```
 
-### LLM Configuration
+### LLM
 
 ```text
 LLM_PROVIDER
@@ -686,352 +559,72 @@ OPENAI_API_KEY
 OPENROUTER_API_KEY
 ```
 
-### Logging
-
-```text
-LOG_LEVEL
-DEBUG
-```
-
 API keys are loaded through environment variables and should never be hardcoded or committed to the repository.
 
 ---
 
-# 🏃 Running Locally
+## 🚀 Running the Project
 
-## 1. Clone the repository
+### 1. Clone
 
 ```bash
 git clone https://github.com/Namitha-C-Anto/hospital-assistant-v3.git
 cd hospital-assistant-v3
 ```
 
-## 2. Create a virtual environment
+### 2. Configure Environment
 
-```bash
-python -m venv .venv
-```
+Create a `.env` file with the required API keys and configuration.
 
-### Windows
-
-```bash
-.venv\Scripts\activate
-```
-
-### Linux / macOS
-
-```bash
-source .venv/bin/activate
-```
-
-## 3. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-## 4. Configure environment variables
-
-Create a `.env` file:
-
-```env
-GROQ_API_KEY=your_api_key
-```
-
-Add the remaining configuration variables as required.
-
-## 5. Start Qdrant
-
-```bash
-docker compose up -d qdrant
-```
-
-## 6. Build the vector database
-
-```bash
-python build_db.py
-```
-
-This loads the hospital documents, creates chunks, generates embeddings, and stores the vectors in Qdrant.
-
-## 7. Start FastAPI
-
-```bash
-uvicorn app.main:app --reload
-```
-
-Swagger documentation:
-
-```text
-http://localhost:8000/docs
-```
-
-## 8. Start Streamlit
-
-```bash
-streamlit run app.py
-```
-
----
-
-# 🐳 Running with Docker Compose
-
-Build and start all services:
+### 3. Run with Docker Compose
 
 ```bash
 docker compose up --build
 ```
 
-Run in the background:
+The application starts:
 
-```bash
-docker compose up -d
-```
-
-Check the services:
-
-```bash
-docker compose ps
-```
-
-Stop the services:
-
-```bash
-docker compose down
-```
-
-Access the application:
-
-```text
-Streamlit:
-http://localhost:8501
-
-FastAPI:
-http://localhost:8000
-
-Swagger:
-http://localhost:8000/docs
-
-Qdrant:
-http://localhost:6333
-```
-
----
-
-# 🔐 Security
-
-API keys are provided through environment variables.
-
-Do not commit:
-
-```text
-.env
-```
-
-Recommended `.gitignore` entries:
-
-```gitignore
-.env
-.venv/
-__pycache__/
-.pytest_cache/
-```
-
----
-
-# 🔄 Project Evolution
-
-The project was developed incrementally.
-
-## Version 1 — Basic RAG
-
-```text
-Documents
-    ↓
-Chunking
-    ↓
-Embeddings
-    ↓
-FAISS
-    ↓
-LLM
-    ↓
-Streamlit
-```
-
-Focused on understanding the fundamentals of RAG.
-
----
-
-## Version 2 — Advanced Retrieval
-
-```text
-Documents
-    ↓
-FAISS + BM25
-    ↓
-Hybrid Retrieval
-    ↓
-RRF
-    ↓
-Cross-Encoder Reranking
-    ↓
-LLM
-    ↓
-Streamlit
-```
-
-Focused on improving retrieval quality and evaluating different retrieval strategies.
-
----
-
-## Version 3 — Modular & Containerized RAG
-
-```text
-Streamlit
-    ↓
-FastAPI
-    ↓
-RAGService
-    ↓
-Qdrant
-    ↓
-Optional BM25 + RRF
-    ↓
-Cross-Encoder Reranking
-    ↓
-LLM
-```
-
-Version 3 focuses on:
-
-* Migrating from FAISS to Qdrant
-* Separating API and UI layers
-* Introducing a dedicated RAG service
-* Supporting configurable LLM providers
-* Containerizing the application
-* Running multiple services with Docker Compose
-* Adding automated tests
-* Preparing the application for future cloud deployment
-
----
-
-# 📚 Key Engineering Concepts Demonstrated
-
-This project demonstrates practical experience with:
-
-* Retrieval-Augmented Generation
-* Document ingestion
-* Text chunking
-* Embeddings
-* Semantic search
-* Vector databases
-* Qdrant
-* BM25
-* Hybrid retrieval
-* Reciprocal Rank Fusion
-* Cross-Encoder reranking
-* LLM integration
-* RAGAS evaluation
+* Streamlit
 * FastAPI
-* REST APIs
-* Dependency injection
-* FastAPI lifespan
-* Docker
-* Docker Compose
-* Docker networking
-* Persistent volumes
-* Environment configuration
-* Structured logging
-* Automated testing
-* Modular architecture
+* Qdrant
 
----
-
-# 🚀 Future Improvements
-
-Potential future improvements include:
-
-* Authentication and authorization
-* Metadata-based filtering
-* Streaming responses
-* Improved observability
-* Cloud deployment
-* Managed Qdrant
-* Automated evaluation in CI/CD
-* CI/CD pipeline
-* Agentic AI workflows
-* Advanced conversational memory
-
----
-
-# ☁️ Deployment Architecture
-
-The current containerized architecture can be extended to cloud infrastructure.
+Access the applications from the configured host ports:
 
 ```text
-                         Users
-                           │
-                           ▼
-                    Application Layer
-                           │
-                           ▼
-                        FastAPI
-                           │
-                ┌──────────┴──────────┐
-                ▼                     ▼
-             Qdrant                   LLM
-          Vector Database           Provider
+Streamlit → http://localhost:8501
+FastAPI   → http://localhost:8000
+Swagger   → http://localhost:8000/docs
+Qdrant    → http://localhost:6333
 ```
-
-The application, API, and vector database are separated into services, making the architecture suitable for future deployment on cloud infrastructure.
 
 ---
 
-# 🎯 Project Goal
+## 🚀 Future Improvements
 
-The goal of this project is to demonstrate the complete lifecycle of a practical RAG application:
+The current architecture provides a foundation for further production enhancements.
 
-```text
-Document Ingestion
-       ↓
-Chunking
-       ↓
-Embeddings
-       ↓
-Vector Database
-       ↓
-Retrieval
-       ↓
-Hybrid Search
-       ↓
-Reranking
-       ↓
-LLM Generation
-       ↓
-RAGAS Evaluation
-       ↓
-FastAPI
-       ↓
-Streamlit
-       ↓
-Docker Compose
-       ↓
-Deployment-Ready Architecture
-```
-
-Rather than building only a chatbot, this project demonstrates how a RAG application can be **evaluated, modularized, exposed through an API, connected to a dedicated vector database, tested, and containerized**.
+* 🔎 **Metadata Filtering** — filter retrieved documents using metadata such as department, document type, category, or other attributes.
+* ✍️ **Query Rewriting** — rewrite conversational or ambiguous queries before retrieval to improve retrieval quality.
+* 🧠 **Agentic RAG** — introduce agents for tool selection, multi-step reasoning, and task-specific workflows.
+* ☁️ **Cloud Deployment** — Deploy the containerized application to AWS/Azure/GCP using managed container services and integrate a cloud-native LLM platform such as Amazon Bedrock, Google Vertex AI, or Azure AI Foundry.
+* 📝 **File-Based Logging** — persist application logs to rotating log files for production troubleshooting and auditing.
+* 📈 **Observability** — add metrics, tracing, latency monitoring, and production dashboards.
+* 📊 **Advanced Evaluation** — expand the evaluation dataset and systematically compare retrieval, reranking, and LLM configurations.
 
 ---
 
-# 👩‍💻 Author
+## 🎯 Project Objective
+
+The goal of this project is to demonstrate how a document-based RAG prototype can be transformed into a **modular, configurable, evaluated, API-driven, and containerized GenAI application**.
+
+The project focuses on practical RAG engineering rather than only LLM integration, including **retrieval strategy selection, hybrid search, RRF, reranking, evaluation, API architecture, testing, logging, and deployment**.
+
+---
+
+## 👩‍💻 Author
 
 **Namitha C Anto**
 
-AI Engineer | Generative AI | RAG | Agentic AI
+GenAI / AI Engineering Portfolio Project
 
-**GitHub:**
-https://github.com/Namitha-C-Anto
-
-**LinkedIn:**
-https://www.linkedin.com/in/namitha-c-anto-79442b103
+**GitHub:** [Namitha-C-Anto/hospital-assistant-v3](https://github.com/Namitha-C-Anto/hospital-assistant-v3)

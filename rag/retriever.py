@@ -59,28 +59,37 @@ def retrieve_documents(
     question: str,
     qdrant_retriever: BaseRetriever,
     bm25_retriever: BaseRetriever | None,
+    retrieval_mode: str = RETRIEVAL_MODE, 
 ) -> list[Document]:
 
+    
     """
-    Retrieve documents using the configured retrieval mode.
+    Retrieve relevant documents using the selected retrieval strategy.
 
-    In Qdrant mode, retrieves semantically relevant documents using
-    the Qdrant vector retriever. In hybrid mode, combines Qdrant
-    semantic search with BM25 keyword search using Reciprocal Rank
+    The pipeline supports semantic retrieval using Qdrant and hybrid
+    retrieval using Qdrant and BM25 keyword search. In hybrid mode,
+    results from both retrievers are combined using Reciprocal Rank
     Fusion (RRF).
 
     Args:
         question: User's query.
         qdrant_retriever: Qdrant-based semantic retriever.
-        bm25_retriever: BM25 keyword retriever, required for hybrid mode.
+        bm25_retriever: BM25 keyword retriever, required when
+            retrieval_mode is "hybrid".
+        retrieval_mode: Retrieval strategy to use. Supported values are
+            "qdrant" for semantic search and "hybrid" for hybrid search.
 
     Returns:
         A list of retrieved LangChain Document objects.
+
+    Raises:
+        ValueError: If an unsupported retrieval mode is provided or
+            BM25 retriever is unavailable in hybrid mode.
     """
 
     question = question.strip()
 
-    if RETRIEVAL_MODE == "qdrant":
+    if retrieval_mode == "qdrant":
         return qdrant_retriever.invoke(question)
 
     if bm25_retriever is None:

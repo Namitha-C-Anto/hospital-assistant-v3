@@ -4,10 +4,11 @@ from memory.chat_manager import (
     switch_chat,
     list_chats,
     delete_chat,)
+from utils.logger import logger
 
 def render_sidebar() -> None:
     st.markdown(APP_TITLE, unsafe_allow_html=True)
-
+ 
     # -----------------------------
     # New Chat
     # -----------------------------
@@ -21,7 +22,7 @@ def render_sidebar() -> None:
         switch_chat(None)
         st.rerun()
 
-    with st.expander("Recent", expanded=True):
+    with st.expander("💬Recents", expanded=True):
 
         chats = list_chats()
 
@@ -74,31 +75,82 @@ def render_sidebar() -> None:
     # Settings
     # ---------------------------------------------------
 
-    with st.expander("⚙️ Settings"):
+    with st.expander("⚙️Settings"):
+
+        # -------------------------------------------------
+        # Retrieval Mode
+        # -------------------------------------------------
+
+        retrieval_options = {
+            "Semantic": {
+                "retrieval_mode": "qdrant",
+                "use_reranker": False,
+            },
+            "Semantic + Reranker": {
+                "retrieval_mode": "qdrant",
+                "use_reranker": True,
+            },
+            "Hybrid": {
+                "retrieval_mode": "hybrid",
+                "use_reranker": False,
+            },
+            "Hybrid + Reranker": {
+                "retrieval_mode": "hybrid",
+                "use_reranker": True,
+            },
+        }
+
+        mode_description = {
+            "Semantic": "Qdrant semantic search",
+            "Semantic + Reranker": "Qdrant semantic search + cross-encoder reranking",
+            "Hybrid": "Qdrant + BM25 → RRF fusion",
+            "Hybrid + Reranker": "Qdrant + BM25 → RRF → cross-encoder reranking",
+        }
+
+        retrieval_level = st.selectbox(
+            "🔎Retrieval Mode",
+            options=list(retrieval_options.keys()),
+            index=0,
+            help=(
+                "Semantic: Qdrant vector search only.\n\n"
+                "Semantic + Reranker: Qdrant vector search followed by cross-encoder reranking.\n\n"
+                "Hybrid: Qdrant + BM25 combined using Reciprocal Rank Fusion (RRF).\n\n"
+                "Hybrid + Reranker: Hybrid retrieval followed by cross-encoder reranking."
+            ),
+        )
+
+        selected_retrieval = retrieval_options[retrieval_level]
+
+        st.caption(
+            f"**{retrieval_level}:** {mode_description[retrieval_level]}"
+        )
+
+        retrieval_mode = selected_retrieval["retrieval_mode"]
+        use_reranker = selected_retrieval["use_reranker"]
+
+        st.session_state["retrieval_mode"] = retrieval_mode.lower()
+        st.session_state["use_reranker"] = use_reranker
+
+        logger.info(
+            "Retrieval mode: level=%s, search=%s, reranker=%s",
+            retrieval_level,
+            retrieval_mode,
+            use_reranker,
+        )
 
         provider = st.selectbox(
-            "LLM Provider",
+            "🏢LLM Provider",
             ["Groq", "OpenAI", "OpenRouter"],
             key="llm_provider",
         )
         st.session_state["provider"] = provider.lower()
 
-        if provider == "OpenAI":
+        if provider == "Groq":
             model = st.selectbox(
-                "Model",
+                "🧠Model",
                 [
-                    "gpt-4o-mini",
-                    "gpt-5.4-mini",
-                ],
-                key="llm_model",
-            )
-
-        elif provider == "Groq":
-            model = st.selectbox(
-                "Model",
-                [
-                    "llama-3.3-70b-versatile",
-                    "llama-3.1-8b-instant",
+                    "openai/gpt-oss-120b",
+                    "openai/gpt-oss-20b",
                     "qwen/qwen3.6-27b",
                 ],
                 key="llm_model",
@@ -106,11 +158,10 @@ def render_sidebar() -> None:
             
         elif provider == "OpenRouter":
             model = st.selectbox(
-                "Model",
+                "🧠Model",
                 [
                     "openai/gpt-oss-120b",
                     "qwen/qwen3-235b-a22b",
-                    "openrouter/free",
                 ],
                 key="llm_model",
             )

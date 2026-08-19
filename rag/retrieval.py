@@ -3,7 +3,7 @@ import time
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
 
-from config import USE_RERANKER, TOP_K
+from config import USE_RERANKER, TOP_K, RETRIEVAL_MODE
 from rag.models import RetrievalResult, DocumentInfo
 from rag.retriever import retrieve_documents
 from rag.reranker import reranker
@@ -63,26 +63,33 @@ def build_retrieval_result(
 def run_retrieval_pipeline(
     question: str,
     qdrant_retriever: BaseRetriever,
-    bm25_retriever: BaseRetriever | None
+    bm25_retriever: BaseRetriever | None,
+    retrieval_mode: str = RETRIEVAL_MODE,
+    use_reranker: bool = USE_RERANKER,
 ) -> tuple[RetrievalResult, float, float]:
 
     """
     Run the document retrieval pipeline.
 
-    The pipeline retrieves relevant documents using Qdrant semantic
-    search and, when configured, combines the results with BM25 keyword
-    search using Reciprocal Rank Fusion (RRF). Retrieved documents are
-    then deduplicated and optionally reranked.
+    The pipeline supports semantic retrieval using Qdrant and hybrid
+    retrieval using Qdrant and BM25 with Reciprocal Rank Fusion (RRF).
+    Retrieved documents are deduplicated and can optionally be reranked
+    using a cross-encoder reranker.
 
     Args:
         question: User's query.
         qdrant_retriever: Qdrant-based semantic retriever.
         bm25_retriever: BM25 keyword retriever, or None when hybrid
-            retrieval is disabled.
+            retrieval is not used.
+        retrieval_mode: Retrieval strategy to use. Supported values are
+            "qdrant" for semantic search and "hybrid" for hybrid search.
+        use_reranker: Whether to apply the optional cross-encoder
+            reranker to the retrieved documents.
 
     Returns:
         A tuple containing:
-            - RetrievalResult containing the retrieved and reranked documents.
+            - RetrievalResult containing the retrieved and optionally
+              reranked documents.
             - Retrieval latency in seconds.
             - Reranker latency in seconds.
     """
@@ -95,6 +102,7 @@ def run_retrieval_pipeline(
         question,
         qdrant_retriever,
         bm25_retriever,
+        retrieval_mode,
     )
     retrieval_time = round(
         time.perf_counter() - retrieval_start, 
@@ -112,7 +120,7 @@ def run_retrieval_pipeline(
     reranker_time = 0.0
 
     # Rerank them
-    if USE_RERANKER:
+    if use_reranker:
         reranker_start = time.perf_counter()
 
         reranked_documents  = reranker.compress_documents(

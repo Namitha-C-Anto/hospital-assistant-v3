@@ -6,6 +6,8 @@ class ChatRequest(BaseModel):
     provider: str
     model: str 
     chat_history: str
+    retrieval_mode: str 
+    use_reranker: bool
 
 class DocumentInfoResponse(BaseModel):
     content: str

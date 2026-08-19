@@ -15,6 +15,8 @@ class RAGService:
         provider:str,
         model:str, 
         chat_history:str,
+        retrieval_mode:str,
+        use_reranker:bool,
     ) -> tuple[str, RetrievalResult]:
 
         if provider == "groq":
@@ -36,11 +38,12 @@ class RAGService:
         )
 
         pipeline_result = await run_rag_pipeline(
-            question,
-            self.components,
-            llm,
-            chat_history = chat_history,
-
+            question=question,
+            rag_components=self.components,
+            app_llm=llm,
+            chat_history=chat_history,
+            retrieval_mode=retrieval_mode,
+            use_reranker=use_reranker,
         )
 
         return pipeline_result.answer, pipeline_result.retrieval_result

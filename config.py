@@ -86,7 +86,7 @@ DEBUG = os.getenv(
 # Large Language Model
 # --------------------------------------------------
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "groq")
-LLM_MODEL = os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+LLM_MODEL = os.getenv("LLM_MODEL", "openai/gpt-oss-120b")
 LLM_API_KEY = os.getenv("GROQ_API_KEY")
 TEMPERATURE = float(os.getenv("TEMPERATURE", 0.2))
 # --------------------------------------------------

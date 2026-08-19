@@ -1,3 +1,4 @@
+from config import RETRIEVAL_MODE, USE_RERANKER
 from rag.models import PipelineComponents, RagPipelineResult
 from rag.retrieval import run_retrieval_pipeline
 from rag.generation import generate_answer
@@ -9,6 +10,8 @@ async def run_rag_pipeline(
     rag_components: PipelineComponents,
     app_llm: BaseChatModel,
     chat_history: str = "",
+    retrieval_mode: str = RETRIEVAL_MODE,
+    use_reranker:bool = USE_RERANKER,
 ) -> RagPipelineResult:
 
     """
@@ -36,6 +39,8 @@ async def run_rag_pipeline(
             question,
             rag_components.qdrant_retriever,
             rag_components.bm25_retriever, 
+            retrieval_mode,
+            use_reranker,
         )
 
     # Combine retrieved contexts into a single prompt for the LLM.

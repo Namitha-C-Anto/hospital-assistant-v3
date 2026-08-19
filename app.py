@@ -3,7 +3,9 @@ import streamlit as st
 from config import (
     LLM_PROVIDER,
     LLM_MODEL,
-    FASTAPI_URL
+    FASTAPI_URL,
+    RETRIEVAL_MODE,
+    USE_RERANKER
 )  
 from utils.logger import logger      
 
@@ -24,8 +26,10 @@ from ui.sources import render_sources
 def call_chat_api(
     question: str,
     provider: str,
-    model: str, 
+    model: str,
     chat_history: str,
+    retrieval_mode: str,
+    use_reranker: bool,
 ) -> dict:
 
     response = requests.post(
@@ -35,6 +39,8 @@ def call_chat_api(
             "provider": provider,
             "model": model, 
             "chat_history": chat_history,
+            "retrieval_mode": retrieval_mode,
+            "use_reranker": use_reranker,
         },
         timeout=300,
     )
@@ -140,8 +146,10 @@ def main() -> None:
                     api_result = call_chat_api(
                         question=question,
                         provider=st.session_state.get("provider", LLM_PROVIDER),
-                        model=st.session_state.get("model", LLM_MODEL), 
-                        chat_history=history_text
+                        model=st.session_state.get("model", LLM_MODEL),
+                        chat_history=history_text,
+                        retrieval_mode=st.session_state.get("retrieval_mode", RETRIEVAL_MODE),
+                        use_reranker=st.session_state.get("use_reranker", USE_RERANKER),
                     )
 
                     answer = api_result["answer"]
