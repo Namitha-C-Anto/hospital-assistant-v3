@@ -382,7 +382,9 @@ Inside Docker, services communicate using their **Docker Compose service names**
 
 ## 📊 RAG Evaluation
 
-The project includes an evaluation framework using **RAGAS** to measure retrieval and generation quality.
+The project uses **RAGAS** to evaluate the quality of retrieved context and generated answers.
+
+The evaluation dataset contains **22 test questions** covering hospital policy and patient-service scenarios. The same dataset is used to compare different retrieval configurations and measure improvements across RAG pipeline versions.
 
 ### Metrics
 
@@ -393,9 +395,19 @@ The project includes an evaluation framework using **RAGAS** to measure retrieva
 | Context Precision | Measures the relevance of retrieved documents                 |
 | Context Recall    | Measures whether the required information was retrieved       |
 
-Evaluation experiments are used to compare retrieval configurations and identify weaknesses in the RAG pipeline.
 
----
+### Evaluation Flow
+
+```text
+22 Test Questions
+       ↓
+   RAG Pipeline
+       ↓
+ Generated Answers + Retrieved Context
+       ↓
+      RAGAS
+       ↓
+  Quality Metrics
 
 ## 🧪 Testing
 

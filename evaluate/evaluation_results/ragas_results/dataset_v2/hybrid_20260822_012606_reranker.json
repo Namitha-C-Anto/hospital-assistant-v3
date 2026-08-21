@@ -1,8 +1,8 @@
 {
     "version": "1.0",
     "experiment": {
-        "experiment": "hybrid_20260820_023044_reranker",
-        "run_date": "20260820_023044",
+        "experiment": "hybrid_20260822_012606_reranker",
+        "run_date": "20260822_012606",
         "dataset": "dataset_v2",
         "temperature": 1.0,
         "retrieval_mode": "hybrid",
@@ -14,30 +14,30 @@
         "reranker_model": "BAAI/bge-reranker-base",
         "reranker_top_n": 5,
         "generation_llm": "openai/gpt-oss-120b",
-        "judge_llm": "openai/gpt-oss-120b"
+        "judge_llm": "gpt-oss:120b-cloud"
     },
     "summary": {
         "total_questions": 22,
         "successful_questions": 22,
         "failed_questions": 0,
-        "ragas_evaluation_seconds": 912.605,
-        "avg_retrieval_latency": 1.1632,
-        "avg_reranker_latency": 5.4097,
-        "avg_generation_latency": 1.0363,
-        "avg_pipeline_latency": 7.6131,
-        "avg_prompt_latency": 0.0019,
+        "ragas_evaluation_seconds": 598.5526,
+        "avg_retrieval_latency": 0.5083,
+        "avg_reranker_latency": 4.5231,
+        "avg_generation_latency": 10.2002,
+        "avg_pipeline_latency": 15.2382,
+        "avg_prompt_latency": 0.005,
         "avg_chunks_retrieved": 15.0,
         "avg_chunks_after_reranker": 5.0,
-        "total_prompt_tokens": 16851,
-        "total_completion_tokens": 5026,
-        "total_tokens": 21877,
-        "avg_prompt_tokens": 765.95,
-        "avg_completion_tokens": 228.45,
-        "avg_total_tokens": 994.41,
-        "faithfulness": 0.684,
-        "answer_relevancy": 0.94,
-        "context_precision": 0.832,
-        "context_recall": 0.81
+        "total_prompt_tokens": 16852,
+        "total_completion_tokens": 5810,
+        "total_tokens": 22662,
+        "avg_prompt_tokens": 766.0,
+        "avg_completion_tokens": 264.09,
+        "avg_total_tokens": 1030.09,
+        "faithfulness": 0.853,
+        "answer_relevancy": 0.944,
+        "context_precision": 0.853,
+        "context_recall": 0.877
     },
     "run_statistics": {
         "total_questions": 22,
@@ -47,20 +47,20 @@
     "results": [
         {
             "question": "What are the two types of hospital admissions described in the guidelines?",
-            "answer": "The guidelines describe two distinct types of hospital admissions:\n\n1. **Elective admissions** – planned admissions that are scheduled in advance, with careful pre‑admission planning and coordination of the patient’s entire care journey.  \n2. **Emergency admissions** – unplanned admissions that arise from trauma or an acute illness that cannot be managed on an outpatient basis.",
+            "answer": "The guidelines describe two distinct categories of hospital admission:\n\n1. **Elective admissions** – planned admissions that are scheduled in advance, with comprehensive pre‑admission planning and coordination of the patient’s whole “journey” from referral through discharge.  \n2. **Emergency admissions** – unplanned admissions that arise from trauma or an acute illness that cannot be managed on an outpatient basis.  \n\nThese are the two types of hospital admissions referenced in the guidelines.",
             "reference": "The guidelines describe two types of hospital admissions: elective admissions, which are planned, and emergency admissions, which are unplanned and require urgent care.",
             "ground_truth": "The guidelines describe two types of hospital admissions: elective admissions, which are planned, and emergency admissions, which are unplanned and require urgent care.",
             "latency": {
-                "retrieval_seconds": 4.5629,
-                "reranker_seconds": 7.5373,
-                "prompt_seconds": 0.0094,
-                "generation_seconds": 2.257,
-                "pipeline_seconds": 14.368
+                "retrieval_seconds": 5.5071,
+                "reranker_seconds": 11.5844,
+                "prompt_seconds": 0.1022,
+                "generation_seconds": 19.1222,
+                "pipeline_seconds": 36.3356
             },
             "usage": {
-                "prompt_tokens": 702,
-                "completion_tokens": 109,
-                "total_tokens": 811
+                "prompt_tokens": 705,
+                "completion_tokens": 160,
+                "total_tokens": 865
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -233,28 +233,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": 0.9869914680857838,
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0000000000000002,
                 "context_precision": 0.32499999998375,
                 "context_recall": 1.0
             }
         },
         {
             "question": "What are the five strategic objectives of an effective admissions and discharge policy?",
-            "answer": "The five key strategic objectives that underpin an effective and coherent admissions and discharge policy for emergency and elective patients are:\n\n1. **Integrated personal health and social‑services system** – delivering seamless, patient‑centred care at all times.  \n2. **Optimised use of resources** – maximizing clinical and organisational effectiveness and outcomes.  \n3. **Fully integrated acute‑care networks** – ensuring acute‑care services are accessible to every person.  \n4. **Local access to acute care with high‑quality clinical standards** – providing appropriate levels of local access while maintaining high‑quality care.  \n5. **Acquisition of clinical admissions data** – collecting data to support service planning and ongoing monitoring.  ",
+            "answer": "The five strategic objectives that underpin an effective and coherent admissions and discharge policy are:\n\n1. **Provide an integrated personal health‑and‑social‑services system** that delivers seamless, patient‑centred care at all times.  \n2. **Utilise resources to maximise clinical and organisational effectiveness and outcomes.**  \n3. **Establish fully integrated networks of acute care** that are accessible to every individual.  \n4. **Offer levels of local access to acute care** while ensuring high‑quality clinical care.  \n5. **Acquire clinical admissions data** to support service planning and ongoing monitoring.",
             "reference": "The objectives are to provide integrated patient-centred care, maximize clinical and organizational effectiveness, establish integrated acute care networks, ensure local access with high-quality care, and acquire admissions data for planning and monitoring.",
             "ground_truth": "The objectives are to provide integrated patient-centred care, maximize clinical and organizational effectiveness, establish integrated acute care networks, ensure local access with high-quality care, and acquire admissions data for planning and monitoring.",
             "latency": {
-                "retrieval_seconds": 2.2959,
-                "reranker_seconds": 4.7869,
-                "prompt_seconds": 0.0004,
-                "generation_seconds": 0.8242,
-                "pipeline_seconds": 7.9081
+                "retrieval_seconds": 1.6333,
+                "reranker_seconds": 5.0557,
+                "prompt_seconds": 0.001,
+                "generation_seconds": 1.9901,
+                "pipeline_seconds": 8.681
             },
             "usage": {
-                "prompt_tokens": 756,
-                "completion_tokens": 284,
-                "total_tokens": 1040
+                "prompt_tokens": 759,
+                "completion_tokens": 285,
+                "total_tokens": 1044
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -302,16 +302,16 @@
                         "content": "Admissions and Discharge Guidelines Health Strategy Implementation Project 2003",
                         "metadata": {
                             "source": "admission_and_discharge_guidelines_2003.pdf",
-                            "page": 2,
-                            "doc_id": "0eab4274e93d76d65bab4b1bce821ffb"
+                            "page": 1,
+                            "doc_id": "0aec2b583d145d3667a655a3aeac2a63"
                         }
                     },
                     {
                         "content": "Admissions and Discharge Guidelines Health Strategy Implementation Project 2003",
                         "metadata": {
                             "source": "admission_and_discharge_guidelines_2003.pdf",
-                            "page": 1,
-                            "doc_id": "0aec2b583d145d3667a655a3aeac2a63"
+                            "page": 2,
+                            "doc_id": "0eab4274e93d76d65bab4b1bce821ffb"
                         }
                     },
                     {
@@ -427,28 +427,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
-                "context_precision": NaN,
-                "context_recall": NaN
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9799443661899098,
+                "context_precision": 0.7499999999625,
+                "context_recall": 1.0
             }
         },
         {
             "question": "According to the guidelines, what are the responsibilities of the Hospital Bed Manager (HBM)?",
-            "answer": "According to the guidelines, the Hospital Bed Manager (HBM) is responsible for:\n\n* **Implementing and overseeing the bed‑management policy** – the HBM has the authority to apply the policy and to coordinate the whole bed‑management team.  \n* **Ensuring 24‑hour, year‑round operation** of the bed‑management service.  \n* **Reporting to senior management** while maintaining authority over access to all hospital beds.  \n* **Centralising bed allocation** – the HBM decides which patients are placed in which beds, working within the notional bed allocation for each specialty.  \n* **Matching patients to the most appropriate bed and staff expertise** so that care is delivered by the right professionals.  \n* **Conducting continuous analysis** of bed usage and **producing regular reports and forecasts** to support planning.  \n* **Supporting the availability of beds for emergency and elective admissions**, helping keep waiting lists down and ensuring efficient use of scarce resources.  \n\nThese responsibilities together aim to improve patient‑centred care, quality, safety and value for money throughout the admission‑discharge cycle.",
+            "answer": "**Responsibilities of the Hospital Bed Manager (HBM) as set out in the guidelines**\n\n1. **Implement the bed‑management policy** – the HBM has the authority to put the policy into practice across the whole hospital.  \n\n2. **Coordinate the bed‑management team** – oversee and direct the team that carries out day‑to‑day bed‑allocation activities.  \n\n3. **Provide 24‑hour, year‑round service** – ensure that the bed‑management function is available continuously (all days, all hours).  \n\n4. **Report to senior management** – the HBM is accountable to a senior manager within the organization.  \n\n5. **Continuous analysis and forecasting** – carry out ongoing analysis of bed usage and produce regular reports and forecasts to support planning.  \n\n6. **Centralise allocation of beds** – have authority over access to every hospital bed and manage the centralised process of assigning beds to patients.  \n\n7. **Maintain awareness of bed‑designation ratios** – understand and apply the ratios set out by the Department of Health and Children.  \n\n8. **Work within notional specialty allocations** – allocate patients to the most appropriate beds in line with the designated number of beds for each specialty, ensuring patients are placed where staff have the required expertise.  \n\nTogether, these duties ensure that beds are allocated efficiently, that emergency and elective patients have timely access to care, and that the overall quality and safety of inpatient services are upheld.",
             "reference": "The Hospital Bed Manager should oversee bed management, implement the bed management policy, coordinate the bed management team, operate the service continuously (24/7), report to senior management, continuously analyse bed usage and provide reports and forecasts, centralise bed allocation, and ensure patients are accommodated in the most appropriate beds.",
             "ground_truth": "The Hospital Bed Manager should oversee bed management, implement the bed management policy, coordinate the bed management team, operate the service continuously (24/7), report to senior management, continuously analyse bed usage and provide reports and forecasts, centralise bed allocation, and ensure patients are accommodated in the most appropriate beds.",
             "latency": {
-                "retrieval_seconds": 0.4892,
-                "reranker_seconds": 7.6546,
-                "prompt_seconds": 0.0209,
-                "generation_seconds": 2.3751,
-                "pipeline_seconds": 10.5471
+                "retrieval_seconds": 0.2354,
+                "reranker_seconds": 5.527,
+                "prompt_seconds": 0.0005,
+                "generation_seconds": 52.8749,
+                "pipeline_seconds": 58.6384
             },
             "usage": {
-                "prompt_tokens": 703,
-                "completion_tokens": 543,
-                "total_tokens": 1246
+                "prompt_tokens": 693,
+                "completion_tokens": 687,
+                "total_tokens": 1380
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -621,10 +621,10 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
-                "context_precision": NaN,
-                "context_recall": NaN
+                "faithfulness": 0.9130434782608695,
+                "answer_relevancy": 0.9911718708491408,
+                "context_precision": 0.99999999995,
+                "context_recall": 1.0
             }
         },
         {
@@ -633,16 +633,16 @@
             "reference": "A hospital bed occupancy level of about 85% is considered desirable.",
             "ground_truth": "A hospital bed occupancy level of about 85% is considered desirable.",
             "latency": {
-                "retrieval_seconds": 4.5736,
-                "reranker_seconds": 8.4868,
-                "prompt_seconds": 0.0017,
-                "generation_seconds": 0.8968,
-                "pipeline_seconds": 13.9835
+                "retrieval_seconds": 0.3263,
+                "reranker_seconds": 6.3088,
+                "prompt_seconds": 0.0025,
+                "generation_seconds": 1.8209,
+                "pipeline_seconds": 8.4593
             },
             "usage": {
-                "prompt_tokens": 753,
-                "completion_tokens": 64,
-                "total_tokens": 817
+                "prompt_tokens": 756,
+                "completion_tokens": 108,
+                "total_tokens": 864
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -815,28 +815,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
+                "faithfulness": 1.0,
                 "answer_relevancy": 0.9999999999999999,
-                "context_precision": NaN,
-                "context_recall": NaN
+                "context_precision": 0.99999999995,
+                "context_recall": 1.0
             }
         },
         {
             "question": "How is an emergency hospital admission defined?",
-            "answer": "An emergency hospital admission is defined as a **non‑planned admission that results from trauma (injury) or an acute illness that cannot be treated on an outpatient basis**.",
+            "answer": "An emergency hospital admission is defined as **a non‑planned admission that results from trauma (injury) or an acute illness that cannot be treated on an outpatient basis.**",
             "reference": "An emergency hospital admission is an unplanned admission resulting from trauma or acute illness that cannot be treated on an outpatient basis.",
             "ground_truth": "An emergency hospital admission is an unplanned admission resulting from trauma or acute illness that cannot be treated on an outpatient basis.",
             "latency": {
-                "retrieval_seconds": 4.8362,
-                "reranker_seconds": 6.3803,
+                "retrieval_seconds": 0.2022,
+                "reranker_seconds": 6.1979,
                 "prompt_seconds": 0.0006,
-                "generation_seconds": 1.4069,
-                "pipeline_seconds": 12.6245
+                "generation_seconds": 12.1293,
+                "pipeline_seconds": 18.5308
             },
             "usage": {
-                "prompt_tokens": 743,
-                "completion_tokens": 97,
-                "total_tokens": 840
+                "prompt_tokens": 746,
+                "completion_tokens": 96,
+                "total_tokens": 842
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -1009,28 +1009,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9196020838698667,
                 "context_precision": 0.99999999995,
-                "context_recall": NaN
+                "context_recall": 1.0
             }
         },
         {
             "question": "According to the guidelines, when should discharge planning begin?",
-            "answer": "The guidelines state that discharge planning should start **at the pre‑admission stage**—i.e., it should be initiated during the pre‑admission assessment/visit, well before the patient is actually admitted to the hospital.",
+            "answer": "The guidelines state that discharge planning should begin **at the pre‑admission stage** – it should be started during the pre‑admission assessment visit, before the patient is admitted to the hospital.",
             "reference": "Discharge planning should begin during the pre-admission stage and continue from the day of admission.",
             "ground_truth": "Discharge planning should begin during the pre-admission stage and continue from the day of admission.",
             "latency": {
-                "retrieval_seconds": 1.8166,
-                "reranker_seconds": 3.7366,
+                "retrieval_seconds": 0.1258,
+                "reranker_seconds": 3.3091,
                 "prompt_seconds": 0.0002,
-                "generation_seconds": 0.8186,
-                "pipeline_seconds": 6.3726
+                "generation_seconds": 8.5987,
+                "pipeline_seconds": 12.0346
             },
             "usage": {
-                "prompt_tokens": 764,
-                "completion_tokens": 170,
-                "total_tokens": 934
+                "prompt_tokens": 767,
+                "completion_tokens": 171,
+                "total_tokens": 938
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -1203,28 +1203,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
-                "context_precision": NaN,
-                "context_recall": NaN
+                "faithfulness": 1.0,
+                "answer_relevancy": 1.0,
+                "context_precision": 0.9999999999666667,
+                "context_recall": 1.0
             }
         },
         {
             "question": "What information should patients receive during the pre-admission visit?",
-            "answer": "During the pre‑admission visit patients (and their carers) should be given clear information about:\n\n* **Their medical condition** – an explanation of the diagnosis and any relevant health issues.  \n* **The proposed treatment** – what procedures or therapies are planned.  \n* **Likely hospital procedures** – what will happen during the admission (e.g., tests, surgeries, day‑surgery admission, use of discharge lounges).  \n\nThe visit also serves to involve the patient’s General Practitioner or Primary Care Team as appropriate and to begin planning for discharge and post‑hospital care, ensuring that all relevant information is coordinated and shared with the care team.",
+            "answer": "During the pre‑admission visit the patient (and their carers) should be given clear, comprehensive information about:\n\n* **Their medical condition** – an explanation of the diagnosis or health issue that is prompting the admission.  \n* **The proposed treatment** – details of the planned investigations, interventions or surgery and any alternatives.  \n* **Likely hospital procedures** – what will happen during the hospital stay, including any preparatory steps, day‑of‑surgery arrangements, and what to expect in terms of ward care, tests, and post‑procedure monitoring.  \n\nThese points ensure the patient is fully informed and can participate in decisions about their care before admission.",
             "reference": "Patients and their carers should be informed about the patient's medical condition, proposed treatment, and likely hospital procedures.",
             "ground_truth": "Patients and their carers should be informed about the patient's medical condition, proposed treatment, and likely hospital procedures.",
             "latency": {
-                "retrieval_seconds": 0.1267,
-                "reranker_seconds": 4.4137,
-                "prompt_seconds": 0.0002,
-                "generation_seconds": 0.6661,
-                "pipeline_seconds": 5.2073
+                "retrieval_seconds": 0.1225,
+                "reranker_seconds": 3.4695,
+                "prompt_seconds": 0.0001,
+                "generation_seconds": 11.8131,
+                "pipeline_seconds": 15.406
             },
             "usage": {
-                "prompt_tokens": 788,
-                "completion_tokens": 254,
-                "total_tokens": 1042
+                "prompt_tokens": 791,
+                "completion_tokens": 276,
+                "total_tokens": 1067
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -1397,28 +1397,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": 0.942294520700181,
-                "context_precision": NaN,
-                "context_recall": NaN
+                "faithfulness": 0.4375,
+                "answer_relevancy": 0.9326703580385344,
+                "context_precision": 0.9999999999,
+                "context_recall": 1.0
             }
         },
         {
             "question": "Into which five categories should Emergency Department patients be streamed?",
-            "answer": "Emergency Department patients should be streamed into the following five categories:\n\n1. **Resuscitation**  \n2. **Minor illness and injury stream** (patients who are unlikely to be admitted)  \n3. **Paediatric cases**  \n4. **Specialised medical/surgical team assessment** for patients who may require admission  \n5. **Psychiatric case assessment service**",
+            "answer": "Patients in the Emergency Department should be streamed into the following five categories:\n\n1. **Resuscitation**  \n2. **Minor illness and injury stream** (patients who are unlikely to be admitted)  \n3. **Paediatric cases**  \n4. **Specialised medical/surgical team assessment** for patients who may require admission  \n5. **Psychiatric case assessment service**",
             "reference": "Patients should be streamed into resuscitation, minor illness and injury, paediatric cases, specialised medical or surgical assessment, and psychiatric assessment.",
             "ground_truth": "Patients should be streamed into resuscitation, minor illness and injury, paediatric cases, specialised medical or surgical assessment, and psychiatric assessment.",
             "latency": {
-                "retrieval_seconds": 0.2303,
-                "reranker_seconds": 4.2738,
+                "retrieval_seconds": 0.1344,
+                "reranker_seconds": 3.6982,
                 "prompt_seconds": 0.0002,
-                "generation_seconds": 0.7457,
-                "pipeline_seconds": 5.2506
+                "generation_seconds": 1.3157,
+                "pipeline_seconds": 5.1491
             },
             "usage": {
-                "prompt_tokens": 760,
-                "completion_tokens": 183,
-                "total_tokens": 943
+                "prompt_tokens": 763,
+                "completion_tokens": 192,
+                "total_tokens": 955
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -1591,28 +1591,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
-                "context_precision": NaN,
-                "context_recall": NaN
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9740802664912277,
+                "context_precision": 0.9999999999,
+                "context_recall": 1.0
             }
         },
         {
             "question": "What are the core principles of effective discharge planning?",
-            "answer": "**Core principles of effective discharge planning**\n\n1. **Advance planning** – Whenever possible, the patient’s use of a hospital bed and the discharge plan should be arranged **before admission**.  \n2. **Early communication of discharge date** – The **estimated discharge date** must be documented and communicated to the patient and all relevant staff **within 24 hours of admission**.  \n3. **Streamlined process** – Discharge should be organized in a **streamlined, efficient manner** so that unnecessary delays are avoided.  \n4. **Data‑driven oversight** – The discharge co‑ordinator/bed manager analyses trends and data, shares findings with the local emergency‑services planning forum, and ensures that performance measures and indicators are **developed, monitored and reviewed**.  \n5. **Multidisciplinary teamwork** – A **named member of the multidisciplinary team** coordinates the discharge plan, involving **general practitioners, primary‑care teams and community providers**.  \n6. **Patient and carer partnership** – Patients and their carers are treated as **partners** in the planning process, actively participating in decisions about their discharge.  \n7. **Continuous improvement** – Discharge plans are **regularly updated and refined** to reflect changing needs and to improve the overall process.  \n\nThese principles together ensure that discharge is safe, timely, patient‑centred, and supports optimal bed availability for future admissions.",
+            "answer": "The core principles for effective discharge planning are:\n\n1. **Pre‑admission planning** – where possible, the patient’s need for a hospital bed and their eventual discharge are planned before the admission occurs.  \n2. **Early documentation of discharge date** – the estimated discharge date is recorded and communicated to the patient and all relevant staff within 24 hours of admission.  \n3. **Streamlined discharge process** – the discharge is organised to be as smooth and efficient as possible.  \n4. **Data analysis and performance monitoring** – the discharge co‑ordinator/bed manager analyses trends and data, shares findings with local emergency‑services planning groups, and develops, monitors and reviews performance measures and case‑management indicators.  \n5. **Multidisciplinary teamwork** – a named member of the multidisciplinary team coordinates the discharge plan, involving physicians, nurses, allied health professionals, general practitioners, primary‑care teams and community providers.  \n6. **Patient and carer partnership** – patients and their carers are active partners in the discharge planning process.  \n7. **Continuous updating and improvement** – the discharge plan is regularly reviewed, updated and refined to reflect changing needs and to improve the process.",
             "reference": "Hospital bed use and discharge should be planned before admission where possible, the estimated discharge date should be documented within 24 hours, discharge should be streamlined, and complex discharges should be discussed in multidisciplinary forums.",
             "ground_truth": "Hospital bed use and discharge should be planned before admission where possible, the estimated discharge date should be documented within 24 hours, discharge should be streamlined, and complex discharges should be discussed in multidisciplinary forums.",
             "latency": {
-                "retrieval_seconds": 0.1056,
-                "reranker_seconds": 4.2787,
-                "prompt_seconds": 0.0003,
-                "generation_seconds": 1.5491,
-                "pipeline_seconds": 5.9343
+                "retrieval_seconds": 0.123,
+                "reranker_seconds": 3.251,
+                "prompt_seconds": 0.0002,
+                "generation_seconds": 6.8047,
+                "pipeline_seconds": 10.1794
             },
             "usage": {
-                "prompt_tokens": 776,
-                "completion_tokens": 481,
-                "total_tokens": 1257
+                "prompt_tokens": 779,
+                "completion_tokens": 562,
+                "total_tokens": 1341
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -1785,28 +1785,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": 0.6521739130434783,
-                "answer_relevancy": NaN,
-                "context_precision": NaN,
-                "context_recall": NaN
+                "faithfulness": 0.5,
+                "answer_relevancy": 0.9954990502372429,
+                "context_precision": 0.99999999995,
+                "context_recall": 0.0
             }
         },
         {
             "question": "Who should coordinate a patient's discharge plan?",
-            "answer": "A patient’s discharge plan should be coordinated by a nominated member of the multidisciplinary team – essentially a named discharge co‑ordinator who is responsible for overseeing all stages of the patient’s journey.",
+            "answer": "A **named member of the multidisciplinary team**—often called the discharge coordinator (or bed manager)—should take responsibility for coordinating all stages of the patient’s discharge plan. This person acts as the point‑person who ensures the discharge process is organized, engages the patient and carers, and works with clinicians, primary‑care teams and community providers.",
             "reference": "A nominated member of the multidisciplinary team should coordinate the patient's discharge plan.",
             "ground_truth": "A nominated member of the multidisciplinary team should coordinate the patient's discharge plan.",
             "latency": {
-                "retrieval_seconds": 0.0937,
-                "reranker_seconds": 4.3196,
+                "retrieval_seconds": 0.1116,
+                "reranker_seconds": 3.2884,
                 "prompt_seconds": 0.0005,
-                "generation_seconds": 0.583,
-                "pipeline_seconds": 4.9975
+                "generation_seconds": 1.8159,
+                "pipeline_seconds": 5.218
             },
             "usage": {
-                "prompt_tokens": 689,
-                "completion_tokens": 164,
-                "total_tokens": 853
+                "prompt_tokens": 692,
+                "completion_tokens": 207,
+                "total_tokens": 899
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -1979,28 +1979,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
-                "context_precision": NaN,
-                "context_recall": NaN
+                "faithfulness": 0.8,
+                "answer_relevancy": 0.941365770558916,
+                "context_precision": 0.94999999997625,
+                "context_recall": 1.0
             }
         },
         {
             "question": "What responsibilities are assigned to the Hospital Bed Manager?",
-            "answer": "The Hospital Bed Manager (HBM) has several specific responsibilities, as outlined in the provided material:\n\n* **Authority and Oversight**\n  * Implement the hospital’s bed‑management policy.\n  * Have authority over the allocation of **all** hospital beds and control access to them.\n  * Coordinate the bed‑management team to ensure a unified approach.\n\n* **Planning and Allocation**\n  * Centralise the process of assigning beds to patients.\n  * Work within the notional bed‑allocation for each speciality, ensuring each patient is placed in the most appropriate bed at the time of admission.\n  * Make sure patients are cared for by staff with the right expertise.\n\n* **Reporting and Forecasting**\n  * Conduct continuous analysis of bed utilisation.\n  * Produce regular reports and forecasts to inform senior management and support decision‑making.\n\n* **Operational Role**\n  * Ensure beds are available for both emergency and elective admissions, helping to keep waiting lists down and maintain high‑quality, appropriate patient care.\n  * Contribute to the whole‑systems approach to admission planning, supporting smooth patient flow from admission through discharge.\n\n* **Governance**\n  * Report to a senior member of hospital management, providing updates on bed availability, utilisation trends, and any issues that arise.\n\nIn short, the HBM is responsible for the strategic and day‑to‑day management of hospital beds, from planning admissions to ensuring efficient discharge, while maintaining oversight, coordination, and reporting functions.",
+            "answer": "The Hospital Bed Manager (HBM) is given a broad set of authority‑based duties that centre on the planning, coordination and optimisation of all inpatient beds. According to the provided material, the HBM’s responsibilities include:\n\n| Responsibility | What it entails |\n|----------------|-----------------|\n| **Implement the bed‑management policy** | The HBM has the authority to put the hospital’s bed‑management policy into practice and to ensure it is followed throughout the organisation. |\n| **Coordinate the bed‑management team** | The HBM leads and co‑ordinates the team that handles day‑to‑day bed allocation, admissions and discharges. |\n| **Centralised allocation of beds** | All decisions about which patient gets which bed are made centrally under the HBM’s control, giving the manager authority over access to every hospital bed. |\n| **Work within notional specialty allocations** | The HBM must respect the Department of Health and Children’s designated “bed‑ration” for each specialty, placing patients in the most appropriate bed that matches the clinical expertise required. |\n| **Report to senior management** | The HBM’s line of accountability is to a senior member of hospital management. |\n| **Continuous analysis, reporting and forecasting** | The HBM is responsible for ongoing data analysis on bed utilisation, producing regular reports and forecasts to inform resource planning. |\n| **Balance emergency and elective pressures** | The HBM must monitor and balance competing demands for beds (emergency admissions vs. elective patients) and ensure theatres and beds are fully utilised. |\n| **Support whole‑systems admission and discharge planning** | By overseeing the entire patient “journey” from admission through discharge, the HBM helps ensure smooth transitions, availability of beds for emergencies, reduction of waiting lists, and overall quality and safety of inpatient care. |\n| **Promote inter‑professional coordination** | The role may be extended to improve coordination between different professional groups, fostering teamwork and partnership across the health‑care system. |\n\nThese duties collectively aim to make sure that beds are used efficiently, patients receive appropriate care, and scarce resources are utilised in a cost‑effective manner.",
             "reference": "The Hospital Bed Manager oversees bed management, coordinates bed allocation, manages hospital bed resources, monitors bed utilization, and reports to senior management.",
             "ground_truth": "The Hospital Bed Manager oversees bed management, coordinates bed allocation, manages hospital bed resources, monitors bed utilization, and reports to senior management.",
             "latency": {
-                "retrieval_seconds": 0.3723,
-                "reranker_seconds": 5.8323,
-                "prompt_seconds": 0.0005,
-                "generation_seconds": 1.0443,
-                "pipeline_seconds": 7.2501
+                "retrieval_seconds": 0.1128,
+                "reranker_seconds": 3.9298,
+                "prompt_seconds": 0.0001,
+                "generation_seconds": 19.0014,
+                "pipeline_seconds": 23.0447
             },
             "usage": {
-                "prompt_tokens": 778,
-                "completion_tokens": 415,
-                "total_tokens": 1193
+                "prompt_tokens": 781,
+                "completion_tokens": 618,
+                "total_tokens": 1399
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -2173,28 +2173,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": 0.8865137212044216,
-                "context_precision": NaN,
-                "context_recall": NaN
+                "faithfulness": 0.9166666666666666,
+                "answer_relevancy": 0.8851758076486831,
+                "context_precision": 0.99999999998,
+                "context_recall": 1.0
             }
         },
         {
             "question": "What is the primary purpose of the online doctor's appointment system?",
-            "answer": "The primary purpose of the online doctor’s appointment system is to automate the traditional, manual scheduling process and give patients a quick, convenient way to book a doctor’s appointment over the Internet. By moving the booking and record‑keeping online, the system makes it easier and faster for users to schedule visits and ensures that appointment and medical data are stored electronically for long‑term access.",
+            "answer": "The online doctor’s appointment system is primarily intended to **automate the traditional, paper‑based appointment process and give patients a quick, convenient way to book a doctor’s visit over the Internet**. By moving the scheduling function to a web‑based platform, the system reduces the need for patients to travel to the hospital just to make an appointment, speeds up the booking process, and stores the patients’ records electronically for long‑term preservation. (See the excerpts describing the system’s purpose to “automate the existing manual system” and to “provide ease and comfort to patients.”)",
             "reference": "The system is designed to allow patients to book doctor appointments online, manage appointments, store medical records, and simplify communication between patients and doctors.",
             "ground_truth": "The system is designed to allow patients to book doctor appointments online, manage appointments, store medical records, and simplify communication between patients and doctors.",
             "latency": {
-                "retrieval_seconds": 0.1807,
-                "reranker_seconds": 5.6347,
-                "prompt_seconds": 0.0004,
-                "generation_seconds": 1.0859,
-                "pipeline_seconds": 6.9024
+                "retrieval_seconds": 0.1508,
+                "reranker_seconds": 3.8502,
+                "prompt_seconds": 0.0002,
+                "generation_seconds": 1.9152,
+                "pipeline_seconds": 5.917
             },
             "usage": {
-                "prompt_tokens": 849,
-                "completion_tokens": 296,
-                "total_tokens": 1145
+                "prompt_tokens": 852,
+                "completion_tokens": 314,
+                "total_tokens": 1166
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -2367,10 +2367,10 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9896689850856732,
                 "context_precision": 0.99999999998,
-                "context_recall": NaN
+                "context_recall": 1.0
             }
         },
         {
@@ -2379,16 +2379,16 @@
             "reference": "The application is developed using the Waterfall Development Methodology.",
             "ground_truth": "The application is developed using the Waterfall Development Methodology.",
             "latency": {
-                "retrieval_seconds": 0.1248,
-                "reranker_seconds": 5.4114,
-                "prompt_seconds": 0.0015,
-                "generation_seconds": 0.5285,
-                "pipeline_seconds": 6.0681
+                "retrieval_seconds": 1.3243,
+                "reranker_seconds": 4.3975,
+                "prompt_seconds": 0.0001,
+                "generation_seconds": 6.7402,
+                "pipeline_seconds": 12.4625
             },
             "usage": {
-                "prompt_tokens": 773,
-                "completion_tokens": 55,
-                "total_tokens": 828
+                "prompt_tokens": 763,
+                "completion_tokens": 113,
+                "total_tokens": 876
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -2561,28 +2561,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": 0.8887015271828546,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.8932882210692312,
                 "context_precision": 0.9999999999666667,
                 "context_recall": 1.0
             }
         },
         {
             "question": "What are the three tiers of the application's architecture?",
-            "answer": "The application is built on a **three‑tier architecture** consisting of:\n\n1. **Presentation tier** – the user‑interface layer where users interact with the system, view information and provide input.  \n2. **Application tier** (also called the logic or middle tier) – the core of the system that processes the data received from the presentation tier, applies business rules, and coordinates any needed interactions with the data tier.  \n3. **Data tier** (data‑access tier or database) – the storage layer where the processed information is saved, retrieved, and managed.",
+            "answer": "The application is built on a **three‑tier architecture** consisting of:\n\n1. **Presentation tier** – the user‑interface and communication layer where end users interact with the system (view information and enter data).  \n2. **Application tier** – also called the logic or middle tier; it processes the data received from the presentation tier, applies business rules, and coordinates add/delete/modify operations.  \n3. **Data tier** – the data‑access/database layer where the processed information is stored, managed, and retrieved.",
             "reference": "The application consists of the Presentation Tier, Application Tier, and Data Tier.",
             "ground_truth": "The application consists of the Presentation Tier, Application Tier, and Data Tier.",
             "latency": {
-                "retrieval_seconds": 0.284,
-                "reranker_seconds": 4.2304,
+                "retrieval_seconds": 0.1075,
+                "reranker_seconds": 3.1745,
                 "prompt_seconds": 0.0003,
-                "generation_seconds": 0.8679,
-                "pipeline_seconds": 5.3832
+                "generation_seconds": 2.3058,
+                "pipeline_seconds": 5.5884
             },
             "usage": {
-                "prompt_tokens": 775,
-                "completion_tokens": 188,
-                "total_tokens": 963
+                "prompt_tokens": 778,
+                "completion_tokens": 181,
+                "total_tokens": 959
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -2755,28 +2755,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
-                "context_precision": NaN,
-                "context_recall": NaN
+                "faithfulness": 0.9230769230769231,
+                "answer_relevancy": 0.9740985919469513,
+                "context_precision": 0.99999999995,
+                "context_recall": 1.0
             }
         },
         {
             "question": "What can a patient do after successfully logging into the system?",
-            "answer": "After logging into the system, a patient can:\n\n- Chat with a doctor for a consultation.  \n- Initiate a video call with the doctor if needed.  \n- Download any prescriptions that are issued.  \n\nAll of the patient’s data are stored electronically in the database, so no physical paperwork needs to be handled.",
+            "answer": "After logging in, a patient can:\n\n* Chat with a doctor for a consultation.  \n* Initiate a video call with the doctor if needed.  \n* Download any prescribed medicines or prescriptions.  \n\nAll of the patient’s information is stored electronically in the system, so there’s no need to handle paper files.",
             "reference": "A patient can select a doctor, book appointments, cancel appointments, view medical history, communicate with doctors, download prescriptions, and log out.",
             "ground_truth": "A patient can select a doctor, book appointments, cancel appointments, view medical history, communicate with doctors, download prescriptions, and log out.",
             "latency": {
-                "retrieval_seconds": 0.207,
-                "reranker_seconds": 5.4544,
+                "retrieval_seconds": 0.1064,
+                "reranker_seconds": 4.635,
                 "prompt_seconds": 0.0002,
-                "generation_seconds": 0.5587,
-                "pipeline_seconds": 6.2207
+                "generation_seconds": 1.5482,
+                "pipeline_seconds": 6.2903
             },
             "usage": {
-                "prompt_tokens": 711,
-                "completion_tokens": 187,
-                "total_tokens": 898
+                "prompt_tokens": 714,
+                "completion_tokens": 176,
+                "total_tokens": 890
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -2950,27 +2950,27 @@
             },
             "metrics": {
                 "faithfulness": 0.4,
-                "answer_relevancy": NaN,
-                "context_precision": NaN,
+                "answer_relevancy": 0.953803672479848,
+                "context_precision": 0.3333333333,
                 "context_recall": 0.2857142857142857
             }
         },
         {
             "question": "What information is stored in the database after each patient visit?",
-            "answer": "The system records the following information in the database after each patient visit:\n\n* **Medical entry / health history** – the doctor’s notes and observations for that visit are saved, so the patient can view his or her complete medical history the next time he/she logs in.  \n* **Prescription details** – any prescription generated by the doctor is stored and can be downloaded later by the patient.  \n* **Appointment information** – the status of the appointment (confirmed, completed, or cancelled) and the time slot that was used are kept for future reference.  \n* **Communication records** – chat messages and, when a video call is used, the related consultation details are also saved in the database.  \n\nAll of these data points are retained for later use, enabling patients and doctors to review past visits, retrieve prescriptions, and manage future appointments.",
+            "answer": "The system saves a record of everything that is created or generated during a visit. According to the description, after each patient’s appointment the following information is written to the database:\n\n* **The patient’s personal and account data** (the information entered when the patient creates an account).  \n* **The appointment details** – date, time, doctor‑name, status (confirmed, cancelled, etc.).  \n* **The medical entry made by the doctor** – notes on the consultation, observations, diagnosis and any other clinical information recorded during the visit.  \n* **Prescriptions** – the drug or treatment plan that the doctor issues; these can later be downloaded by the patient.  \n* **Communication records** – messages or chat logs (and, if used, video‑call logs) that occur between the doctor and patient during the consultation.\n\nAll of these items are stored in the database so that they can be retrieved later as the patient’s medical history or for future appointments.",
             "reference": "The patient's medical history and appointment-related information are stored in the database for future reference.",
             "ground_truth": "The patient's medical history and appointment-related information are stored in the database for future reference.",
             "latency": {
-                "retrieval_seconds": 0.1504,
-                "reranker_seconds": 5.8566,
-                "prompt_seconds": 0.0017,
-                "generation_seconds": 1.1963,
-                "pipeline_seconds": 7.206
+                "retrieval_seconds": 0.1478,
+                "reranker_seconds": 6.286,
+                "prompt_seconds": 0.0005,
+                "generation_seconds": 15.0918,
+                "pipeline_seconds": 21.527
             },
             "usage": {
-                "prompt_tokens": 773,
-                "completion_tokens": 399,
-                "total_tokens": 1172
+                "prompt_tokens": 776,
+                "completion_tokens": 477,
+                "total_tokens": 1253
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -3143,28 +3143,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
-                "context_precision": NaN,
+                "faithfulness": 0.625,
+                "answer_relevancy": 0.9356542779128281,
+                "context_precision": 0.94999999997625,
                 "context_recall": 1.0
             }
         },
         {
             "question": "What features are available on the consultation dashboard?",
-            "answer": "The consultation dashboard provides the following features:\n\n- **Video call** – patients can start a live video consultation with the doctor.  \n- **Messaging/Chat** – a text‑chat function lets the patient communicate with the doctor in real time.  \n- **Prescription options** – after the consultation the doctor can generate a prescription that the patient can view and download.  \n\nThese three tools (video call, chat/message, and downloadable prescriptions) are the core functions available on the dashboard.",
+            "answer": "The consultation dashboard includes:\n\n* **Video‑call functionality** – patients can start a live video session with the doctor when needed.  \n* **Messaging / chat** – a text‑chat window lets the patient exchange messages with the doctor.  \n* **Prescription options** – after the consultation the doctor can issue a prescription that the patient can view and download.  \n\nThese tools are all accessed from the dashboard after the user signs in.",
             "reference": "The dashboard provides video calling, messaging, prescription download, and storage of consultation records.",
             "ground_truth": "The dashboard provides video calling, messaging, prescription download, and storage of consultation records.",
             "latency": {
-                "retrieval_seconds": 1.3936,
-                "reranker_seconds": 8.4906,
-                "prompt_seconds": 0.0014,
-                "generation_seconds": 0.9832,
-                "pipeline_seconds": 10.8699
+                "retrieval_seconds": 0.0818,
+                "reranker_seconds": 3.7034,
+                "prompt_seconds": 0.0002,
+                "generation_seconds": 1.971,
+                "pipeline_seconds": 5.7568
             },
             "usage": {
-                "prompt_tokens": 739,
-                "completion_tokens": 195,
-                "total_tokens": 934
+                "prompt_tokens": 742,
+                "completion_tokens": 164,
+                "total_tokens": 906
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -3337,28 +3337,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
-                "context_precision": NaN,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9615192088656249,
+                "context_precision": 0.19999999998,
                 "context_recall": 0.0
             }
         },
         {
             "question": "What is the primary objective of the hospital billing and collections policy?",
-            "answer": "The primary objective of the hospital’s Billing and Collections Policy is to ensure that **patients and applicable payers are billed accurately and in a timely manner**, while staff provide quality customer service, timely follow‑up, and handle all outstanding accounts in compliance with the relevant regulations (e.g., Section 501(r) of the Internal Revenue Code).",
+            "answer": "The primary objective of the hospital’s Billing and Collections Policy is to ensure that **Major Hospital bills patients and applicable payers accurately and in a timely manner** while providing quality customer service, timely follow‑up, and handling all outstanding accounts in compliance with the requirements of Section 501(r) of the Internal Revenue Code.",
             "reference": "The objective is to bill patients and payers accurately and promptly while ensuring quality customer service, timely follow-up, compliance with regulations, and consideration of financial assistance.",
             "ground_truth": "The objective is to bill patients and payers accurately and promptly while ensuring quality customer service, timely follow-up, compliance with regulations, and consideration of financial assistance.",
             "latency": {
-                "retrieval_seconds": 2.2945,
-                "reranker_seconds": 3.8634,
-                "prompt_seconds": 0.0004,
-                "generation_seconds": 1.0673,
-                "pipeline_seconds": 7.226
+                "retrieval_seconds": 0.0825,
+                "reranker_seconds": 3.3095,
+                "prompt_seconds": 0.0003,
+                "generation_seconds": 12.133,
+                "pipeline_seconds": 15.5261
             },
             "usage": {
-                "prompt_tokens": 767,
-                "completion_tokens": 217,
-                "total_tokens": 984
+                "prompt_tokens": 757,
+                "completion_tokens": 172,
+                "total_tokens": 929
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -3531,28 +3531,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
-                "context_precision": NaN,
-                "context_recall": NaN
+                "faithfulness": 0.25,
+                "answer_relevancy": 0.9658572285997931,
+                "context_precision": 0.7499999999625,
+                "context_recall": 1.0
             }
         },
         {
             "question": "What are Extraordinary Collection Actions (ECAs)?",
-            "answer": "Extraordinary Collection Actions (ECAs) are specific collection activities that a hospital may pursue against an individual to obtain payment for care **only after** it has made reasonable efforts to determine whether the individual is eligible for financial assistance under the hospital’s Financial Assistance Policy (FAP).  \n\nThe Code Section 501(r) Requirements define ECAs to include, for example:\n\n1. **Selling the individual’s debt** to another party (unless the purchaser is subject to the restrictions outlined in § 501(r)).  \n2. **Reporting adverse information** about the individual to consumer‑credit reporting agencies or credit bureaus.  \n3. **Deferring, denying, or conditioning medically necessary care** on payment for prior bills covered under the FAP.  \n4. **Taking legal or judicial action** to collect the debt, except for claims filed in a bankruptcy or personal‑injury proceeding.  \n\nIn short, ECAs are the more aggressive collection steps that may be taken only after the hospital has reasonably determined that the patient does **not** qualify for financial assistance.",
+            "answer": "Extraordinary Collection Actions (ECAs) are specific collection activities that a hospital may take against an individual to obtain payment for care **only after** it has made reasonable efforts to determine whether the individual is eligible for financial assistance under the hospital’s Financial Assistance Policy (FAP).  \n\nThe Code Section 501(r) Requirements identify ECAs as the following actions:\n\n1. **Selling the individual’s debt** to another party (unless the purchaser is subject to the restrictions listed in the 501(r) requirements).  \n2. **Reporting adverse information** about the individual to consumer‑credit reporting agencies or credit bureaus.  \n3. **Deferring, denying, or requiring payment before providing medically necessary care** because the individual has not paid prior bills covered under the FAP.  \n4. **Taking legal or judicial actions** to collect the debt (with the exception of claims filed in a bankruptcy or personal‑injury proceeding).  \n\nBefore any of these actions are pursued, the hospital must first make reasonable efforts—such as completing the patient’s financial assistance application and suspending collection activity while the application is reviewed—to determine the patient’s eligibility for assistance.",
             "reference": "ECAs are collection activities that can only be taken after reasonable efforts have been made to determine whether a patient qualifies for financial assistance.",
             "ground_truth": "ECAs are collection activities that can only be taken after reasonable efforts have been made to determine whether a patient qualifies for financial assistance.",
             "latency": {
-                "retrieval_seconds": 0.0926,
-                "reranker_seconds": 5.0677,
-                "prompt_seconds": 0.0003,
-                "generation_seconds": 1.1095,
-                "pipeline_seconds": 6.2706
+                "retrieval_seconds": 0.1257,
+                "reranker_seconds": 3.9215,
+                "prompt_seconds": 0.0002,
+                "generation_seconds": 3.828,
+                "pipeline_seconds": 7.876
             },
             "usage": {
-                "prompt_tokens": 758,
-                "completion_tokens": 317,
-                "total_tokens": 1075
+                "prompt_tokens": 761,
+                "completion_tokens": 435,
+                "total_tokens": 1196
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -3725,28 +3725,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9247147905963826,
                 "context_precision": 0.999999999975,
                 "context_recall": 1.0
             }
         },
         {
             "question": "How many billing statements are mailed to insured patients before collection actions may be considered?",
-            "answer": "Insured patients receive **at least three separate billing statements** mailed before any collection actions can be considered.",
+            "answer": "Insured patients will receive **at least three separate billing statements** mailed before any collection actions are considered.",
             "reference": "Major Hospital mails at least three separate billing statements to insured patients.",
             "ground_truth": "Major Hospital mails at least three separate billing statements to insured patients.",
             "latency": {
-                "retrieval_seconds": 0.1164,
-                "reranker_seconds": 4.4416,
-                "prompt_seconds": 0.0003,
-                "generation_seconds": 0.6971,
-                "pipeline_seconds": 5.2559
+                "retrieval_seconds": 0.1257,
+                "reranker_seconds": 3.4733,
+                "prompt_seconds": 0.0002,
+                "generation_seconds": 15.0851,
+                "pipeline_seconds": 18.6848
             },
             "usage": {
-                "prompt_tokens": 818,
-                "completion_tokens": 141,
-                "total_tokens": 959
+                "prompt_tokens": 808,
+                "completion_tokens": 136,
+                "total_tokens": 944
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -3919,28 +3919,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.9407094696787629,
                 "context_precision": 0.99999999995,
                 "context_recall": 1.0
             }
         },
         {
             "question": "What prompt pay discount is available and under what condition?",
-            "answer": "The hospital offers a **Prompt Pay Discount of 20 %**.  \nThis discount applies when a patient **pays the balance in full (minus the discount amount) within 21 days of the date of the first statement**.",
+            "answer": "The hospital offers a **Prompt Pay Discount of 20 %**.  \n\n**Condition:** The discount is applied when the patient pays the entire balance (minus the discount amount) **within 21 days of the date on the first patient statement**.",
             "reference": "Patients receive a 20% discount if the balance is paid in full within 21 days of the first billing statement.",
             "ground_truth": "Patients receive a 20% discount if the balance is paid in full within 21 days of the first billing statement.",
             "latency": {
-                "retrieval_seconds": 0.1189,
-                "reranker_seconds": 4.3606,
+                "retrieval_seconds": 0.1733,
+                "reranker_seconds": 3.5698,
                 "prompt_seconds": 0.0003,
-                "generation_seconds": 0.823,
-                "pipeline_seconds": 5.3032
+                "generation_seconds": 12.3714,
+                "pipeline_seconds": 16.1155
             },
             "usage": {
-                "prompt_tokens": 857,
-                "completion_tokens": 172,
-                "total_tokens": 1029
+                "prompt_tokens": 860,
+                "completion_tokens": 150,
+                "total_tokens": 1010
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -4113,28 +4113,28 @@
                 "after_reranker": 5
             },
             "metrics": {
-                "faithfulness": NaN,
-                "answer_relevancy": NaN,
+                "faithfulness": 1.0,
+                "answer_relevancy": 0.6407756652798532,
                 "context_precision": 0.49999999995,
                 "context_recall": 1.0
             }
         },
         {
             "question": "What processing fee applies to an extended payment plan?",
-            "answer": "The Extended Payment Plan incurs a processing fee of **$3.00 per month**.",
+            "answer": "A processing fee of **$3.00 per month** applies to an extended payment plan.",
             "reference": "Extended payment plans that last between 4 and 18 months incur a processing fee of $3.00 per month.",
             "ground_truth": "Extended payment plans that last between 4 and 18 months incur a processing fee of $3.00 per month.",
             "latency": {
-                "retrieval_seconds": 1.1237,
-                "reranker_seconds": 4.5007,
-                "prompt_seconds": 0.0003,
-                "generation_seconds": 0.7136,
-                "pipeline_seconds": 6.3389
+                "retrieval_seconds": 0.1228,
+                "reranker_seconds": 3.5682,
+                "prompt_seconds": 0.0002,
+                "generation_seconds": 14.1272,
+                "pipeline_seconds": 17.8191
             },
             "usage": {
-                "prompt_tokens": 819,
-                "completion_tokens": 95,
-                "total_tokens": 914
+                "prompt_tokens": 809,
+                "completion_tokens": 130,
+                "total_tokens": 939
             },
             "retrieval": {
                 "retrieved_documents": [
@@ -4308,8 +4308,8 @@
             },
             "metrics": {
                 "faithfulness": 1.0,
-                "answer_relevancy": 0.9376535893805517,
-                "context_precision": NaN,
+                "answer_relevancy": 0.9736562787202643,
+                "context_precision": 0.9999999999,
                 "context_recall": 1.0
             }
         }
