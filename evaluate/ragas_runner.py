@@ -2,6 +2,7 @@ import time
 import pandas as pd
 from typing import Any
 from datasets import Dataset
+from ragas.run_config import RunConfig
 
 from utils.logger import logger
 from config import USE_RERANKER
@@ -113,6 +114,7 @@ def create_ragas_metrics(
         ResponseRelevancy(
             llm=ragas_components.ragas_llm, 
             embeddings=ragas_components.ragas_embeddings,
+            strictness=1,
         ),
         ContextPrecision(
             llm=ragas_components.ragas_llm,
@@ -168,10 +170,17 @@ def run_ragas_evaluation(
         # Execute RAGAS evaluation and measure execution time
         # -------------------------------------------------
         ragas_start = time.perf_counter()
-        
+
+        run_config = RunConfig(
+            max_workers=1,   # serialize local Ollama calls
+            timeout=180,     # allow slow CPU-based local inference to finish
+            max_retries=2,   # avoid repeated expensive local retries
+            max_wait=30,
+        )
         ragas_results = evaluate(
             dataset=ragas_dataset,
             metrics=metrics,
+            run_config=run_config,
         )
         ragas_time = round(time.perf_counter() - ragas_start, 4)
 
@@ -210,10 +219,10 @@ def attach_metrics_to_pipeline_results(
     # Convert RAGAS results into a pandas DataFrame.
     df = ragas_results.to_pandas()
 
-    # Attach metric scores to each PipelineResults object.
-    
-    # Take each PipelineResults object and pair it with the corresponding row from the RAGAS DataFrame. 
-    # Ignore the DataFrame index, and give the row itself.
+    nan_counts = df[["faithfulness", "answer_relevancy",
+                      "context_precision", "context_recall"]].isna().sum()
+    if nan_counts.sum() > 0:
+        logger.warning("RAGAS metric failures (NaN) by column:\n%s", nan_counts)
 
     for result, (_, row) in zip(pipeline_results, df.iterrows()):
         result.metrics = Metrics(
@@ -222,5 +231,4 @@ def attach_metrics_to_pipeline_results(
             context_precision=row["context_precision"],
             context_recall=row["context_recall"],
         )
-    
     return df

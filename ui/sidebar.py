@@ -140,7 +140,7 @@ def render_sidebar() -> None:
 
         provider = st.selectbox(
             "🏢LLM Provider",
-            ["Groq", "OpenAI", "OpenRouter"],
+            ["Groq", "OpenRouter"],
             key="llm_provider",
         )
         st.session_state["provider"] = provider.lower()

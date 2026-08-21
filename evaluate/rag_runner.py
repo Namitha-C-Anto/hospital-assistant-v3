@@ -5,7 +5,9 @@ from config import (
     DEBUG,
     LLM_PROVIDER,
     LLM_MODEL,
-    LLM_API_KEY,)
+    LLM_API_KEY,
+    USE_RERANKER,
+    RETRIEVAL_MODE)
 
 from utils.logger import logger
 from evaluate.logging import (
@@ -121,6 +123,8 @@ async def process_test_questions(
             question,
             rag_components,
             app_llm,
+            RETRIEVAL_MODE,
+            USE_RERANKER,
         )
 
         # Calculate total pipeline execution time.

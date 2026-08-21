@@ -1,5 +1,6 @@
 from langchain_openai import ChatOpenAI
 from langchain_groq import ChatGroq
+from langchain_ollama import ChatOllama
 
 from config import TEMPERATURE, LLM_PROVIDER, LLM_MODEL
 
@@ -11,6 +12,13 @@ def get_llm(
 ):
     provider = provider.lower()
 
+    if provider == "ollama":
+        return ChatOllama(
+            model=model,
+            base_url="http://localhost:11434",
+            temperature=TEMPERATURE,
+        )
+        
     if not api_key:
         raise ValueError(
             f"API key is required for {provider}."

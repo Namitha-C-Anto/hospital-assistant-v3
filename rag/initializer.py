@@ -86,6 +86,9 @@ def initialize_ragas() -> EvaluationComponents:
         api_key=JUDGE_API_KEY,
     )
 
+    judge_llm.temperature = 0
+    # judge_llm.max_tokens = 4096
+    
     # -------------------------------------------------
     # 2. Initialize embedding model for RAGAS metrics
     # -------------------------------------------------

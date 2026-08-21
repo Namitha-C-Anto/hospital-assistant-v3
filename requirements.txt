@@ -10,6 +10,7 @@ langchain-groq==0.3.8
 # LLM APIs
 openai==1.109.1
 groq==0.37.1
+langchain-ollama==0.3.10
 
 # Environment Variables
 python-dotenv==1.1.1

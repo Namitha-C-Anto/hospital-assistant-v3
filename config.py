@@ -87,7 +87,7 @@ DEBUG = os.getenv(
 # --------------------------------------------------
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "groq")
 LLM_MODEL = os.getenv("LLM_MODEL", "openai/gpt-oss-120b")
-LLM_API_KEY = os.getenv("GROQ_API_KEY")
+LLM_API_KEY = os.getenv("OPENROUTER_API_KEY")
 TEMPERATURE = float(os.getenv("TEMPERATURE", 0.2))
 # --------------------------------------------------
 # Evaluation LLM
@@ -100,7 +100,7 @@ JUDGE_MODEL = os.getenv(
     "JUDGE_MODEL",
     LLM_MODEL
 )
-JUDGE_API_KEY = os.getenv("GROQ_API_KEY")
+JUDGE_API_KEY = os.getenv("OLLAMA_API_KEY")
 
 # --------------------------------------------------
 # Streamlit Application
