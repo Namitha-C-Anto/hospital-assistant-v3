@@ -1,6 +1,6 @@
 # 🏥 Hospital Assistant RAG v3
 
-**Production-ready conversational hospital assistant** built with Retrieval-Augmented Generation (RAG), hybrid retrieval, cross-encoder reranking, and a fully API-driven, containerized architecture.
+**Production-oriented conversational hospital assistant** built with Retrieval-Augmented Generation (RAG), hybrid retrieval, cross-encoder reranking, and a fully API-driven, containerized architecture.
 
 Version 3 evolves the project from a single-file Streamlit prototype into a **modular, configurable, evaluated, and Dockerized GenAI application**, powered by Qdrant, FastAPI, and Streamlit.
 
