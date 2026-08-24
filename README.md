@@ -8,8 +8,6 @@ Version 3 evolves the application from a Streamlit-based RAG prototype into a **
 
 ## 🎥 Demo
 
-> Add your demo video here.
-
 **▶️ [Watch the Demo Video](YOUR_DEMO_VIDEO_LINK)**
 
 The demo showcases:
