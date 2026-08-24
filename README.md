@@ -15,7 +15,12 @@ Version 3 evolves the project from a single-file Streamlit prototype into a **mo
 
 ## 🎥 Demo
 
-**▶️ [Watch the full demo video](https://github.com/Namitha-C-Anto/hospital-assistant-v3/raw/main/assets/hospital-assistant-rag-v3-demo.mp4)** — conversational Q&A, retrieval-mode switching, reranking, source transparency, and Docker deployment in action.
+**▶️ [Watch the full demo video](https://github.com/user-attachments/assets/f8bbf594-13f5-4835-bd0d-acb2c29ba24b)** — conversational Q&A, retrieval-mode switching, reranking, source transparency, and Docker deployment in action.
+
+
+
+
+
 
 ---
 
