@@ -468,6 +468,7 @@ v3 turns the v2 prototype into a **modular, API-driven, configurable, and contai
 - 🔎 **Metadata Filtering** — filter retrieved documents by department, document type, category, etc.
 - ✍️ **Query Rewriting** — rewrite conversational/ambiguous queries before retrieval
 - 🧠 **Agentic RAG** — agents for tool selection, multi-step reasoning, task-specific workflows
+- 💾 **Persistent & Scalable Memory** — replace in-process session state with a Redis-backed conversation store (fast, TTL-based active session memory) paired with a relational database such as SQL Server/PostgreSQL for permanent chat history, enabling multi-user support, horizontal scaling across multiple backend instances, and session recovery after restarts.
 - ☁️ **Cloud Deployment** — AWS/Azure/GCP managed containers + a cloud-native LLM platform (Bedrock, Vertex AI, Azure AI Foundry)
 - 📝 **File-Based Logging** — rotating log files for production troubleshooting/auditing
 - 📈 **Observability** — metrics, tracing, latency monitoring, dashboards
