@@ -465,15 +465,18 @@ v3 turns the v2 prototype into a **modular, API-driven, configurable, and contai
 
 ## 🚀 Future Improvements
 
-- 🔎 **Metadata Filtering** — filter retrieved documents by department, document type, category, etc.
-- ✍️ **Query Rewriting** — rewrite conversational/ambiguous queries before retrieval
-- 🧠 **Agentic RAG** — agents for tool selection, multi-step reasoning, task-specific workflows
-- 💾 **Persistent & Scalable Memory** — replace in-process session state with a Redis-backed conversation store (fast, TTL-based active session memory) paired with a relational database such as SQL Server/PostgreSQL for permanent chat history, enabling multi-user support, horizontal scaling across multiple backend instances, and session recovery after restarts.
-- ☁️ **Cloud Deployment** — AWS/Azure/GCP managed containers + a cloud-native LLM platform (Bedrock, Vertex AI, Azure AI Foundry)
-- 📝 **File-Based Logging** — rotating log files for production troubleshooting/auditing
-- 📈 **Observability** — metrics, tracing, latency monitoring, dashboards
-- 📊 **Advanced Evaluation** — larger evaluation dataset, systematic retrieval/reranking/LLM comparisons
+The current architecture provides a foundation for further production enhancements.
 
+- 🗃️ **Structured Data Retrieval (NL-to-SQL)** — enable natural language querying of structured data (e.g., patient records, appointment schedules) by generating and validating SQL against a relational database, using schema embeddings to ground query generation.
+- 🔎 **Metadata Filtering** — filter retrieved documents using metadata such as department, document type, category, or other attributes.
+- ✍️ **Query Rewriting** — rewrite conversational or ambiguous queries before retrieval to improve retrieval quality.
+- 🧠 **Agentic RAG** — introduce an orchestration agent that routes between document retrieval and structured data sources (e.g., SQL databases), enabling tool selection, multi-step reasoning, and hybrid structured/unstructured question answering.
+- 💾 **Persistent & Scalable Memory** — replace in-process session state with a Redis-backed conversation store (fast, TTL-based active session memory) paired with a relational database such as SQL Server/PostgreSQL for permanent chat history, enabling multi-user support, horizontal scaling across multiple backend instances, and session recovery after restarts.
+- ☁️ **Cloud Deployment** — deploy the containerized application to AWS/Azure/GCP using managed container services and integrate a cloud-native LLM platform such as Amazon Bedrock, Google Vertex AI, or Azure AI Foundry.
+- 🔄 **CI/CD Pipeline** — automate testing and deployment using GitHub Actions on push/PR.
+- 📝 **File-Based Logging** — persist application logs to rotating log files for production troubleshooting and auditing.
+- 📈 **Observability** — add metrics, tracing, latency monitoring, and production dashboards.
+- 📊 **Advanced Evaluation** — expand the evaluation dataset and systematically compare retrieval, reranking, and LLM configurations.
 ---
 
 ## 🎯 Project Objective
