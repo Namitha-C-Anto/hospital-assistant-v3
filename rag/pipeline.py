@@ -4,34 +4,37 @@ from rag.retrieval import run_retrieval_pipeline
 from rag.generation import generate_answer
 from utils.logger import logger
 from langchain_core.language_models import BaseChatModel
+from langchain_core.messages import BaseMessage
 
 async def run_rag_pipeline(
     question: str,
     rag_components: PipelineComponents,
     app_llm: BaseChatModel,
-    chat_history: str = "",
+    chat_history: list[BaseMessage] | None = None,
     retrieval_mode: str = RETRIEVAL_MODE,
     use_reranker:bool = USE_RERANKER,
 ) -> RagPipelineResult:
 
     """
+   
     Execute the complete RAG pipeline.
 
-    This includes:
-    - Document retrieval
-    - Deduplication
-    - Reranking
-    - Context construction
-    - Answer generation
+    The pipeline retrieves relevant documents, optionally reranks them,
+    constructs the LLM context, and generates a grounded answer.
 
     Args:
-        question: User question.
-        rag_components: Initialized RAG components.
+        question: Current user question.
+        rag_components: Initialized retrieval components.
+        app_llm: Configured chat model used for answer generation.
+        chat_history: Recent conversation history as LangChain messages.
+        retrieval_mode: Retrieval strategy to use.
+        use_reranker: Whether to apply the cross-encoder reranker.
 
     Returns:
-        RagPipelineResult containing the generated answer,
-        retrieved documents, latency measurements, and token usage.
+        RagPipelineResult containing the generated answer, retrieval
+        results, context, token usage, and latency measurements.
     """
+    
     # -------------------------------------------------
     # 1. Retrieve and rerank relevant documents
     # -------------------------------------------------

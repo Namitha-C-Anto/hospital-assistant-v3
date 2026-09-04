@@ -32,7 +32,7 @@ class QdrantRetriever(BaseRetriever):
 
         return [
             document
-            for document, score in results
+            for document, _ in results
         ]
 
 # ----------------------------------------------------------------------------------------

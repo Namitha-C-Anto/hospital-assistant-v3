@@ -75,7 +75,7 @@ USE_RERANKER = os.getenv(
     "True"
 ).lower() == "true"
 
-RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "qdrant").lower()
+RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "hybrid").lower()
  
 DEBUG = os.getenv(
     "DEBUG",

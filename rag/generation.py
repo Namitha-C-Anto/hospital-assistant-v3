@@ -3,13 +3,14 @@ from typing import Any
 from prompts.prompt_template import prompt 
 from utils.logger import logger
 from langchain_core.language_models import BaseChatModel
+from langchain_core.messages import BaseMessage
 
 async def generate_answer(
     question: str,
     context_text: str,
     app_llm: BaseChatModel,
-    chat_history: str | None = None,
-) -> tuple[str, dict[str, int], float, float]:
+    chat_history: list[BaseMessage] | None = None,
+) -> tuple[str, dict[str, Any], float, float]:
     """
     Generate an answer using the application LLM.
 
@@ -36,7 +37,7 @@ async def generate_answer(
     messages = prompt.format_messages(
         context=context_text,
         question=question,
-        chat_history=chat_history or "",
+        chat_history=chat_history or [],
     )
     prompt_time = round(time.perf_counter() - prompt_start, 4)
 
@@ -62,6 +63,12 @@ async def generate_answer(
         "response_metadata",
          {},
     ).get("token_usage", {})
+
+    logger.debug(
+        "Answer generation completed: prompt=%.4fs, generation=%.4fs",
+        prompt_time,
+        generation_time,
+    )
 
     return (
         answer, 

@@ -1,3 +1,4 @@
+import hashlib
 from langchain_core.documents import Document
 from typing import Sequence
 
@@ -17,10 +18,12 @@ def get_qdrant_client() -> QdrantClient:
         port=QDRANT_PORT,
     )
 
-def create_collection() -> None:
-    """Create the hospital documents collection if it does not exist."""
+def create_collection(
+    client: QdrantClient, 
+    embeddings: HuggingFaceEmbeddings,
+    ) -> None:
 
-    client = get_qdrant_client()
+    """Create the hospital documents collection if it does not exist."""
 
     try:
         if client.collection_exists(COLLECTION_NAME):
@@ -30,10 +33,8 @@ def create_collection() -> None:
             )
             return
 
-        embeddings = get_embeddings()
-
         # Generate one embedding to determine vector dimension.
-        sample_vector = embeddings.embed_query("test_docuement")
+        sample_vector = embeddings.embed_query("test_document")
 
         vector_size = len(sample_vector)
 
@@ -57,9 +58,11 @@ def create_collection() -> None:
             COLLECTION_NAME,
         )
 
-    finally:
-        client.close()
+    except Exception:
+        logger.exception("Failed to create Qdrant collection.")
+        raise
 
+#------------------------------------------------------------------------------
 
 def add_documents(
     client: QdrantClient,
@@ -92,9 +95,13 @@ def add_documents(
                 **document.metadata,
             }
 
+            chunk_id = hashlib.md5(
+                f"{document.metadata['doc_id']}_{index}".encode("utf-8")
+            ).hexdigest()
+            
             points.append(
                 PointStruct(
-                    id=index,
+                    id=chunk_id,
                     vector=vector,
                     payload=payload,
                 )
@@ -111,6 +118,7 @@ def add_documents(
             start + len(batch) - 1,
         )
 
+#-----------------------------------------------------------------------------
 def search_qdrant(
     client: QdrantClient,
     query: str,

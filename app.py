@@ -12,8 +12,7 @@ from utils.logger import logger
 from memory.chat_manager import (
     initialize_chat_sessions,
     rename_chat,
-    get_chat_history, 
-    format_chat_history, 
+    get_chat_history,  
     save_chat,)  
 
 from ui.styles import load_css
@@ -27,7 +26,7 @@ def call_chat_api(
     question: str,
     provider: str,
     model: str,
-    chat_history: str,
+    chat_history: list[dict[str, str]],
     retrieval_mode: str,
     use_reranker: bool,
 ) -> dict:
@@ -128,11 +127,9 @@ def main() -> None:
         logger.info("Processing question: %s.",question)
 
         # -------------------------------------------------
-        # Format conversation history and execute the
-        # complete RAG pipeline.
+        # Eexecute the complete RAG pipeline.
         # -------------------------------------------------
-        history_text = format_chat_history(chat_history)
-
+         
         # -------------------------------------------------
         # Display the latest conversation.
         # -------------------------------------------------
@@ -147,7 +144,7 @@ def main() -> None:
                         question=question,
                         provider=st.session_state.get("provider", LLM_PROVIDER),
                         model=st.session_state.get("model", LLM_MODEL),
-                        chat_history=history_text,
+                        chat_history=chat_history,
                         retrieval_mode=st.session_state.get("retrieval_mode", RETRIEVAL_MODE),
                         use_reranker=st.session_state.get("use_reranker", USE_RERANKER),
                     )

@@ -1,11 +1,15 @@
 from typing import Any
 from pydantic import BaseModel, Field
 
+class ChatHistoryItem(BaseModel):
+    question: str
+    answer: str
+
 class ChatRequest(BaseModel):
     question: str = Field(min_length = 1)
     provider: str
     model: str 
-    chat_history: str
+    chat_history: list[ChatHistoryItem] = Field(default_factory=list)
     retrieval_mode: str 
     use_reranker: bool
 
