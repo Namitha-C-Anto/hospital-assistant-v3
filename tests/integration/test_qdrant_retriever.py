@@ -20,19 +20,17 @@ def test_qdrant_retriever():
         documents = retriever.invoke(
             "What are the admission guidelines?"
         )
-
-        print("\nRetrieved documents:")
-
-        for document in documents:
-            print("\nSource:", document.metadata.get("source"))
-            print("Page:", document.metadata.get("page"))
-            print("Text:", document.page_content[:300])
-
+  
         assert len(documents) == 5
         assert all(
             isinstance(document, Document)
             for document in documents
         )
+
+        assert all(
+            document.page_content
+            for document in documents
+        )        
 
     finally:
         client.close()

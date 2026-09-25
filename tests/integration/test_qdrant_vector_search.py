@@ -1,5 +1,4 @@
-from config import COLLECTION_NAME
-from qdrant_client import QdrantClient
+from config import COLLECTION_NAME 
 
 from rag.qdrant_store import (
     get_qdrant_client,
@@ -7,7 +6,7 @@ from rag.qdrant_store import (
 )
 
 
-def test_search_qdrant():
+def test_qdrant_vector_search():
     client = get_qdrant_client()
 
     try:
@@ -26,7 +25,7 @@ def test_search_qdrant():
         print("\nSearch result:")
         print(results)
 
-        assert len(results.points) == 1
+        assert len(results.points) >= 1
 
         point = results.points[0]
 

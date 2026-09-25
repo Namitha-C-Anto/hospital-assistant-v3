@@ -48,20 +48,24 @@ def test_chat():
             "question": "What are the visiting hours?",
             "provider": "groq",
             "model": "test-model", 
-            "chat_history": "",
+            "chat_history": [],
+            "retrieval_mode": "semantic",
+            "use_reranker": False,
         }
     )
 
-
-    print(response.json())
     assert response.status_code == 200
-    assert response.json()["answer"] == "This is a test answer."
+    data = response.json()
+    assert data["answer"] == "This is a test answer."
+    assert "retrieval_result" in data
 
     mock_rag_service.ask.assert_awaited_once_with(
         question="What are the visiting hours?",
         provider="groq",
         model="test-model", 
-        chat_history="",
+        chat_history=[],
+        retrieval_mode="semantic",
+        use_reranker=False,
     )
 
     app.dependency_overrides.clear()

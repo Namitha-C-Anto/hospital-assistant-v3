@@ -10,15 +10,14 @@ def test_create_qdrant_collection():
     client = get_qdrant_client()
     embeddings = get_embeddings()
 
-    create_collection(client, embeddings)
-
     try:
+        create_collection(client, embeddings)
+
         assert client.collection_exists(COLLECTION_NAME)
 
         collection = client.get_collection(COLLECTION_NAME)
 
-        print(f"\nCollection: {COLLECTION_NAME}")
-        print(f"Collection info: {collection}")
+        assert collection is not None 
 
     finally:
         client.close()
